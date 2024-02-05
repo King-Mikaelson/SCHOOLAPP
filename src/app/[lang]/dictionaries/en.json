@@ -1,0 +1,345 @@
+{
+  "common": {
+    "welcome": "Welcome to GT Western",
+    "heroTitle": "Start your stress-free journey to study abroad at zero cost",
+    "heroSubtitle": "GT Western is your one-stop destination for a stress-free study abroad experience. We provide all the information and assistance you need to make studying in any country a breeze at no cost"
+  },
+  "navBar": {
+    "studyAbroad": "Study Abroad",
+    "applyForVisa": "Apply for Visa",
+    "bookFlight": "Book Flight",
+    "contactUs": "Contact Us",
+    "bookFreeConsultation": "Book Free Consultation"
+  },
+  "footer": {
+    "studyAbroad": "Study Abroad",
+    "catchCaption": "Ready to study abroad?",
+    "applyForVisa": "Apply for Visa",
+    "bookFlight": "Book Flight",
+    "contactUs": "Contact Us",
+    "bookFreeConsultation": "Book a Free Consultation",
+    "findYourPreferredProgram": "Find your Preferred Program",
+    "locations": {
+      "abuja": "Abuja, Nigeria",
+      "owerri": "Owerri, Nigeria"
+    },
+    "rightsReserved": "© 2023 GT Western. All Rights Reserved",
+    "termsAndConditions": "Terms & Condition",
+    "privacyPolicy": "Privacy Policy"
+  },
+  "form": {
+    "locationLabel": "Location",
+    "selectCountry": "Select Country",
+    "studyLabel": "What do you want to study",
+    "selectProgram": "Select Program",
+    "timeframeLabel": "When do you want to study",
+    "selectTimeframe": "Select Timeframe",
+    "searchButton": "Search"
+  },
+  "button": {
+    "findProgram": "Find My Preferred Program"
+  },
+  "aboutUs": {
+    "heading": "We represent and recruit for the top universities and educational institutions in the world.",
+    "description": "GT Western is an International Education and Migration agency providing study and relocation solutions with offices in Australia, Nigeria and growing. If you are keen on international education, we are here to make it happen for you. At GT Western Immigration & Education Services we provide comprehensive individually tailored services to all of our clients regardless of what, where and when it is needed. Our focus is on providing quality migration and education services to our clients"
+  },
+  "proofSection": {
+    "title": "We have helped students study abroad in over 100 schools"
+  },
+  "howWeWork": {
+    "heading": "How we work?",
+    "exploreHeading": "Explore programs & universities",
+    "exploreDescription": "Complete your profile to let potential roommates or accommodation providers know more about you. Add details like your preferences, interests, and bio. The more information you share, the better your chances of finding the perfect match.",
+    "steps": [
+      {
+        "title": "Explore programs & universities",
+        "text": "Explore our comprehensive database of Universities and programs ranging from recognized universities to specialized courses around the world to find the right fit for your academic journey."
+      },
+      {
+        "title": "Send your application to us",
+        "text": "Once you've found your desired university and program, complete your application and send it to us. Our team ensures that your application materials are organized, reviewed, and submitted correctly, streamlining the process and maximizing your chances of acceptance."
+      },
+      {
+        "title": "Apply for visa",
+        "text": "GT Western provides expert guidance throughout the visa application process. We assist in understanding the necessary documents, deadlines, and procedures, ensuring a smooth and stress-free visa application experience."
+      },
+      {
+        "title": "Book a Flight",
+        "text": "GT Western offers convenient flight booking options to get you to your destination hassle-free. Choose from a range of flight options and enjoy competitive fares. You can count on our support to finalize your travel plans."
+      }
+    ]
+  },
+  "services": {
+    "heading": "We also provide other services to ease transition to school.",
+    "steps": [
+      {
+        "title": "Student Accommodation Solution",
+        "text": "Securing suitable accommodation for students can pose a significant challenge. However, we, in collaboration with our partners at Casita, are dedicated to assisting you in discovering the ideal student residence in over 400 cities worldwide. Our range of student-made accommodations caters to every budget, ensuring that there is an option for every student."
+      },
+      {
+        "title": "School Fees Payment Assistance",
+        "text": "GT Western ensures a safe and secure method for you to make payments for services globally. We offer diverse payment options covering various services, including tuition fees, accommodation fees, medical insurance, and flight tickets. All transactions take place in a secure environment to safeguard your financial information."
+      },
+      {
+        "title": "Bank Opening Assistance",
+        "text": "GT Western has facilitated the accessibility of an international bank account for every prospective international student. This initiative eliminates the need to carry large sums of cash when traveling across borders, providing you with a secure and convenient financial solution."
+      },
+      {
+        "title": "Jobs and Employment Opportunities",
+        "text": "As an international student, you have the opportunity to engage in part-time work to sustain yourself while pursuing your studies. If you are interested in exploring part-time job opportunities during your academic journey, discover the strategies employed by other students to secure such positions."
+      }
+    ]
+  },
+  "testimonials": {
+    "heading": "Success stories and feedback from students who have used GT Western",
+    "description": "Discover what students have to say about their transformative experiences with GT Western. Our dedicated team takes pride in making study abroad dreams come true. From personalized guidance to stress-free visa applications and seamless flight bookings, our students' success stories speak volumes.",
+    "imageAlt": "testimony",
+    "placeholderAlt": "testimony placeholder"
+  },
+  "advert": {
+    "heading": "Your best shot at studying abroad",
+    "description": "In order to succeed in this mission, we work with over 3,750+ universities, business schools, law schools, and pathway providers who are eager to diversify their campuses and attract the right students from all over the world. Preparation pathway courses will increase your chances of getting accepted in a university and will help you do better at your dream study.",
+    "buttonText": "Find Preferred Program"
+  },
+  "faq": {
+    "heading": "Frequently asked Questions",
+    "subheading": "We know you have questions, so we have provided answers to most of the questions you might want to ask.",
+    "details": [
+      {
+        "title": "What study programs are available through GT Western?",
+        "text": "GT Western offers a diverse range of study programs across various countries, covering a wide array of academic disciplines. Explore our 'Study Abroad Programs' section for detailed information on available courses and universities."
+      },
+      {
+        "title": "How do I begin the process of studying abroad with GT Western?",
+        "text": "To start your study abroad journey with GT Western, explore our website to discover universities and programs, submit your application through us, receive visa guidance, and book your flight hassle-free"
+      },
+      {
+        "title": "Are there fees for using GT Western's services?",
+        "text": "No, GT Western's services are entirely free for students. We aim to support and simplify the study abroad process without any additional charges."
+      },
+      {
+        "title": "Can GT Western assist with scholarships or financial aid for studying abroad?",
+        "text": "While GT Western doesn't directly provide scholarships, we offer information and guidance on available financial aid options and scholarships. Our resources aim to help students navigate funding opportunities."
+      },
+      {
+        "title": "How long does the application process take through GT Western?",
+        "text": "The application process duration varies based on universities and visa processing times. GT Western strives to fast-track the process and keeps applicants informed at each stage for a smooth and timely experience."
+      }
+    ]
+  },
+  "studyAbroad": {
+    "location": "Location",
+    "select_country": "Select Country",
+    "what_to_study": "What do you want to study",
+    "select_program": "Select Program",
+    "when_to_study": "When do you want to study",
+    "select_timeframe": "Select Timeframe",
+    "search": "Search",
+    "degree": "Degree",
+    "prev": "Previous",
+    "next": "Next",
+    "completeApplication": {
+      "completeApplication": "Complete your application",
+      "startJourney": "Start your journey to study abroad by completing your application to University of Hong Kong.",
+      "personalInformation": "Personal Information",
+      "contactInformation": "Contact Information",
+      "sponsorInformation": "Sponsor Information",
+      "academicInformation": "Academic Information",
+      "uploadDocuments": "Upload Documents"
+    },
+    "degreeFilter": [
+      "High school", "Undergraduate Diploma", "Undergraduate Advanced Diploma", "Associate Degree",
+      "Bachelor’s Degree", "PostGraduate Certificate", "Master’s Degree", "Doctoral Degree (Ph.D)"
+    ]
+  },
+  "visa": {
+    "heading": "Expert visa guidance tailored to your journey",
+    "description": "At GT Western, we offer expert advice for your visa needs: explore, inquire, and navigate your visa application process with our free consultation services.",
+    "countries": "We help our clients process visas to over 150 different countries in the world.",
+    "startApplication": "Start your Visa Application",
+    "modal": {
+      "full_name": "FULL NAME",
+      "enter_name": "Enter Name",
+      "email_address": "Email address",
+      "enter_email": "Enter Email",
+      "mobile_number": "MOBILE NUMBER",
+      "select_country": "Select Country",
+      "nationality": "NATIONALITY",
+      "travel_destination": "TRAVEL DESTINATION",
+      "reason_for_travel": "REASON FOR TRAVEL",
+      "visa_type": "Select Visa Type",
+      "submit_application": "Submit Application",
+      "topic_1": "English topic",
+      "topic_2": "English topic 2"
+    }
+  },
+  "bookFlight": {
+    "heading": "Discover and book the best flight for your journey",
+    "description": "With GT Western, you can find the best flight options suited to your study abroad plans without having to break the bank. Book now for smooth takeoffs!",
+    "return": "RETURN",
+    "oneWay": "ONE-WAY",
+    "flyingFrom": "FLYING FROM",
+    "flyingTo": "FLYING TO",
+    "departureDate": "Departure Date",
+    "returnDate": "Return Date",
+    "adult": "ADULT (17+ YEARS)",
+    "child": "CHILD (2-17 YEARS)",
+    "infant": "INFANT (UNDER 2 YEARS)",
+    "findFlights": "FIND FLIGHTS"
+  },
+  "contactUs": {
+    "getInTouch": "Get in touch with GT Western",
+    "thanksForStoppingBy": "Thanks for stopping by! Whether you have a question, comment, or just want to say hi, don't be a stranger. We're here to help, and we love connecting with our students. Drop us a line or use the contact form below to get in touch.",
+    "yourName": "Your Name",
+    "typeYourFullName": "Type your full name",
+    "yourEmailAddress": "Your Email Address",
+    "typeYourEmailAddress": "Type your email address",
+    "mobileNumber": "Mobile Number",
+    "enterMobileNumber": "Enter here",
+    "selectYourCountry": "Select your country",
+    "select": "Select",
+    "nigeria": "Nigeria",
+    "others": "Others",
+    "whatsYourQuestion": "What's your question",
+    "typeYourQuestion": "Type your question",
+    "submit": "Submit",
+    "chatWithUs": "Chat with us",
+    "ourExperiencedAndFriendlyTeam": "Our experienced and friendly team is here to help you",
+    "callUs": "Call us",
+    "visitUs": "Visit us",
+    "comeSayHello": "Come say hello at our office"
+  },
+  "bookConsultation": {
+    "title": "Book a free consultation with us today",
+    "subTitle": "Schedule a free 20-min Consultation with us for expert advice and personalised guidance - Let GT Western help navigate your path to a stress-free study abroad program.",
+    "yourName": "Your Name",
+    "yourEmailAddress": "Your Email Address",
+    "mobileNumber": "Mobile Number",
+    "selectMainTopic": "Select Main Topic",
+    "chooseAvailableDate": "Choose Available Date",
+    "pickATime": "Pick a Time",
+    "scheduleSession": "Schedule Session",
+    "chatWithUs": "Chat with Us",
+    "email": "admin@gtwhub.com",
+    "callUs": "Call Us",
+    "phoneNumber": "+2347031918634",
+    "visitUs": "Visit Us",
+    "comeSayHello": "Come say hello at our office",
+    "locationAbuja": "Abuja, Nigeria",
+    "ourExperiencedAndFriendlyTeam": "Our experienced and friendly team is here to help you",
+    "addressAbuja": "ANON PlazaBS, Second FloorPlot 1085 Joseph Gomwalk Way, Gudu, Abuja (Opposite Ajuji Hotel)",
+    "locationOwerri": "Owerri, Nigeria",
+    "addressOwerri": "Silas PlazaLevel 2, Unit 7, KM 6 Owerri-Orlu RoadOwerri, Imo State (After Akwakuma Junction)"
+  },
+  "personalInformation": {
+    "personalInformation": "Personal Information",
+    "firstName": "FIRST NAME",
+    "enterFirstName": "Enter here",
+    "lastName": "LAST NAME",
+    "enterLastName": "Enter here",
+    "middleName": "MIDDLE NAME",
+    "enterMiddleName": "Enter here",
+    "location": "LOCATION",
+    "selectCountry": "Select Country",
+    "nigeria": "Nigeria",
+    "others": "Others",
+    "dob": "Date of Birth",
+    "nationality": "Nationality",
+    "continue": "Continue"
+  },
+  "contactInformation": {
+    "contactInformation": "Contact Information",
+    "emailAddress": "EMAIL ADDRESS",
+    "enterEmail": "Enter here",
+    "mobileNumber": "Mobile Number",
+    "enterMobileNumber": "Enter here",
+    "streetAddress": "STREET ADDRESS",
+    "enterStreetAddress": "Enter here",
+    "city": "CITY",
+    "enterCity": "Enter here",
+    "state": "STATE",
+    "selectCountry": "Select",
+    "nigeria": "Nigeria",
+    "others": "Others",
+    "country": "COUNTRY",
+    "zipCode": "ZIPCODE",
+    "enterZipCode": "Enter here",
+    "sameAsMailingAddress": "IS THIS SAME AS YOUR MAILING ADDRESS",
+    "yes": "YES",
+    "no": "NO",
+    "continue": "Continue"
+  },
+  "sponsorInformation": {
+    "title": "Sponsor Information",
+    "selfSponsoredQuestion": "ARE YOU SELF SPONSORED?",
+    "yes": "YES",
+    "no": "NO",
+    "firstName": "SPONSOR'S FIRST NAME",
+    "lastName": "SPONSOR'S LAST NAME",
+    "email": "EMAIL ADDRESS",
+    "mobileNumber": "MOBILE NUMBER",
+    "streetAddress": "STREET ADDRESS",
+    "city": "CITY",
+    "state": "STATE",
+    "country": "COUNTRY",
+    "zipCode": "ZIPCODE",
+    "addAnotherSponsorQuestion": "DO YOU WANT TO ADD ANOTHER SPONSOR",
+    "continueButton": "Continue",
+    "enterHere": "Enter here",
+    "selectCountry": "Select Country",
+    "emailAddress": "EMAIL ADDRESS"
+  },
+  "academicPlan": {
+    "title": "Academic Plan",
+    "prospectiveUniversity": "Prospective University",
+    "enterHere": "Enter here",
+    "intendedProgram": "Course of study",
+    "selectCountry": "Select Country",
+    "select": "Select",
+    "startTermAndYear": "Start Term and Year",
+    "studentType": "Degree",
+    "regular": "Regular",
+    "partTime": "Part Time",
+    "attendFullTime": "Do you intend to attend full-time",
+    "yes": "Yes",
+    "no": "No",
+    "startingWithCurrent": "Starting with the current or most recent, list ALL schools you have attended or are currently attending.",
+    "addAnotherSponsor": "Do you want to add another sponsor",
+    "testScores": "Test Scores",
+    "nativeLanguage": "Is English your native language?",
+    "englishProficiencyTest": "Have you taken an English proficiency test?",
+    "typeOfTestTaken": "Type of test taken",
+    "testScore": "Test score",
+    "interestedInScholarship": "INTERESTED IN SCHOLARSHIPS/FINANCIAL AID?",
+    "previousHighSchool": "Previous High School History",
+    "previousInstitutionAttended": "Previous Institution Attended",
+    "graduatedFromThisInstitution": "Have you graduated from this institution?",
+    "expectedDateOfGraduation": "Expected date of graduation",
+    "addAnotherInstitution": "Do you want to add another institution?",
+    "previousCollegeHistory": "Previous College History",
+    "major": "Major",
+    "degreeEarnedExpected": "Degree earned / expected?",
+    "continueButton": "Continue"
+  },
+  "uploadSupportDocuments": {
+    "title": "Upload Supporting Documents",
+    "passportPhoto": "Passport Photo",
+    "result": "Result",
+    "scratchCard": "Scratch Card",
+    "unofficialTranscript": "Unofficial Transcript",
+    "uploadDocuments": "Upload Additional Documents",
+    "submitApplication": "Submit Application"
+  },
+  "successModal": {
+    "title": "Congratulations 🎉🎉🎉",
+    "content": "You have taken the first big step towards studying abroad by submitting your application to us. Keep an eye on your email as we process your application.",
+    "goHomeLink": "Go Home"
+  },
+  "applicationSections": [
+    "Personal Information",
+    "Contact Information",
+    "Sponsor Information",
+    "Academic Information",
+    "Upload Documents"
+  ]
+}
