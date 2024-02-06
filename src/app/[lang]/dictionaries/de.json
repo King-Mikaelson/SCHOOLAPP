@@ -34,6 +34,8 @@
     "selectProgram": "Programm auswählen",
     "timeframeLabel": "Wann möchten Sie studieren",
     "selectTimeframe": "Zeitraum auswählen",
+    "desiredDegree": "Welchen Abschluss möchten Sie",
+    "selectDegree": "Grad auswählen",
     "searchButton": "Suchen"
   },
   "button": {

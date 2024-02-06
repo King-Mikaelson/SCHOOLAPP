@@ -93,9 +93,9 @@ export default function StudyAbroad({ params }: IProps) {
   // console.log(searchQuery)
   return (
     <main className="p-4 grid grid-rows-[max-content_1fr] animate-fade-in min-h-[calc(100vh-80px)]">
-      <div className="form-container container mx-auto shadow-lg my-[clamp(3rem,5vmax,6rem)] z-[1] mt-10 bg-white rounded-lg w-full md:w-[95%] max-w-screen-2xl">        
-      <form onSubmit={handleSearch} className="input-group flex flex-row gap-2 justify-between items-center p-4">
-          <label htmlFor="location" className="text-neutral-400 text-sm flex flex-col">
+      <div className="form-container container mx-auto shadow-lg my-[clamp(3rem,5vmax,6rem)] z-[1] mt-10 bg-white rounded-xl w-full md:w-[95%] max-w-screen-2xl">        
+        <form onSubmit={handleSearch} className="input-group flex flex-row max-md:flex-col gap-3 justify-between items-center p-4">
+          <label htmlFor="location" className="text-neutral-400 bg-neutral-100 rounded-lg py-2 px-4 max-md:w-full md:bg-white text-sm flex flex-col">
             {langs[params.lang as keyof typeof langs].form.locationLabel}
             <FormControl fullWidth>
               <Select
@@ -118,30 +118,8 @@ export default function StudyAbroad({ params }: IProps) {
             </FormControl>
           </label>
           
-          <label htmlFor="location" className="text-neutral-400 text-sm flex flex-col">
+          <label htmlFor="location" className="text-neutral-400 bg-neutral-100 rounded-lg py-2 px-4 max-md:w-full md:bg-white text-sm flex flex-col">
             {langs[params.lang as keyof typeof langs].form.studyLabel}
-            {/* <input name="courseOfStudy" onChange={handleTextInput} type="text" placeholder="Enter course of study" className="px-3 py-2 focus:outline outline-1 rounded-md text-slate-700 focus:outline-slate-300" /> */}
-            <FormControl fullWidth>
-              <Select
-                itemID="location"
-                displayEmpty
-                sx={{ '& > *': { border: 'none', padding: "0.5rem 0", fontWeight: "500", color: "rgb(120 113 108)" } }}
-                className="[&>*]:!py-2 [&>*]:!px-0 [&>*]:!border-none font-medium text-stone-500 min-w-[180px]"
-                value={searchData.program}
-                name="program"
-                onChange={handleTextInput}
-              >
-                <MenuItem className="!p-0 !hidden" value="">{langs[params.lang as keyof typeof langs].form.selectProgram}</MenuItem>
-                {
-                  degreeList.map((degType: string) => (
-                    <MenuItem key={degType} value={degType}>{degType}</MenuItem>
-                  ))
-                }
-              </Select>
-            </FormControl>
-          </label>
-          <label htmlFor="location" className="text-neutral-400 text-sm flex flex-col">
-            {langs[params.lang as keyof typeof langs].form.timeframeLabel}
             <FormControl fullWidth>
               <Select
                 itemID="location"
@@ -155,26 +133,42 @@ export default function StudyAbroad({ params }: IProps) {
                 className="[&>*]:!py-2 [&>*]:!px-0 [&>*]:!border-none font-medium text-stone-500 min-w-[180px]"
                 
               >
-                <MenuItem className="!p-0 !hidden" value="">{langs[params.lang as keyof typeof langs].form.selectTimeframe}</MenuItem>
+                <MenuItem className="!p-0 !hidden" value="">{langs[params.lang as keyof typeof langs].form.selectProgram}</MenuItem>
                 {
                   programs && programs?.map((program: string) => (
                     <MenuItem value={program}>{program}</MenuItem>
                   ))
                 }
-                {/* <MenuItem value="Dec 2023 - March 2024">Dec 2023 - March 2024</MenuItem>
-                <MenuItem value="April - July 2024">April - July 2024</MenuItem>
-                <MenuItem value="Aug - Nov 2024">Aug - Nov 2024</MenuItem>
-                <MenuItem value="Dec 2024 to Mar 2025">Dec 2024 to Mar 2025</MenuItem> */}
-                
-                {/* <MenuItem value={20}>{langs[params.lang as keyof typeof langs].form.selectCountryOption1}</MenuItem>
-                <MenuItem value={30}>{langs[params.lang as keyof typeof langs].form.selectCountryOption2}</MenuItem> */}
+              </Select>
+            </FormControl>
+            {/* <input name="courseOfStudy" onChange={handleTextInput} type="text" placeholder="Enter course of study" className="px-3 py-2 focus:outline outline-1 rounded-lg text-slate-700 focus:outline-slate-300" /> */}
+            
+          </label>
+          <label htmlFor="location" className="text-neutral-400 bg-neutral-100 rounded-lg py-2 px-4 max-md:w-full md:bg-white text-sm flex flex-col">
+            {langs[params.lang as keyof typeof langs].form.desiredDegree}
+            <FormControl fullWidth>
+              <Select
+                itemID="location"
+                displayEmpty
+                sx={{ '& > *': { border: 'none', padding: "0.5rem 0", fontWeight: "500", color: "rgb(120 113 108)" } }}
+                className="[&>*]:!py-2 [&>*]:!px-0 [&>*]:!border-none font-medium text-stone-500 min-w-[180px]"
+                value={searchData.program}
+                name="program"
+                onChange={handleTextInput}
+              >
+                <MenuItem className="!p-0 !hidden" value="">{langs[params.lang as keyof typeof langs].form.selectDegree}</MenuItem>
+                {
+                  degreeList.map((degType: string) => (
+                    <MenuItem key={degType} value={degType}>{degType}</MenuItem>
+                  ))
+                }
               </Select>
             </FormControl>
           </label>
 
           {/* ... other form elements ... */}
 
-          <button className="button bg-red-500 h-full flex flex-row py-2 px-6 items-center rounded-md gap-2">
+          <button className="button bg-red-500 h-full max-md:w-full max-md:py-3 flex flex-row py-2 px-6 items-center justify-center rounded-lg gap-2">
             <img
               loading="lazy"
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/ec30e33db9ff2542020699f255cdc699c343a9eea71f9d3d7995882140f597ea?apiKey=0ce679486ae447bd8ce08b2cc2263e2e&"
@@ -201,8 +195,8 @@ export default function StudyAbroad({ params }: IProps) {
         <div className="grid h-full grid-rows-[1fr_max-content]">
           <SchoolsList routeProfix="/dashboard/jobs" data={data?.data} loading={isFetching} selectedFilters={selectedFilters} arrangement={listArrangement} />
 
-          <div className="flex items-center max-md:max-w-[calc(100vw-2.2rem)] w-[500px] bottom-4 bg-white mb-4 ml-auto  md:max-w-max rounded-md  mt-8 p-1">
-            <button onClick={getPreviousPage} disabled={data?.previousCursor ? false : true} className={`${data?.previousCursor ? "text-stone-700" : "text-stone-300"} border md:mr-4 border-slate-400/80 flex gap-x-1 items-center bg-primary-pale/30 rounded-md text-primary/90 pl-3 pr-4 max-md:pl-2 max-md:pr-3 py-1`}>
+          <div className="flex items-center max-md:max-w-[calc(100vw-2.2rem)] bottom-4 bg-whit mb-4 ml-auto rounded-md  mt-8 p-1">
+            <button onClick={getPreviousPage} disabled={data?.previousCursor ? false : true} className={`${data?.previousCursor ? "text-stone-700" : "text-stone-300"} border mr-4 border-slate-400/80 flex gap-x-1 items-center bg-primary-pale/30 rounded-md text-primary/90 pl-3 pr-4 max-md:pl-2 max-md:pr-3 py-1`}>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
               </svg>
@@ -215,7 +209,7 @@ export default function StudyAbroad({ params }: IProps) {
                 ))
               }
             </div> */}
-            <button onClick={getNextPage} disabled={data?.nextCursor ? false : true} className={`${data?.nextCursor ? "text-stone-700" : "text-stone-300"} border md:ml-4 border-slate-400/80 flex gap-x-1 items-center bg-primary-pale/30 rounded-md text-primary/90 pl-4 pr-3 max-md:pl-3 max-md:pr-2 py-1`}>
+            <button onClick={getNextPage} disabled={data?.nextCursor ? false : true} className={`${data?.nextCursor ? "text-stone-700" : "text-stone-300"} border ml-4 border-slate-400/80 flex gap-x-1 items-center bg-primary-pale/30 rounded-md text-primary/90 pl-4 pr-3 max-md:pl-3 max-md:pr-2 py-1`}>
               Next
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                 <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />

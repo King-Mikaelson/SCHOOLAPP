@@ -36,7 +36,6 @@ export default function SignIn() {
     signIn(formData);
   }
 
-  console.log(formData)
   return (
     <main className="self-stretch bg-white">
       <div className="grid grid-cols-2 max-md:grid-cols-1 min-h-screen">
@@ -90,7 +89,7 @@ export default function SignIn() {
             <div className="flex flex-row justify-between items-center w-full">
               <label htmlFor="remember" className="flex gap-2 mt-1 self-start items-center">
                 <input id="remember" checked={formData.rememberMe} onChange={(e) => setFormData({ ...formData, rememberMe: !formData.rememberMe })} className="h-[20px] w-[20px]" type="checkbox" />
-                <p className="text-zinc-500 text-sm leading-4">Remember for 30 days</p>
+                <p className="text-zinc-500 text-sm leading-4">Remember for 7 days</p>
               </label>
               <Link href="forgot-password" className="text-orange-600 text-sm font-medium leading-5 whitespace-nowrap">Forgot password</Link>
             </div>

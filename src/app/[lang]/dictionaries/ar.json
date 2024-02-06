@@ -34,6 +34,8 @@
     "selectProgram": "اختر البرنامج",
     "timeframeLabel": "متى تريد الدراسة",
     "selectTimeframe": "اختر الإطار الزمني",
+    "desiredDegree": "أي درجة ترغب فيها",
+    "selectDegree": "اختر الدرجة",
     "searchButton": "بحث"
   },
   "button": {

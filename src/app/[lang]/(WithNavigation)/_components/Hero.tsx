@@ -95,7 +95,29 @@ export default function Hero({ params }: IProps) {
           
           <label htmlFor="location" className="text-neutral-400 text-sm flex flex-col">
             {langs[params.lang as keyof typeof langs].form.studyLabel}
+            <FormControl fullWidth>
+              <Select             
+                displayEmpty
+                value={searchData.name}
+                onChange={handleTextInput}
+                name="name"
+                defaultValue=""
+                sx={{ '& > *': { border: 'none', padding: "0.5rem 0", fontWeight: "500", color: "rgb(120 113 108)" } }}
+                className="[&>*]:!py-2 [&>*]:!px-0 [&>*]:!border-none font-medium text-stone-500 min-w-[180px]"
+              >
+                <MenuItem className="!p-0 !hidden" value="">{langs[params.lang as keyof typeof langs].form.selectProgram}</MenuItem>
+                {
+                  programs && programs?.map((program: string) => (
+                    <MenuItem value={program}>{program}</MenuItem>
+                  ))
+                }
+              </Select>
+            </FormControl>
             {/* <input name="courseOfStudy" onChange={handleTextInput} type="text" placeholder="Enter course of study" className="px-3 py-2 focus:outline outline-1 rounded-md text-slate-700 focus:outline-slate-300" /> */}
+            
+          </label>
+          <label htmlFor="location" className="text-neutral-400 text-sm flex flex-col">
+            {langs[params.lang as keyof typeof langs].form.desiredDegree}
             <FormControl fullWidth>
               <Select
                 itemID="location"
@@ -106,41 +128,13 @@ export default function Hero({ params }: IProps) {
                 name="program"
                 onChange={handleTextInput}
               >
-                <MenuItem className="!p-0 !hidden" value="">{langs[params.lang as keyof typeof langs].form.selectProgram}</MenuItem>
+                <MenuItem className="!p-0 !hidden" value="">{langs[params.lang as keyof typeof langs].form.selectDegree}</MenuItem>
+                
                 {
                   degreeList.map((degType: string) => (
                     <MenuItem key={degType} value={degType}>{degType}</MenuItem>
                   ))
                 }
-              </Select>
-            </FormControl>
-          </label>
-          <label htmlFor="location" className="text-neutral-400 text-sm flex flex-col">
-            {langs[params.lang as keyof typeof langs].form.timeframeLabel}
-            <FormControl fullWidth>
-              <Select             
-                displayEmpty
-                value={searchData.name}
-                onChange={handleTextInput}
-                name="name"
-                defaultValue=""
-                sx={{ '& > *': { border: 'none', padding: "0.5rem 0", fontWeight: "500", color: "rgb(120 113 108)" } }}
-                className="[&>*]:!py-2 [&>*]:!px-0 [&>*]:!border-none font-medium text-stone-500 min-w-[180px]"
-                
-              >
-                <MenuItem className="!p-0 !hidden" value="">{langs[params.lang as keyof typeof langs].form.selectTimeframe}</MenuItem>
-                {
-                  programs && programs?.map((program: string) => (
-                    <MenuItem value={program}>{program}</MenuItem>
-                  ))
-                }
-                {/* <MenuItem value="Dec 2023 - March 2024">Dec 2023 - March 2024</MenuItem>
-                <MenuItem value="April - July 2024">April - July 2024</MenuItem>
-                <MenuItem value="Aug - Nov 2024">Aug - Nov 2024</MenuItem>
-                <MenuItem value="Dec 2024 to Mar 2025">Dec 2024 to Mar 2025</MenuItem> */}
-                
-                {/* <MenuItem value={20}>{langs[params.lang as keyof typeof langs].form.selectCountryOption1}</MenuItem>
-                <MenuItem value={30}>{langs[params.lang as keyof typeof langs].form.selectCountryOption2}</MenuItem> */}
               </Select>
             </FormControl>
           </label>

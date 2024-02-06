@@ -31,9 +31,11 @@
     "locationLabel": "Location",
     "selectCountry": "Select Country",
     "studyLabel": "What do you want to study",
-    "selectProgram": "Select Program",
+    "selectProgram": "Select Course",
     "timeframeLabel": "When do you want to study",
     "selectTimeframe": "Select Timeframe",
+    "desiredDegree": "What degree do you want",
+    "selectDegree": "Select Degree",
     "searchButton": "Search"
   },
   "button": {

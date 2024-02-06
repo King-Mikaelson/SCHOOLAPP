@@ -37,7 +37,7 @@ export default function ProgramDetails({ params }: IProps) {
         <Image fill src={selectedData?.images[0]?.url} alt="university" loading="lazy"  className="absol ute h-full w-full object-cover object-center inset-0" />
         {/* <Image fill src="/images/home/hero.png" alt="university" loading="lazy"  className="absolute h-full w-full object-cover object-center inset-0" /> */}
         <div className="relative flex z-[1] flex-col md:ml-[1vmax] items-stretch  mt-64 mb-1 max-md:max-w-full max-md:mt-30">
-          <h2 className="text-white text-6xl font-semibold leading-[56px] tracking-tighter whitespace-nowrap max-md:max-w-full max-sm:text-4xl max-lg:text-5xl max-md:leading-10" aria-label="University Name">
+          <h2 className="text-white text-6xl font-semibold leading-[56px] tracking-tighter max-md:max-w-full max-sm:text-4xl max-lg:text-5xl max-md:leading-10" aria-label="University Name">
             {/* The University of Hong Kong */}
             {selectedData?.info?.name}
           </h2>
