@@ -123,14 +123,14 @@ export default function Hero({ params }: IProps) {
                 options={programs ? programs : []}
                 sx={{ "& ul": { backgroundColor: "blue !important", } }}
                 // sx={{ '& > *': { border: 'none', padding: "0.5rem 0", fontWeight: "500", color: "rgb(120 113 108)" } }}
-                className="[&>*]:!py-2 [&_*]:whitespace-nowrap   [&>*>*>*>*>*]:text-[0px] [&>*]:min-w-[250px] [&>*]:!px-0 [&_*]:!border-none font-medium text-stone-500 min-w-[180px]"
+                className=" [&_*]:whitespace-nowrap   [&>*>*>*>*>*]:!text-[0px] [&>*]:min-w-[250px] [&>*]:!px-0 [&_*]:!border-none font-medium text-stone-500 min-w-[180px]"
                 renderInput={(params) =>
                   <TextField
                   {...params}
                   name="name"
                   placeholder="Select Course"
-                  sx={{ '& > *': { border: 'none', padding: "0.5rem 0", fontWeight: "500",  } }}
-                  className="[&>*]:!py-2  !border placeholder:!text-neutral-900 !border-red-400 [&>*]:!px-0 [&>*]:!border-none font-medium !text-stone-800 min-w-[180px]"
+                  sx={{ '& > *': { border: 'none', padding: "0.5rem 0", fontWeight: "500", color: "black !important" } }}
+                  className="[&>*]:!py-1  !border placeholder:!text-black !border-red-400 [&>*]:!px-0 [&>*]:!border-none font-medium !text-red-600 min-w-[180px]"
                   // label="Select Course"
                   />}
 

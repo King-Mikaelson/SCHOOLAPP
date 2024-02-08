@@ -147,7 +147,7 @@ export default function StudyAbroad({ params }: IProps) {
                 onChange={(e, val) => setSearchData({ ...searchData, name: val as string})}
                 options={programs ? programs : []}
                 // sx={{ '& > *': { border: 'none', padding: "0.5rem 0", fontWeight: "500", color: "rgb(120 113 108)" } }}
-                className="[&_*]:whitespace-nowrap [&_*]:!z-[4] [&>*>*>*>*>*]:text-[0px] [&>*]:min-w-[250px] [&_*]:!border-none font-medium text-stone-500 min-w-[180px]"
+                className="[&_*]:whitespace-nowrap [&_*]:!z-[4] [&>*>*>*>*>*]:!text-[0px] [&>*]:min-w-[250px] [&_*]:!border-none font-medium text-stone-500 min-w-[180px]"
                 renderInput={(params) =>
                   <TextField
                   {...params}
