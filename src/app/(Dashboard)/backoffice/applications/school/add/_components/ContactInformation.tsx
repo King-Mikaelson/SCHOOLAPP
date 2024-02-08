@@ -134,7 +134,7 @@ export default function ContactInformation({ formData, setFormData, isLoading, h
                       value={formData?.contactInformation?.country}
                       onChange={(e) => handleInputChange(e, "contactInformation")}
                     >
-                      <MenuItem className="!p-0 !hidden" value={10}>Select</MenuItem>
+                      {/* <MenuItem className="!p-0 !hidden" value={10}>Select</MenuItem> */}
                       {
                         countryList.sort((a: any, b: any) => a?.name?.localeCompare(b?.name))?.map((country: typeof countryList[0], index: number) => (
                           <MenuItem key={index} className="" value={country.code} >{country.name}</MenuItem>
@@ -163,7 +163,7 @@ export default function ContactInformation({ formData, setFormData, isLoading, h
                       value={formData?.contactInformation?.state}
                       onChange={(e) => handleInputChange(e, "contactInformation")}
                     >
-                      <MenuItem className="!p-0 !hidden" value={10}>Select</MenuItem>
+                      {/* <MenuItem className="!p-0 !hidden" value={10}>Select</MenuItem> */}
                       {
                         State.getStatesOfCountry(formData?.contactInformation?.country as string).map((state: IState, index: number) => (
                           <MenuItem key={index} value={state.name}>{state.name}</MenuItem>
@@ -294,7 +294,7 @@ export default function ContactInformation({ formData, setFormData, isLoading, h
                               value={formData?.contactInformation?.mailingAddress?.country}
                               onChange={(e) => handleMailingAddressInputChange(e)}
                             >
-                              <MenuItem className="!p-0 !hidden" value={10}>Select</MenuItem>
+                              {/* <MenuItem className="!p-0 !opacity-0" value={10}>Select</MenuItem> */}
                               {
                                 countryList.sort((a: any, b: any) => a?.name?.localeCompare(b?.name))?.map((country: typeof countryList[0], index: number) => (
                                   <MenuItem key={index} className="" value={country.code} >{country.name}</MenuItem>

@@ -170,7 +170,7 @@ export default function ContactUs({ params }: IProps) {
                   value={formData?.country}
                   onChange={handleInputChange}
                 >
-                  <MenuItem className="!p-0 !hidden" value={10}>{langs[params.lang as keyof typeof langs].contactUs.select}</MenuItem>
+                  {/* <MenuItem className="!p-0 !hidden" value={10}>{langs[params.lang as keyof typeof langs].contactUs.select}</MenuItem> */}
                   {
                     countryList.sort((a: any, b: any) => a?.name?.localeCompare(b?.name))?.map((country: typeof countryList[0], index: number) => (
                       <MenuItem key={index} value={country.name}>{country?.name}</MenuItem>

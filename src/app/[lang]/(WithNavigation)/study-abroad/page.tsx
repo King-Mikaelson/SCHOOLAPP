@@ -107,7 +107,7 @@ export default function StudyAbroad({ params }: IProps) {
                 sx={{ '& > *': { border: 'none', padding: "0.5rem 0", fontWeight: "500", color: "rgb(120 113 108)" } }}
                 className="[&>*]:!py-2 [&>*]:!px-0 [&>*]:!border-none font-medium text-stone-500 min-w-[180px]"
               >
-                <MenuItem className="!p-0 !hidden" value="">{langs[params.lang as keyof typeof langs].form.selectCountry}</MenuItem>
+                <MenuItem className="!p-0 !opacity-0" value="">{langs[params.lang as keyof typeof langs].form.selectCountry}</MenuItem>
                 {
                   countryList.sort((a: any, b: any) => a?.name?.localeCompare(b?.name))?.map((country: typeof countryList[0], index: number) => (
                     <MenuItem key={country.name} className="" value={country.code}>{country.name}</MenuItem>

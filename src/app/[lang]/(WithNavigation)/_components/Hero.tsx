@@ -6,7 +6,7 @@ import { getDictionary } from "../../dictionaries";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import langs from "../../dictionaries/langs";
-import { countryList } from "@SharedData/CountryList";
+import { countryList, getCountryNameFromCode } from "@SharedData/CountryList";
 import { ChangeEvent, useEffect, useState } from "react";
 import { degreeList } from "@SharedData/degreeList";
 import api from "@redux/api";
@@ -22,6 +22,7 @@ export default function Hero({ params }: IProps) {
   // const [ searchData, setFormData ] = useState({ location: "", courseOfStudy: "", timeframe: "" })
   const [ searchQuery, setSearchQuery ] = useState("");
   const [ searchData, setSearchData ] = useState({ location: "", program: "", timeframe: "", from: "", to: "", name: "", cursor: "" });
+  // const [ searchData, setSearchData ] = useState({ location: "", program: ""});
 
   const [ getProgramsTrigger, { data: programs } ] = api.adminApis.useLazyGetSchoolProgramsQuery();
 
@@ -54,7 +55,8 @@ export default function Hero({ params }: IProps) {
   // const dict = await getDictionary(params.lang)
   // const { t } = useTranslation();
   console.log(programs)
-  console.log(searchData?.name)
+  console.log(searchData)
+  // console.log(countryList.sort((a: any, b: any) => a?.name?.localeCompare(b?.name))?.map((x: any) => x?.name))
   return (
     <section id="hero" className="flex-col min-h-[calc(100vh-100px)] after:h-full after:w-full after:bg-black/40 after:absolute bg-[url(/images/home/hero.png)] bg-no-repeat bg-cover items-center overflow-hidden relative flex justify-center px-16 py-12 max-md:px-5">
       <header className="header z-[1] max-w-[1000px]">
@@ -73,6 +75,30 @@ export default function Hero({ params }: IProps) {
         <form className="input-group  flex flex-row gap-2 justify-between items-center p-4">
           <label htmlFor="location" className="text-neutral-400 text-sm flex flex-col">
             {langs[params.lang as keyof typeof langs].form.locationLabel}
+            {/* <FormControl fullWidth className="">
+              <Autocomplete
+                options={countryList ? countryList.sort((a: any, b: any) => a?.name?.localeCompare(b?.name)) : []}
+                getOptionLabel={(country) => country.name as any}
+                // getOptionSelected={(country: any, selectedValue: any) => country.code === selectedValue.code}
+                value={countryList.find((country) => country.code === searchData.location)}
+                onChange={(e, val) => setSearchData({ ...searchData, location: val?.code as string })}
+                // options={countryList ? countryList.sort((a: any, b: any) => a?.name?.localeCompare(b?.name)) : []}
+                sx={{ "& ul": { backgroundColor: "blue !important", } }}
+                // sx={{ '& > *': { border: 'none', padding: "0.5rem 0", fontWeight: "500", color: "rgb(120 113 108)" } }}
+                className=" [&_*]:whitespace-nowrap   [&>*>*>*>*>*]:!text-[0px] [&>*]:min-w-[250px] [&>*]:!px-0 [&_*]:!border-none font-medium text-stone-500 min-w-[180px]"
+                renderInput={(params) =>
+                  <TextField
+                  {...params}
+                  name="name"
+                  placeholder="Select Country"
+                  sx={{ '& > *': { border: 'none', fontWeight: "500", color: "black !important" } }}
+                  className="[&>*]:!py-1 [&_input]:!px-0 !border placeholder:!text-black !border-red-400 [&>*]:!px-0  [&>*]:!border-none font-medium !text-red-600 min-w-[180px]"
+                  // label="Select Course"
+                  />}
+
+              />
+            </FormControl> */}
+
             <FormControl fullWidth>
               <Select
                 itemID="location"
@@ -84,7 +110,7 @@ export default function Hero({ params }: IProps) {
                 sx={{ '& > *': { border: 'none', padding: "0.5rem 0", fontWeight: "500", color: "rgb(120 113 108)" } }}
                 className="[&>*]:!py-2 [&>*]:!px-0 [&>*]:!border-none font-medium text-stone-500 min-w-[180px]"
               >
-                <MenuItem className="!p-0 !hidden" value="">{langs[params.lang as keyof typeof langs].form.selectCountry}</MenuItem>
+                <MenuItem className="!p-0 !opacity-0" value="">{langs[params.lang as keyof typeof langs].form.selectCountry}</MenuItem>
                 {
                   countryList.sort((a: any, b: any) => a?.name?.localeCompare(b?.name))?.map((country: typeof countryList[0], index: number) => (
                     <MenuItem key={index} className="" value={country.code}>{country.name}</MenuItem>

@@ -188,9 +188,14 @@ export default function VisaApplication({ params }: IProps) {
     setPhoneDetailsArray(temp);
   };
 
-  const handleInputChange = (e: any, property: string): void => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [property]: { ...formData[property as keyof typeof formData], [name]: value } });
+  const handleInputChange = (e: any, property: string, componentValue?: string): void => {
+    const { name, value, id, itemId } = e.target;
+    console.log(name)
+    if (["nationality", "country"].includes(id)) {
+      setFormData({ ...formData, [property]: { ...formData[property as keyof typeof formData], [id]: value } });
+    } else {
+      setFormData({ ...formData, [property]: { ...formData[property as keyof typeof formData], [name]: value } });
+    }
     if (submitSuccess) reset();
   }
 

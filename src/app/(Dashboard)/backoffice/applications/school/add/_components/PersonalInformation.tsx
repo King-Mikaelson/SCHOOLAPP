@@ -96,7 +96,7 @@ export default function PersonalInformation({ formData, setFormData, isLoading, 
                       value={formData?.personalInformation?.nationality}
                       onChange={(e) => handleInputChange(e, "personalInformation")}
                     >
-                      <MenuItem className="!p-0 !hidden" value={10}>Select</MenuItem>
+                      {/* <MenuItem className="!p-0 !hidden" value={10}>Select</MenuItem> */}
                       {
                         countryList.sort((a: any, b: any) => a?.name?.localeCompare(b?.name))?.map((nationality: typeof countryList[0], index: number) => (
                           <MenuItem key={index} className="" value={nationality.code} >{nationality.name}</MenuItem>

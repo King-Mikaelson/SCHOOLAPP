@@ -140,7 +140,7 @@ export default function AcademicPlan({ setFormSection, formSection, formData, se
                       sx={{ '& > *': { border: 'none', padding: "0.5rem 0", fontWeight: "500", color: "rgb(120 113 108)" } }}
                       className="[&>*]:!py-2.5 [&>*]:!px-3 [&>*]:!rounded-md mt-1 placeholder:text-neutral-400 [&>*]:!border-none border-stone-300/70 border rounded-md text-stone-500 min-w-[180px]"
                     >
-                      <MenuItem className="!p-0 !hidden" value="">{langs[params.lang as keyof typeof langs].form.selectTimeframe}</MenuItem>
+                      {/* <MenuItem className="!p-0 !hidden" value="">{langs[params.lang as keyof typeof langs].form.selectTimeframe}</MenuItem> */}
                       <MenuItem value="Dec 2023 - March 2024">Dec 2023 - March 2024</MenuItem>
                       <MenuItem value="April - July 2024">April - July 2024</MenuItem>
                       <MenuItem value="Aug - Nov 2024">Aug - Nov 2024</MenuItem>
@@ -170,7 +170,7 @@ export default function AcademicPlan({ setFormSection, formSection, formData, se
                       value={formData?.academicInformation?.degree}
                       onChange={(e) => handleInputChange(e, "academicInformation")}
                     >
-                      <MenuItem className="!p-0 !hidden" value={10}>{returnDiction("select")}</MenuItem>
+                      {/* <MenuItem className="!p-0 !hidden" value={10}>{returnDiction("select")}</MenuItem> */}
                       {
                         degreeList.map((degType: string) => (
                           <MenuItem key={degType} value={degType}>{degType}</MenuItem>
@@ -500,7 +500,7 @@ export default function AcademicPlan({ setFormSection, formSection, formData, se
                           value={college?.degreeEarnedOnOrExpected}
                           onChange={(e) => handleArrayInputChange(e, index, "academicInformation", "previousCollegeHistory")}
                         >
-                          <MenuItem className="!p-0 !hidden" value={10}>Select</MenuItem>
+                          {/* <MenuItem className="!p-0 !hidden" value={10}>Select</MenuItem> */}
                           {
                             degreeList.map((course: string) => (
                               <MenuItem key={course} value={course}>{course}</MenuItem>

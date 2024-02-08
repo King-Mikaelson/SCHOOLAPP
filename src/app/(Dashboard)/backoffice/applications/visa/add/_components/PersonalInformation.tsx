@@ -98,7 +98,7 @@ export default function PersonalInformation({ formData, isLoading, handleInputCh
                       value={formData?.nationality}
                       onChange={handleInputChange}
                     >
-                      <MenuItem className="!p-0 !hidden" value={10}>Select</MenuItem>
+                      {/* <MenuItem className="!p-0 !hidden" value={10}>Select</MenuItem> */}
                       {
                         countryList.sort((a: any, b: any) => a?.name?.localeCompare(b?.name))?.map((country: typeof countryList[0], index: number) => (
                           <MenuItem key={index} value={country.code}>{country?.name}</MenuItem>
@@ -127,7 +127,7 @@ export default function PersonalInformation({ formData, isLoading, handleInputCh
                       value={formData?.destinationCountry}
                       onChange={handleInputChange}
                     >
-                      <MenuItem className="!p-0 !hidden" value={10}>Select</MenuItem>
+                      {/* <MenuItem className="!p-0 !hidden" value={10}>Select</MenuItem> */}
                       {
                         countryList.sort((a: any, b: any) => a?.name?.localeCompare(b?.name))?.map((country: typeof countryList[0], index: number) => (
                           <MenuItem key={index} value={country.code}>{country.name}</MenuItem>

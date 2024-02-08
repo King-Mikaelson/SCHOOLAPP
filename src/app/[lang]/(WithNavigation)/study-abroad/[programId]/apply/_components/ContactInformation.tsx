@@ -158,7 +158,7 @@ export default function ContactInformation({ setFormSection, formSection, formDa
                       value={formData?.contactInformation?.country}
                       onChange={(e) => handleInputChange(e, "contactInformation")}
                     >
-                       <MenuItem className="!p-0 !hidden" value={10}>{langs[params.lang as keyof typeof langs].contactInformation.selectCountry}</MenuItem>
+                       {/* <MenuItem className="!p-0 !hidden" value={10}>{langs[params.lang as keyof typeof langs].contactInformation.selectCountry}</MenuItem> */}
                       {
                         countryList.sort((a: any, b: any) => a?.name?.localeCompare(b?.name))?.map((country: typeof countryList[0], index: number) => (
                           <MenuItem key={index} className="" value={country.code} >{country.name}</MenuItem>
@@ -187,7 +187,7 @@ export default function ContactInformation({ setFormSection, formSection, formDa
                       value={formData?.contactInformation?.state}
                       onChange={(e) => handleInputChange(e, "contactInformation")}
                     >
-                      <MenuItem className="!p-0 !hidden" value={10}>{langs[params.lang as keyof typeof langs].contactInformation.selectCountry}</MenuItem>
+                      {/* <MenuItem className="!p-0 !hidden" value={10}>{langs[params.lang as keyof typeof langs].contactInformation.selectCountry}</MenuItem> */}
                       {
                         State.getStatesOfCountry(formData?.contactInformation?.country as string).map((state: IState, index: number) => (
                           <MenuItem key={index} value={state.name}>{state.name}</MenuItem>
@@ -340,7 +340,7 @@ export default function ContactInformation({ setFormSection, formSection, formDa
                               value={formData?.contactInformation?.mailingAddress?.country}
                               onChange={(e) => handleMailingAddressInputChange(e)}
                             >
-                              <MenuItem className="!p-0 !hidden" value={10}>{langs[params.lang as keyof typeof langs].contactInformation.selectCountry}</MenuItem>
+                              {/* <MenuItem className="!p-0 !hidden" value={10}>{langs[params.lang as keyof typeof langs].contactInformation.selectCountry}</MenuItem> */}
                               {
                                 countryList.sort((a: any, b: any) => a?.name?.localeCompare(b?.name))?.map((country: typeof countryList[0], index: number) => (
                                   <MenuItem key={index} className="" value={country.code} >{country.name}</MenuItem>
@@ -369,7 +369,7 @@ export default function ContactInformation({ setFormSection, formSection, formDa
                               value={formData?.contactInformation?.mailingAddress?.state}
                               onChange={(e) => handleMailingAddressInputChange(e)}
                             >
-                              <MenuItem className="!p-0 !hidden" value={10}>{langs[params.lang as keyof typeof langs].contactInformation.selectCountry}</MenuItem>
+                              {/* <MenuItem className="!p-0 !hidden" value={10}>{langs[params.lang as keyof typeof langs].contactInformation.selectCountry}</MenuItem> */}
                               {
                                 State.getStatesOfCountry(formData?.contactInformation?.mailingAddress?.country as string).map((state: IState, index: number) => (
                                   <MenuItem key={index} value={state.name}>{state.name}</MenuItem>

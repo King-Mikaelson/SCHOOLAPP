@@ -217,7 +217,7 @@ export default function SponsorInformation({ formData, setFormData, isLoading, h
                           value={sponsor?.country}
                           onChange={(e) => handleArrayInputChange(e, index, "sponsorInformation", "sponsors")}
                         >
-                          <MenuItem className="!p-0 !hidden" value={10}>Select</MenuItem>
+                          {/* <MenuItem className="!p-0 !hidden" value={10}>Select</MenuItem> */}
                           {
                             countryList.sort((a: any, b: any) => a?.name?.localeCompare(b?.name))?.map((country: typeof countryList[0]) => (
                               <MenuItem key={`count-${index}${country.name}`} className="" value={country.code} >{country.name}</MenuItem>
@@ -240,7 +240,7 @@ export default function SponsorInformation({ formData, setFormData, isLoading, h
                           value={sponsor?.state}
                           onChange={(e) => handleArrayInputChange(e, index, "sponsorInformation", "sponsors")}
                         >
-                          <MenuItem className="!p-0 !hidden" value={10}>Select</MenuItem>
+                          {/* <MenuItem className="!p-0 !hidden" value={10}>Select</MenuItem> */}
                           {
                             State.getStatesOfCountry(sponsor?.country as string).map((state: any, stateIndex: number) => (
                               <MenuItem key={`state-${stateIndex}${state?.name}`} value={state.name}>{state.name}</MenuItem>

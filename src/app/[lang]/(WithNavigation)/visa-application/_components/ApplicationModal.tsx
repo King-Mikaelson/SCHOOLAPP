@@ -91,7 +91,7 @@ export default function ApplicationModal ({ modalOpen, setModalOpen, params }:TP
                   value={phoneDetails.countryCode}
                   onChange={(e) => setPhoneDetails({ ...phoneDetails, countryCode: e.target.value })}
                 >
-                  <MenuItem className="!p-0 !hidden" value={10}>+234</MenuItem>
+                  {/* <MenuItem className="!p-0 !hidden" value={10}>+234</MenuItem> */}
                   {
                     countryList.sort((a: any, b: any) => a?.name?.localeCompare(b?.name))?.map((country: typeof countryList[0], index: number) => (
                       <MenuItem key={country.name} className="" value={country.phone}><Image className="mr-0.5" width={35} height={17} src={`/images/country-flag/${country?.code}.svg`} alt="flag" />({country.name?.slice(0,3)}) +{country.phone}</MenuItem>
@@ -115,7 +115,7 @@ export default function ApplicationModal ({ modalOpen, setModalOpen, params }:TP
               value={formData?.nationality}
               onChange={handleInputChange}
             >
-              <MenuItem className="!p-0 !hidden" value={10}>{langs[params.lang as keyof typeof langs].visa.modal.select_country}</MenuItem>
+              {/* <MenuItem className="!p-0 !hidden" value={10}>{langs[params.lang as keyof typeof langs].visa.modal.select_country}</MenuItem> */}
               {
                 countryList.sort((a: any, b: any) => a?.name?.localeCompare(b?.name))?.map((country: typeof countryList[0], index: number) => (
                   <MenuItem key={index} value={country.code}>{country?.name}</MenuItem>
@@ -136,7 +136,7 @@ export default function ApplicationModal ({ modalOpen, setModalOpen, params }:TP
               value={formData?.destinationCountry}
               onChange={handleInputChange}
             >
-              <MenuItem className="!p-0 !hidden" value={10}>{langs[params.lang as keyof typeof langs].visa.modal.select_country}</MenuItem>
+              {/* <MenuItem className="!p-0 !hidden" value={10}>{langs[params.lang as keyof typeof langs].visa.modal.select_country}</MenuItem> */}
               {
                 countryList.sort((a: any, b: any) => a?.name?.localeCompare(b?.name))?.map((country: typeof countryList[0], index: number) => (
                   <MenuItem key={index} value={country.code}>{country?.name}</MenuItem>

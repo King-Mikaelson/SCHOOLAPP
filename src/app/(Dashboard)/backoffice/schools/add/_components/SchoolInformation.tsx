@@ -56,7 +56,7 @@ export default function SchoolInformation({ formData, setFormData, isLoading, is
                       value={formData?.info?.country || 10}
                       onChange={(e) => handleInputChange(e, "info")}
                     >
-                      <MenuItem className="!p-0 !hidden" value={10}>Select</MenuItem>
+                      {/* <MenuItem className="!p-0 !hidden" value={10}>Select</MenuItem> */}
                       {
                         countryList.sort((a: any, b: any) => a?.name?.localeCompare(b?.name))?.map((country: typeof countryList[0], index: number) => (
                           <MenuItem key={index} className="" value={country.code} >{country.name}</MenuItem>
@@ -85,7 +85,7 @@ export default function SchoolInformation({ formData, setFormData, isLoading, is
                       value={formData?.info?.state || 10}
                       onChange={(e) => handleInputChange(e, "info")}
                     >
-                      <MenuItem className="!p-0 !hidden" value={10}>Select</MenuItem>
+                      {/* <MenuItem className="!p-0 !hidden" value={10}>Select</MenuItem> */}
                       {
                         State.getStatesOfCountry(formData?.info?.country as string).map((state: IState, index: number) => (
                           <MenuItem key={index} value={state.name}>{state.name}</MenuItem>

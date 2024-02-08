@@ -52,7 +52,7 @@ export default function BookConsultation({ params }: IProps) {
     e.preventDefault();
     addConsultation(formData);
   }
-
+  
   return (
     <>
     
@@ -111,7 +111,7 @@ export default function BookConsultation({ params }: IProps) {
                         value={phoneDetails.countryCode}
                         onChange={(e) => setPhoneDetails({ ...phoneDetails, countryCode: e.target.value })}
                       >
-                        <MenuItem className="!p-0 !hidden" value={10}>+234</MenuItem>
+                        {/* <MenuItem className="!p-0 !hidden" value={10}>+234</MenuItem> */}
                         {
                           countryList.sort((a: any, b: any) => a?.name?.localeCompare(b?.name))?.map((country: typeof countryList[0], index: number) => (
                             <MenuItem key={country.name} className="" value={country.phone}><Image className="mr-0.5" width={35} height={17} src={`/images/country-flag/${country?.code}.svg`} alt="flag" />({country.name?.slice(0,3)}) +{country.phone}</MenuItem>

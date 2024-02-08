@@ -1,5 +1,5 @@
 
-import { FormControl, MenuItem, Select } from "@mui/material";
+import { Autocomplete, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { IFormData } from "../page";
 import en from "../../../../../dictionaries/en.json"
 import fr from "../../../../../dictionaries/fr.json"
@@ -12,7 +12,7 @@ interface IProps {
   setFormSection: React.Dispatch<React.SetStateAction<number>>
   formData: any,
   isLoading: boolean
-  handleInputChange: (e: any, property: string) => void
+  handleInputChange: (e: any, property: string, componentValue?: string) => void
   params: {
     lang: string
   }
@@ -21,6 +21,7 @@ interface IProps {
 export default function PersonalInformation({ setFormSection, formData, params, isLoading, handleInputChange }: IProps) {
   const action = useSearchParams().get("action");
   
+  console.log(formData?.personalInformation?.nationality)
   return (
     <section className="">
       <div className="items-start mx-auto bg-white shadow-md flex flex-col px-6 py-7 rounded-xl max-md:px-4 max-w-screen-lg">
@@ -97,9 +98,9 @@ export default function PersonalInformation({ setFormSection, formData, params, 
             <p className="text-neutral-700 text-xs leading-4 tracking-widest uppercase">{langs[params.lang as keyof typeof langs].personalInformation.nationality}</p>
             {
               !isLoading
-                ? <FormControl fullWidth>
-                    <Select
-                      itemID="location"
+                ? 
+                <FormControl fullWidth>
+                    <Select                     
                       required
                       defaultValue="NG"
                       className="[&>*]:!py-2.5 [&>*]:!px-3 [&>*]:!rounded-md mt-1 placeholder:text-neutral-400 [&>*]:!border-none border-stone-300/70 border rounded-md text-stone-500 min-w-[180px]"
@@ -108,7 +109,6 @@ export default function PersonalInformation({ setFormSection, formData, params, 
                       value={formData?.personalInformation?.nationality}
                       onChange={(e) => handleInputChange(e, "personalInformation")}
                     >
-                      <MenuItem className="!p-0 !hidden" value={10}>{langs[params.lang as keyof typeof langs].personalInformation.selectCountry}</MenuItem>
                       {
                         countryList.sort((a: any, b: any) => a?.name?.localeCompare(b?.name))?.map((nationality: typeof countryList[0], index: number) => (
                           <MenuItem key={index} className="" value={nationality.code} >{nationality.name}</MenuItem>
@@ -116,6 +116,39 @@ export default function PersonalInformation({ setFormSection, formData, params, 
                       }
                     </Select>
                   </FormControl>
+                //   <FormControl fullWidth className="">
+                //   <Autocomplete
+                  
+                //     // disablePortal
+                //     // value={getCountryNameFromCode(searchData?.location) as string}
+                //     // inputValue={searchData.location}
+                //     // value={(prop: any) => prop = searchData.location}
+                //     // getOptionLabel={(options) => options?.name as string }
+                //     itemID="nationality"
+
+                //     options={countryList ? countryList.sort((a: any, b: any) => a?.name?.localeCompare(b?.name)) : []}
+                //     getOptionLabel={(country) => country.name as any}
+                //     inputValue={formData?.personalInformation?.nationality}
+                //     // getOptionSelected={(country: any, selectedValue: any) => country.code === selectedValue.code}
+                //     value={countryList.find((country) => country.code === formData?.personalInformation?.nationality)}
+                //     // onChange={(e, val) => setForm({ ...searchData, location: e.currentTarget.tagName })}
+                //     onChange={(e, val) => handleInputChange(e, "personalInformation", val?.code)}
+                //     // options={countryList ? countryList.sort((a: any, b: any) => a?.name?.localeCompare(b?.name)) : []}
+                //     sx={{ "& ul": { backgroundColor: "blue !important", } }}
+                //     // sx={{ '& > *': { border: 'none', padding: "0.5rem 0", fontWeight: "500", color: "rgb(120 113 108)" } }}
+                //     className=" [&_*]:whitespace-nowrap   [&>*>*>*>*>*]:!text-[0px] [&>*]:min-w-[250px] [&>*]:!px-3 mt-1 [&>*]:!py-0 !border [&_*]:!border-none rounded-md font-medium text-stone-500 min-w-[180px]"
+                //     renderInput={(params) =>
+                //       <TextField
+                //       {...params}
+                //       name="name"
+                //       placeholder="Select Course"
+                //       sx={{ '& > *': { border: 'none', fontWeight: "500", color: "black !important" } }}
+                //       className="[&>*]:!py-1 [&_input]:!px-0 !border placeholder:!text-black !border-red-400 [&>*]:!px-0  [&>*]:!border-none font-medium !text-red-600 min-w-[180px]"
+                //       // label="Select Course"
+                //       />}
+    
+                //   />
+                // </FormControl>
                 :
                 <div className="w-full p-[23px] bg-neutral-200 mt-1 animate-pulse rounded-md" />
             }
