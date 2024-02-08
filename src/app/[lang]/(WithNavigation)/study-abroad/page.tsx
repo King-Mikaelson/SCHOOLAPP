@@ -2,7 +2,7 @@
 
 import SchoolsList from "@SharedComponents/SchoolList";
 import FilterSelector, { degreeFilter } from "@SharedComponents/FiltterSelector";
-import { FormControl, MenuItem, Select } from "@mui/material";
+import { Autocomplete, FormControl, MenuItem, Select, TextField } from "@mui/material";
 import langs from "@dictionaries/langs"
 import api from "@redux/api";
 import LoadingButton from "@SharedComponents/LoadingButton";
@@ -35,7 +35,6 @@ export default function StudyAbroad({ params }: IProps) {
 
   useEffect(() => {
     if (!programs) {
-      console.log("firing")
       getProgramsTrigger("");
     }
   }, [ programs, searchData, searchQuery ]);
@@ -120,7 +119,7 @@ export default function StudyAbroad({ params }: IProps) {
           
           <label htmlFor="location" className="text-neutral-400 bg-neutral-100 rounded-lg py-2 px-4 max-md:w-full md:bg-white text-sm flex flex-col">
             {langs[params.lang as keyof typeof langs].form.studyLabel}
-            <FormControl fullWidth>
+            {/* <FormControl fullWidth>
               <Select
                 itemID="location"
                 
@@ -140,6 +139,26 @@ export default function StudyAbroad({ params }: IProps) {
                   ))
                 }
               </Select>
+            </FormControl> */}
+            <FormControl fullWidth>
+              <Autocomplete
+                // disablePortal
+                value={searchData.name}
+                onChange={(e, val) => setSearchData({ ...searchData, name: val as string})}
+                options={programs ? programs : []}
+                // sx={{ '& > *': { border: 'none', padding: "0.5rem 0", fontWeight: "500", color: "rgb(120 113 108)" } }}
+                className="[&_*]:whitespace-nowrap [&_*]:!z-[4] [&>*>*>*>*>*]:text-[0px] [&>*]:min-w-[250px] [&_*]:!border-none font-medium text-stone-500 min-w-[180px]"
+                renderInput={(params) =>
+                  <TextField
+                  {...params}
+                  name="name"
+                  placeholder="Select Course"
+                  sx={{ '& > *': { border: 'none', padding: "0.5rem 0", fontWeight: "500",  } }}
+                  className="[&>*]:!py-0 !border placeholder:!text-neutral-900 !border-red-400 [&>*]:!px-0 [&>*]:!border-none font-medium !text-stone-800 min-w-[180px]"
+                  // label="Select Course"
+                  />}
+
+              />
             </FormControl>
             {/* <input name="courseOfStudy" onChange={handleTextInput} type="text" placeholder="Enter course of study" className="px-3 py-2 focus:outline outline-1 rounded-lg text-slate-700 focus:outline-slate-300" /> */}
             
