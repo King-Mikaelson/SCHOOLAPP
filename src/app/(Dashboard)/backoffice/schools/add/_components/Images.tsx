@@ -105,9 +105,8 @@ export default function SchoolImages({ formData, setFormData, isLoading, isSubmi
           )
         } */}
         {
-          action && action === "update"
-          && (
-            hasProcessedImages && formData?.images
+          
+          hasProcessedImages && formData?.images
             ? (
               formData?.images?.map((image: any, index: number) => (
               <li className="relative cursor-pointer p-20 h-[150px] w-[170px] overflow-hidden">
@@ -121,9 +120,11 @@ export default function SchoolImages({ formData, setFormData, isLoading, isSubmi
               </li>
               ))
             ) : (
-              Array.from({length: 1 }).map((_, item: number) => <li key={item} className="rounded-lg h-[150px] w-[170px] bg-neutral-200 animate-pulse" />)
+              action && action === "update"
+              && (
+                Array.from({length: 1 }).map((_, item: number) => <li key={item} className="rounded-lg h-[150px] w-[170px] bg-neutral-200 animate-pulse" />)
+              )
             )
-          )
             
         }
         {
