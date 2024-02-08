@@ -53,7 +53,7 @@ export default function SchoolImages({ formData, setFormData, isLoading, isSubmi
       }
     }
     processImages();
-  }, [ selectedData ]);
+  }, [ selectedData, formData ]);
 
 
   const handleImageUpload = (e: any): void => {
@@ -83,6 +83,7 @@ export default function SchoolImages({ formData, setFormData, isLoading, isSubmi
   }
   console.log(formData.images)
   console.log(imageFiles);
+  console.log(hasProcessedImages);
   return (
     <main className="my-2">
       <ul className="flex flex-row align-center gap-2 flex-wrap">

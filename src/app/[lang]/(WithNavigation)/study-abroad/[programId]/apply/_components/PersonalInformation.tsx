@@ -121,15 +121,20 @@ export default function PersonalInformation({ setFormSection, formData, params, 
             }
           </label>
         </div>
-        <div className="items-stretch self-stretch  flex justify-between gap-5 max-md:max-w-full max-md:flex-wrap">
-          <label htmlFor="location" className="text-neutral-400  text-sm flex  w-full md:basis-1/2 flex-col">
+        <div className="items-stretch flex justify-between gap-5 max-md:max-w-full max-md:flex-wrap">
+          {/* <label htmlFor="location" className="text-neutral-400  text-sm flex  w-full md:basis-1/2 flex-col"> */}
+            <button className="">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+              </svg>
+            </button>
             <button
               onClick={() => setFormSection(1)}
-              className="text-white text-center hover:bg-red-400 active:bg-red-600 duration-300 w-full text-base font-medium leading-6 whitespace-nowrap justify-center items-center bg-red-500 max-w-full mt-8 px-16 py-3 rounded-lg self-start max-md:px-5"
+              className="text-white basis text-center hover:bg-red-400 active:bg-red-600 duration-300 w-full text-base font-medium leading-6 whitespace-nowrap justify-center items-center bg-red-500 max-w-full mt-8 px-16 py-3 rounded-lg self-start max-md:px-5"
             >
               {langs[params.lang as keyof typeof langs].personalInformation.continue}
             </button>
-          </label>
+          {/* </label> */}
           <label htmlFor="" className="grow basis-1/2 w-full invisible" />
         </div>
       </div>

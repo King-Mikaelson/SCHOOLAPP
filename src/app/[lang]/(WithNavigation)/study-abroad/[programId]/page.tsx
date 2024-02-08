@@ -167,7 +167,7 @@ export default function ProgramDetails({ params }: IProps) {
                     {/* Language Requirements: */}
                     Financial Aid:
                   </div>
-                  <div className="text-neutral-700 flex flex-wrap w-full text-base leading-6 self-stretch whitespace-nowrap">
+                  <div className="text-neutral-700 flex flex-wrap w-full text-base leading-6 self-stretch">
                     {/* English Proficiency Test */}
                     {
                       selectedData
@@ -183,7 +183,7 @@ export default function ProgramDetails({ params }: IProps) {
                     {/* Academic Requirement: */}
                     Accomodation Options:
                   </div>
-                  <div className="text-neutral-700 text-base leading-6">
+                  <div className="text-neutral-700 text-base leading-6 self-stretch">
                     <ul>
                       {/* <li>O Level Result</li>
                       <li>Transcript</li>

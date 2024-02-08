@@ -1,7 +1,7 @@
 // import { useTranslation } from 'react-i18next';
 "use client";
 
-import { Autocomplete, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Autocomplete, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { getDictionary } from "../../dictionaries";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -96,6 +96,21 @@ export default function Hero({ params }: IProps) {
           <label htmlFor="location" className="text-neutral-400 text-sm flex flex-col">
             {langs[params.lang as keyof typeof langs].form.studyLabel}
             <FormControl fullWidth>
+              <Autocomplete
+                disablePortal
+                value={searchData.name}
+                onChange={handleTextInput}
+                options={programs}
+                // name="name"
+                defaultValue=""
+                sx={{ '& > *': { border: 'none', padding: "0.5rem 0", fontWeight: "500", color: "rgb(120 113 108)" } }}
+                className="[&>*]:!py-2 [&>*]:!px-0 [&>*]:!border-none font-medium text-stone-500 min-w-[180px]"
+                renderInput={(params) => <TextField {...params} label="stufy" />}
+
+              />
+            </FormControl>
+
+            {/* <FormControl fullWidth>
               <Select             
                 displayEmpty
                 value={searchData.name}
@@ -112,7 +127,7 @@ export default function Hero({ params }: IProps) {
                   ))
                 }
               </Select>
-            </FormControl>
+            </FormControl> */}
             {/* <input name="courseOfStudy" onChange={handleTextInput} type="text" placeholder="Enter course of study" className="px-3 py-2 focus:outline outline-1 rounded-md text-slate-700 focus:outline-slate-300" /> */}
             
           </label>
