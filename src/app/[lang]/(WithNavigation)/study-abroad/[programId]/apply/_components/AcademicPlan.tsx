@@ -2,7 +2,7 @@
 
 import { FormControl, MenuItem, Select } from "@mui/material";
 import { IFormData } from "../page";
-import { useEffect, Fragment } from "react";
+import { useEffect, Fragment, useState } from "react";
 import en from "../../../../../dictionaries/en.json"
 import fr from "../../../../../dictionaries/fr.json"
 import { useSearchParams } from "next/navigation";
@@ -25,25 +25,55 @@ interface IProps {
 
 export default function AcademicPlan({ setFormSection, formSection, formData, setFormData,  handleInputChange, handleArrayInputChange, handleNestedInputChange, isLoading, params }: IProps) {
   const action = useSearchParams().get("action");
+  const [ shouldProceed, setShouldProceed ] = useState<boolean>(false);
 
   const returnDiction = (arg: keyof typeof langs.en.academicPlan): any => {
     return langs[params.lang as keyof typeof langs].academicPlan[arg]
   };
 
-  const{ isLoading: isSchoolDataLoading, data } = api.adminApis.useClientGetSchoolsQuery("");
+
+  useEffect(() => {
+    let result = true;
+
+    if (!formData?.academicInformation?.typeOfTestTaken || !formData?.academicInformation?.testScore || !formData?.academicInformation?.prospectiveUniversity || !formData?.academicInformation?.startTermAndYear || !formData?.academicInformation?.degree || !formData?.academicInformation?.intendedProgramOfStudy) {
+      result = false;
+    }
+
+    for (let i = 0; i < formData?.academicInformation?.previousCollegeHistory?.length; i++) {
+      if (!formData?.academicInformation?.previousCollegeHistory[i]?.degreeEarnedOnOrExpected || !formData?.academicInformation?.previousCollegeHistory[i]?.expectedDateOfGraduation || !formData?.academicInformation?.previousCollegeHistory[i]?.major || !formData?.academicInformation?.previousCollegeHistory[i]?.previousInstitutionAttended) {
+        result = false;
+        break;
+      }
+    }
+
+    for (let i = 0; i < formData?.academicInformation?.previousHighSchoolHistory?.length; i++) {
+      if (!formData?.academicInformation?.previousHighSchoolHistory[i]?.expectedDateOfGraduation || !formData?.academicInformation?.previousHighSchoolHistory[i]?.previousInstitutionAttended) {
+        result = false;
+        break;
+      }
+    }
+
+    setShouldProceed(result);
+
+  }, [ formData?.academicInformation ]);
+
+  console.log(shouldProceed);
+
+  const { isLoading: isSchoolDataLoading, data } = api.adminApis.useClientGetSchoolsQuery("");
   const selectedData: typeof schoolInformationInitialState = data?.data?.filter((each: any) => each?.schoolId === params?.programId)[0];
+  console.log(selectedData?.info?.name)
 
   useEffect(() => {
     document.documentElement.scrollTo({ top: 150, behavior: "smooth" });
     setFormData({ ...formData, academicInformation: { ...formData.academicInformation, prospectiveUniversity: selectedData?.info?.name }})
-  }, [])
+  }, [ formSection, selectedData ])
 
   useEffect(() => {
     if (!formData.academicInformation.hasTakenEnglishProficiencyTest) {
       if (formData.academicInformation.typeOfTestTaken) delete formData.academicInformation.typeOfTestTaken;
       if (formData.academicInformation.testScore) delete formData.academicInformation.testScore;
     }
-  }, [ formData ]);
+  }, [ formData?.academicInformation?.hasTakenEnglishProficiencyTest ]);
 
   console.log(selectedData);
   const addHighSchool = () => {
@@ -90,7 +120,7 @@ export default function AcademicPlan({ setFormSection, formSection, formData, se
             <p className="text-neutral-700 text-xs leading-4 tracking-widest uppercase">{returnDiction("prospectiveUniversity")}</p>
             {
               !isLoading
-                ?  <input id="prospectiveUniversity" disabled value={formData?.academicInformation?.prospectiveUniversity} onChange={(e) => handleInputChange(e, "academicInformation")} name="prospectiveUniversity" type="text" placeholder={returnDiction("enterHere")} className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" />
+                ?  <input required id="prospectiveUniversity" disabled value={formData?.academicInformation?.prospectiveUniversity} onChange={(e) => handleInputChange(e, "academicInformation")} name="prospectiveUniversity" type="text" placeholder={returnDiction("enterHere")} className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" />
                 : <div className="w-full p-[23px] bg-neutral-200 mt-1 animate-pulse rounded-md" />
             }
           </label>
@@ -102,7 +132,7 @@ export default function AcademicPlan({ setFormSection, formSection, formData, se
             {
               !isLoading
                 ?
-                  <input name="intendedProgramOfStudy" disabled={action == "view"} value={formData?.academicInformation?.intendedProgramOfStudy} onChange={(e) => handleInputChange(e, "academicInformation")} type="text" className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" />
+                  <input required name="intendedProgramOfStudy" disabled={action == "view"} value={formData?.academicInformation?.intendedProgramOfStudy} onChange={(e) => handleInputChange(e, "academicInformation")} type="text" className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" />
                   // <FormControl fullWidth>
                   //   <Select
                   //     itemID="location"
@@ -130,6 +160,7 @@ export default function AcademicPlan({ setFormSection, formSection, formData, se
               !isLoading
                 ? <FormControl fullWidth>
                     <Select
+                      required
                       id="startTermAndYear"
                       disabled={action == "view"}
                       displayEmpty
@@ -149,7 +180,7 @@ export default function AcademicPlan({ setFormSection, formSection, formData, se
                   </FormControl>
                 : <div className="w-full p-[23px] bg-neutral-200 mt-1 animate-pulse rounded-md" />
             }
-            {/* <input id="startTermAndYear" disabled={action == "view"} value={formData?.academicInformation?.startTermAndYear} onChange={(e) => handleInputChange(e, "academicInformation")} name="startTermAndYear" type="text" placeholder="Enter here" className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" /> */}
+            {/* <input required id="startTermAndYear" disabled={action == "view"} value={formData?.academicInformation?.startTermAndYear} onChange={(e) => handleInputChange(e, "academicInformation")} name="startTermAndYear" type="text" placeholder="Enter here" className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" /> */}
           </label>
         </div>
 
@@ -161,6 +192,7 @@ export default function AcademicPlan({ setFormSection, formSection, formData, se
                 ? <FormControl fullWidth>
                     {/* <InputLabel id="demo-simple-select-label p-0">Select Country</InputLabel> */}
                     <Select
+                      required
                       // displayEmpty
                       itemID="location"
                       defaultValue={10}
@@ -190,6 +222,7 @@ export default function AcademicPlan({ setFormSection, formSection, formData, se
                 ? <FormControl fullWidth>
                     {/* <InputLabel id="demo-simple-select-label p-0">Select Country</InputLabel> */}
                     <Select
+                      required
                       // displayEmpty
                       itemID="location"
                       defaultValue={false}
@@ -216,13 +249,13 @@ export default function AcademicPlan({ setFormSection, formSection, formData, se
             <ul className="flex flex-col gap-6 mt-2 text-stone-500">
               <li className="">
                 <label className="flex flex-row items-center gap-2.5">
-                  <input type="radio" disabled={action == "view"} checked={formData?.academicInformation?.interestedInFinancialAid} onChange={(e) => setFormData({ ...formData, academicInformation: {...formData.academicInformation, interestedInFinancialAid: true}})} name="interestedInFinancialAid" className="outline outline-2 outline-zinc-300 rounded-full outline-offset-2"/>
+                  <input required type="radio" disabled={action == "view"} checked={formData?.academicInformation?.interestedInFinancialAid} onChange={(e) => setFormData({ ...formData, academicInformation: {...formData.academicInformation, interestedInFinancialAid: true}})} name="interestedInFinancialAid" className="outline outline-2 outline-zinc-300 rounded-full outline-offset-2"/>
                   <p className="text-neutral-700 text-xs font-medium leading-4 tracking-widest uppercase">{returnDiction("yes")}</p>
                 </label>
               </li>
               <li className="">
                 <label className="flex flex-row items-center gap-2.5">
-                  <input type="radio" disabled={action == "view"} checked={!formData?.academicInformation?.interestedInFinancialAid} onChange={(e) => setFormData({ ...formData, academicInformation: {...formData.academicInformation, interestedInFinancialAid: false}})} name="interestedInFinancialAid" className="outline outline-2 outline-zinc-300 rounded-full outline-offset-2"/>
+                  <input required type="radio" disabled={action == "view"} checked={!formData?.academicInformation?.interestedInFinancialAid} onChange={(e) => setFormData({ ...formData, academicInformation: {...formData.academicInformation, interestedInFinancialAid: false}})} name="interestedInFinancialAid" className="outline outline-2 outline-zinc-300 rounded-full outline-offset-2"/>
                   <p className="text-neutral-700 text-xs font-medium leading-4 tracking-widest uppercase">{returnDiction("no")}</p>
                 </label>
               </li>
@@ -246,6 +279,7 @@ export default function AcademicPlan({ setFormSection, formSection, formData, se
                 ? <FormControl fullWidth>
                     {/* <InputLabel id="demo-simple-select-label p-0">Select Country</InputLabel> */}
                     <Select
+                      required
                       // displayEmpty
                       itemID="location"
                       defaultValue={false}
@@ -273,6 +307,7 @@ export default function AcademicPlan({ setFormSection, formSection, formData, se
                 ? <FormControl fullWidth>
                     {/* <InputLabel id="demo-simple-select-label p-0">Select Country</InputLabel> */}
                     <Select
+                      required
                       // displayEmpty
                       itemID="location"
                       defaultValue={false}
@@ -293,60 +328,31 @@ export default function AcademicPlan({ setFormSection, formSection, formData, se
           </label>
         </div>
 
-        <div className="items-stretch self-stretch flex justify-between gap-5 mt-4 max-md:max-w-full max-md:flex-wrap">
-          <label htmlFor="typeOfTestTaken" className="grow basis-1/2">
-            <p className="text-neutral-700 text-xs leading-4 tracking-widest uppercase">{returnDiction("typeOfTestTaken")}</p>
-            {
-              !isLoading
-                ? 
-                  <input name="typeOfTestTaken" disabled={action == "view"} value={formData?.academicInformation?.typeOfTestTaken} onChange={(e) => handleInputChange(e, "academicInformation")} type="text" className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" />
-                  // <FormControl fullWidth>
-                  //   <Select
-                  //     itemID="location"
-                  //     defaultValue={false}
-                  //     className="[&>*]:!py-2.5 [&>*]:!px-3 [&>*]:!rounded-md mt-1 placeholder:text-neutral-400 [&>*]:!border-none border-stone-300/70 border rounded-md text-stone-500 min-w-[180px]"
-                  //     name="typeOfTestTaken"
-                  //     disabled={action == "view"}
-                  //     value={formData?.academicInformation?.typeOfTestTaken}
-                  //     onChange={(e) => handleInputChange(e, "academicInformation")}
-                  //   >
-                  //     <MenuItem className="!p-0 !hidden" value={10}>{returnDiction("select")}</MenuItem>
-                  //     <MenuItem value={true as any}>{returnDiction("yes")}</MenuItem>
-                  //     <MenuItem value={false as any}>{returnDiction("no")}</MenuItem>
-                  //   </Select>
-                  // </FormControl>
-                :
-                <div className="w-full p-[23px] bg-neutral-200 mt-1 animate-pulse rounded-md" />
-            }
-          </label>
-            
-          <label htmlFor="city" className="grow basis-1/2">
-            <p className="text-neutral-700 text-xs leading-4 tracking-widest uppercase">{returnDiction("testScore")}</p>
-            {
-              !isLoading
-                ?
-                  <input name="testScore" disabled={action == "view"} value={formData?.academicInformation?.testScore?.replace(/[^0-9]/g, "")} onChange={(e) => handleInputChange(e, "academicInformation")} type="text" className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" />
-                // <FormControl fullWidth>
-                //     <Select
-                //       itemID="location"
-                //       defaultValue={false}
-                //       className="[&>*]:!py-2.5 [&>*]:!px-3 [&>*]:!rounded-md mt-1 placeholder:text-neutral-400 [&>*]:!border-none border-stone-300/70 border rounded-md text-stone-500 min-w-[180px]"
-                //       name="testScore"
-                //       disabled={action == "view"}
-                //       value={formData?.academicInformation?.testScore}
-                //       onChange={(e) => handleInputChange(e, "academicInformation")}
-                //     >
-                //       <MenuItem className="!p-0 !hidden" value={10}>{returnDiction("select")}</MenuItem>
-                //       <MenuItem value={true as any}>{returnDiction("yes")}</MenuItem>
-                //       <MenuItem value={false as any}>{returnDiction("no")}</MenuItem>
-                //     </Select>
-                //   </FormControl>
-                :
-                <div className="w-full p-[23px] bg-neutral-200 mt-1 animate-pulse rounded-md" />
-            }
-          </label>
-        </div>
-
+        {
+          formData?.academicInformation?.hasTakenEnglishProficiencyTest
+          && (
+            <div className="items-stretch self-stretch flex justify-between gap-5 mt-4 max-md:max-w-full max-md:flex-wrap">
+              <label htmlFor="typeOfTestTaken" className="grow basis-1/2">
+                <p className="text-neutral-700 text-xs leading-4 tracking-widest uppercase">{returnDiction("typeOfTestTaken")}</p>
+                {
+                  !isLoading
+                    ? <input required name="typeOfTestTaken" disabled={action == "view"} value={formData?.academicInformation?.typeOfTestTaken} onChange={(e) => handleInputChange(e, "academicInformation")} type="text" className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" />
+                    : <div className="w-full p-[23px] bg-neutral-200 mt-1 animate-pulse rounded-md" />
+                }
+              </label>
+                
+              <label htmlFor="city" className="grow basis-1/2">
+                <p className="text-neutral-700 text-xs leading-4 tracking-widest uppercase">{returnDiction("testScore")}</p>
+                {
+                  !isLoading
+                    ? <input required name="testScore" disabled={action == "view"} value={formData?.academicInformation?.testScore?.replace(/[^0-9]/g, "")} onChange={(e) => handleInputChange(e, "academicInformation")} type="text" className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" />
+                    : <div className="w-full p-[23px] bg-neutral-200 mt-1 animate-pulse rounded-md" />
+                }
+              </label>
+            </div>
+          )
+        }
+       
         {/* ============================ */}
         {/* Previous High School Section */}
         {/* ============================ */}
@@ -363,7 +369,7 @@ export default function AcademicPlan({ setFormSection, formSection, formData, se
                   <div className="items-stretch self-stretch flex justify-between gap-5 mt-9 max-md:max-w-full max-md:flex-wrap">
                     <label htmlFor="previousInstitutionAttended" className="grow basis-full">
                       <p className="text-neutral-700 text-xs leading-4 tracking-widest uppercase">{returnDiction("previousInstitutionAttended")}</p>         
-                      <input id="previousInstitutionAttended" disabled={action == "view"} value={school?.previousInstitutionAttended} onChange={(e) => handleArrayInputChange(e, index, "academicInformation", "previousHighSchoolHistory")} name="previousInstitutionAttended" type="text" placeholder={returnDiction("enterHere")} className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" />
+                      <input required id="previousInstitutionAttended" disabled={action == "view"} value={school?.previousInstitutionAttended} onChange={(e) => handleArrayInputChange(e, index, "academicInformation", "previousHighSchoolHistory")} name="previousInstitutionAttended" type="text" placeholder={returnDiction("enterHere")} className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" />
                     </label>
                   </div>
     
@@ -372,6 +378,7 @@ export default function AcademicPlan({ setFormSection, formSection, formData, se
                       <p className="text-neutral-700 text-xs leading-4 tracking-widest uppercase">have you graduated from this institution?</p>
                       <FormControl fullWidth>
                         <Select
+                          required
                           itemID="location"
                           defaultValue={school.hasGraduatedFromInstitution || 10}
                           className="[&>*]:!py-2.5 [&>*]:!px-3 [&>*]:!rounded-md mt-1 placeholder:text-neutral-400 [&>*]:!border-none border-stone-300/70 border rounded-md text-stone-500 min-w-[180px]"
@@ -389,7 +396,7 @@ export default function AcademicPlan({ setFormSection, formSection, formData, se
                       
                     <label htmlFor="expectedDateOfGraduation" className="grow basis-1/2">
                       <p className="text-neutral-700 text-xs leading-4 tracking-widest uppercase">{returnDiction("expectedDateOfGraduation")}</p>        
-                      <input id="expectedDateOfGraduation" disabled={action == "view"} value={school?.expectedDateOfGraduation?.split("T")[0]} onChange={(e) => handleArrayInputChange(e, index, "academicInformation", "previousHighSchoolHistory")} name="expectedDateOfGraduation" type="date" placeholder={returnDiction("enterHere")}className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 mt-1 px-3 lg:px-4 py-2.5 rounded-md items-start max-md:pr-5" />
+                      <input required id="expectedDateOfGraduation" disabled={action == "view"} value={school?.expectedDateOfGraduation?.split("T")[0]} onChange={(e) => handleArrayInputChange(e, index, "academicInformation", "previousHighSchoolHistory")} name="expectedDateOfGraduation" type="date" placeholder={returnDiction("enterHere")}className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 mt-1 px-3 lg:px-4 py-2.5 rounded-md items-start max-md:pr-5" />
                     </label>
                   </div>
                   <div className="flex flex-row w-full items-center justify-between">
@@ -445,13 +452,13 @@ export default function AcademicPlan({ setFormSection, formSection, formData, se
                       <ul className="flex flex-col gap-6 mt-2 text-stone-500">
                         <li className="">
                           <label className="flex flex-row items-center gap-2.5">
-                            <input type="radio" disabled name="shouldAddSponsor" className="outline outline-2 outline-zinc-300 rounded-full outline-offset-2"/>
+                            <input required type="radio" disabled name="shouldAddSponsor" className="outline outline-2 outline-zinc-300 rounded-full outline-offset-2"/>
                             <div className="w-[50px] p-[10px] bg-neutral-200 animate-pulse rounded-md" />
                           </label>
                         </li>
                         <li className="">
                           <label className="flex flex-row items-center gap-2.5">
-                            <input type="radio" disabled name="shouldAddSponsor" className="outline outline-2 outline-zinc-300 rounded-full outline-offset-2"/>
+                            <input required type="radio" disabled name="shouldAddSponsor" className="outline outline-2 outline-zinc-300 rounded-full outline-offset-2"/>
                             <div className="w-[40px] p-[10px] bg-neutral-200 animate-pulse rounded-md" />
                           </label>
                         </li>
@@ -478,20 +485,21 @@ export default function AcademicPlan({ setFormSection, formSection, formData, se
                   <div className="items-stretch self-stretch flex justify-between gap-5 mt-9 max-md:max-w-full max-md:flex-wrap">
                     <label htmlFor="previousInstitutionAttended" className="grow basis-full">
                       <p className="text-neutral-700 text-xs leading-4 tracking-widest uppercase">{returnDiction("previousInstitutionAttended")}</p>       
-                      <input id="previousInstitutionAttended" disabled={action == "view"} value={college?.previousInstitutionAttended} onChange={(e) => handleArrayInputChange(e, index, "academicInformation", "previousCollegeHistory")} name="previousInstitutionAttended" type="text"  placeholder={returnDiction("enterHere")} className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" />
+                      <input required id="previousInstitutionAttended" disabled={action == "view"} value={college?.previousInstitutionAttended} onChange={(e) => handleArrayInputChange(e, index, "academicInformation", "previousCollegeHistory")} name="previousInstitutionAttended" type="text"  placeholder={returnDiction("enterHere")} className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" />
                     </label>
                   </div>
 
                   <div className="items-stretch self-stretch flex justify-between gap-5 mt-4 max-md:max-w-full max-md:flex-wrap">
                     <label htmlFor="email" className="grow basis-1/2">
                       <p className="text-neutral-700 text-xs leading-4 tracking-widest uppercase">{returnDiction("intendedProgram")}</p>
-                      <input name="major" disabled={action == "view"} value={college?.major} onChange={(e) => handleArrayInputChange(e, index, "academicInformation", "previousCollegeHistory")} type="text" className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" />
+                      <input required name="major" disabled={action == "view"} value={college?.major} onChange={(e) => handleArrayInputChange(e, index, "academicInformation", "previousCollegeHistory")} type="text" className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" />
                     </label>
                       
                     <label htmlFor="degreeEarnedOnOrExpected" className="grow basis-1/2">
                       <p className="text-neutral-700 text-xs leading-4 tracking-widest uppercase">{returnDiction("degreeEarnedExpected")}</p>       
                       <FormControl fullWidth>
                         <Select
+                          required
                           itemID="location"
                           defaultValue={college?.major || 10}
                           className="[&>*]:!py-2.5 [&>*]:!px-3 [&>*]:!rounded-md mt-1 placeholder:text-neutral-400 [&>*]:!border-none border-stone-300/70 border rounded-md text-stone-500 min-w-[180px]"
@@ -508,7 +516,7 @@ export default function AcademicPlan({ setFormSection, formSection, formData, se
                           }
                         </Select>
                       </FormControl>
-                      {/* <input id="degreeEarnedOnOrExpected" disabled={action == "view"} value={college?.degreeEarnedOnOrExpected?.split("T")[0]} onChange={(e) => handleArrayInputChange(e, index, "academicInformation", "previousCollegeHistory")} name="degreeEarnedOnOrExpected" type="date" placeholder={returnDiction("enterHere")} className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 mt-1 px-3 lg:px-4 py-2.5 rounded-md items-start max-md:pr-5" /> */}
+                      {/* <input required id="degreeEarnedOnOrExpected" disabled={action == "view"} value={college?.degreeEarnedOnOrExpected?.split("T")[0]} onChange={(e) => handleArrayInputChange(e, index, "academicInformation", "previousCollegeHistory")} name="degreeEarnedOnOrExpected" type="date" placeholder={returnDiction("enterHere")} className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 mt-1 px-3 lg:px-4 py-2.5 rounded-md items-start max-md:pr-5" /> */}
                     </label>
                   </div>
 
@@ -517,6 +525,7 @@ export default function AcademicPlan({ setFormSection, formSection, formData, se
                       <p className="text-neutral-700 text-xs leading-4 tracking-widest uppercase">{returnDiction("graduatedFromThisInstitution")}</p>
                       <FormControl fullWidth>
                         <Select
+                          required
                           itemID="location"
                           defaultValue={college?.hasGraduatedFromInstitution || 10}
                           className="[&>*]:!py-2.5 [&>*]:!px-3 [&>*]:!rounded-md mt-1 placeholder:text-neutral-400 [&>*]:!border-none border-stone-300/70 border rounded-md text-stone-500 min-w-[180px]"
@@ -534,7 +543,7 @@ export default function AcademicPlan({ setFormSection, formSection, formData, se
                       
                     <label htmlFor="expectedDateOfGraduation" className="grow basis-1/2">
                       <p className="text-neutral-700 text-xs leading-4 tracking-widest uppercase">{returnDiction("expectedDateOfGraduation")}</p>
-                      <input id="expectedDateOfGraduation" disabled={action == "view"} value={college?.expectedDateOfGraduation?.split("T")[0]} onChange={(e) => handleArrayInputChange(e, index, "academicInformation", "previousCollegeHistory")} name="expectedDateOfGraduation" type="date" placeholder={returnDiction("enterHere")} className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 mt-1 px-3 lg:px-4 py-2.5 rounded-md items-start max-md:pr-5" />
+                      <input required id="expectedDateOfGraduation" disabled={action == "view"} value={college?.expectedDateOfGraduation?.split("T")[0]} onChange={(e) => handleArrayInputChange(e, index, "academicInformation", "previousCollegeHistory")} name="expectedDateOfGraduation" type="date" placeholder={returnDiction("enterHere")} className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 mt-1 px-3 lg:px-4 py-2.5 rounded-md items-start max-md:pr-5" />
                     </label>
                   </div>
 
@@ -572,13 +581,13 @@ export default function AcademicPlan({ setFormSection, formSection, formData, se
                             <ul className="flex flex-col gap-6 mt-2 text-stone-500">
                               <li className="">
                                 <button onClick={(e) => addCollege()} disabled={action == "view"} className="flex flex-row items-center gap-2.5">
-                                  <input type="radio" disabled className="outline outline-2 outline-zinc-300 rounded-full outline-offset-2"/>
+                                  <input required type="radio" disabled className="outline outline-2 outline-zinc-300 rounded-full outline-offset-2"/>
                                   <p className="text-neutral-700 text-xs font-medium leading-4 tracking-widest uppercase">{returnDiction("yes")}</p>
                                 </button>
                               </li>
                               <li className="">
                                 <button onClick={(e) => removeCollege()} disabled={action == "view"} className="flex flex-row items-center gap-2.5">
-                                  <input type="radio" disabled className="outline outline-2 outline-zinc-300 rounded-full outline-offset-2"/>
+                                  <input required type="radio" disabled className="outline outline-2 outline-zinc-300 rounded-full outline-offset-2"/>
                                   <p className="text-neutral-700 text-xs font-medium leading-4 tracking-widest uppercase">{returnDiction("no")}</p>
                                 </button>
                               </li>
@@ -627,13 +636,13 @@ export default function AcademicPlan({ setFormSection, formSection, formData, se
                     <ul className="flex flex-col gap-5 mt-2 text-stone-500">
                       <li className="">
                         <label className="flex flex-row items-center gap-2.5">
-                          <input type="radio" disabled name="shouldAddSponsor" className="outline outline-2 outline-zinc-300 rounded-full outline-offset-2"/>
+                          <input required type="radio" disabled name="shouldAddSponsor" className="outline outline-2 outline-zinc-300 rounded-full outline-offset-2"/>
                           <div className="w-[50px] p-[10px] bg-neutral-200 animate-pulse rounded-md" />
                         </label>
                       </li>
                       <li className="">
                         <label className="flex flex-row items-center gap-2.5">
-                          <input type="radio" disabled name="shouldAddSponsor" className="outline outline-2 outline-zinc-300 rounded-full outline-offset-2"/>
+                          <input required type="radio" disabled name="shouldAddSponsor" className="outline outline-2 outline-zinc-300 rounded-full outline-offset-2"/>
                           <div className="w-[40px] p-[10px] bg-neutral-200 animate-pulse rounded-md" />
                         </label>
                       </li>
@@ -646,7 +655,11 @@ export default function AcademicPlan({ setFormSection, formSection, formData, se
        
         <div className="items-stretch self-stretch  flex justify-between gap-5 max-md:max-w-full max-md:flex-wrap">
           <label htmlFor="location" className="text-neutral-400  text-sm flex  w-full md:basis-1/2 flex-col">
-            <button onClick={() => setFormSection(4)} className="text-white text-center hover:bg-red-400 active:bg-red-600 duration-300 w-full text-base font-medium leading-6 whitespace-nowrap justify-center items-center bg-red-500 max-w-full mt-8 px-16 py-3 rounded-lg self-start max-md:px-5">
+            <button
+              type={shouldProceed ? "button" : "submit"}
+              onClick={() => shouldProceed && setFormSection(4)}
+              // onClick={() => setFormSection(4)}
+              className="text-white text-center hover:bg-red-400 active:bg-red-600 duration-300 w-full text-base font-medium leading-6 whitespace-nowrap justify-center items-center bg-red-500 max-w-full mt-8 px-16 py-3 rounded-lg self-start max-md:px-5">
             {returnDiction("continueButton")}
             </button>
           </label>

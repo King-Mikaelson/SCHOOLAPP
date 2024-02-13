@@ -56,7 +56,8 @@ const SchoolsList = memo(({ arrangement, selectedFilters, routeProfix, scroll = 
                       <h3 className="font-semibold  text-md">{school?.info?.name}</h3>
                       
                       <p className="leading-4 text-xs font-light overflow-ellipsis flex flex-col overflow-hidden text-stone-700">
-                        <span className=" font-medium text-sm text-stone-600">{school?.program?.duration}, { school?.program?.programType}</span>
+                        {/* <span className=" font-medium text-sm text-stone-600">{school?.program?.duration}, { school?.program?.programType}</span> */}
+                        <span className=" font-medium text-sm text-stone-600">{school?.program?.name}, { school?.program?.programType}</span>
                         <span className="mt-0.5 text-justify">{school?.info?.about}</span>
                       </p>
                       <p className="mt-auto text-red-500 font-medium text-md">Explore Program</p>

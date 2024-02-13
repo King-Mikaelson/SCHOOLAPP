@@ -6,6 +6,7 @@ import { FormControl, MenuItem, Select } from "@mui/material";
 import { countryList } from "@SharedData/CountryList";
 import langs from "@dictionaries/langs";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface IProps {
   params: {
@@ -19,10 +20,10 @@ export default function BookFlight({ params }: IProps) {
     returnType: "RETURN"
   })
 
-  const handleSubmit = (e: any): void => {
-    e.preventDefault();
-    router.push("https://www.wakanow.com");
-  }
+  // const handleSubmit = (e: any): void => {
+  //   e.preventDefault();
+  //   router.push("https://www.wakanow.com");
+  // }
 
   return (
     <div className="animate-fade-in flex relative justify-center overflow-hidden bg-[url(/images/book-flight/airplane.jpg)] bg-cover bg-no-repeat after:h-full after:w-full after:bg-black/60 after:absolute items-center min-h-[calc(100vh-80px)]">
@@ -39,7 +40,7 @@ export default function BookFlight({ params }: IProps) {
           </div>
         </div>
         <div className="bg-white    z-[1] max-w-xl max-md:mt-6 max-md:mx-auto flex flex-col items-stretch w-[47%] ml-auto  max-md:w-full p-4 lg:p-5 xl:p-6 rounded-xl">
-          <form onSubmit={handleSubmit} className="items-stretch flex flex-col my-auto max-md:max-w-full mt-1">
+          <form className="items-stretch flex flex-col my-auto max-md:max-w-full mt-1">
             <ul className="flex flex-row gap-4 ml-2 mt-2 mb-6">
               <li className="basis-1/2">
                 <label className="flex flex-row items-center gap-2.5">
@@ -175,10 +176,10 @@ export default function BookFlight({ params }: IProps) {
                 </FormControl>
               </label>
             </div>
-            <label htmlFor="name" className="grow mt-8 basis-full">
-              <button type="submit" className="text-white text-center hover:bg-red-400 active:bg-red-600 duration-300 w-full text-base font-medium leading-6 whitespace-nowrap justify-center items-center bg-[#FF4512] max-w-full px-16 py-3 rounded-lg self-start max-md:px-5">
+            <label htmlFor="name" className="grow mt-8 flex basis-full bg-yellow-300">
+              <Link href="https://www.wakanow.com" target="_blank" rel="noreferrer" className="text-white text-center hover:bg-red-400 active:bg-red-600 duration-300 w-full text-base font-medium leading-6 whitespace-nowrap justify-center items-center bg-[#FF4512] max-w-full px-16 py-3 rounded-lg self-start max-md:px-5">
                 {langs[params.lang as keyof typeof langs].bookFlight.findFlights}
-              </button>
+              </Link>
             </label>
           </form>
         </div>

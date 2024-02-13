@@ -33,6 +33,10 @@ const DashboardNav = memo(() => {
     }
   }
 
+  const handleNaviageToSettings = (): void => {
+    router.push("/backoffice/settings")
+  }
+
   return (
     <nav className="w-full z-[3] sticky top-0 bg-white flex justify-between py-2 md:py-3 px-3 md:px-4 xl:px-6 shadow items-center">
       <span className="flex flex-col items-center gap-x-1.5">
@@ -76,7 +80,7 @@ const DashboardNav = memo(() => {
             label="Age"
           >
             <MenuItem className="!p-0 !hidden" value={0}>{loggedInUser?.fullName}</MenuItem>
-            <MenuItem className="font-semibold text-zinc-600" value={10}>Settings</MenuItem>
+            <MenuItem onClick={handleNaviageToSettings} className="font-semibold text-zinc-600" value={10}>Settings</MenuItem>
             <MenuItem onClick={handleSignOut} className="font-semibold text-zinc-600" value={10}>Log Out</MenuItem>
             
           </Select>

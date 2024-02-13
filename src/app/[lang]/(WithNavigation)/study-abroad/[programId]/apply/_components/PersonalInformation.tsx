@@ -6,6 +6,7 @@ import fr from "../../../../../dictionaries/fr.json"
 import { useSearchParams } from "next/navigation";
 import { countryList } from "@SharedData/CountryList";
 import langs from "@dictionaries/langs";
+import { useEffect, useState } from "react";
 
 
 interface IProps {
@@ -20,6 +21,15 @@ interface IProps {
 
 export default function PersonalInformation({ setFormSection, formData, params, isLoading, handleInputChange }: IProps) {
   const action = useSearchParams().get("action");
+  const [ shouldProceed, setShouldProceed ] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!formData?.personalInformation?.firstName || !formData?.personalInformation?.lastName || !formData?.personalInformation?.gender || !formData?.personalInformation?.dob || !formData?.personalInformation?.nationality) {
+      if (shouldProceed) setShouldProceed(false)
+    } else {
+      if (!shouldProceed) setShouldProceed(true);
+    }
+  }, [ formData?.personalInformation ]);
   
   console.log(formData?.personalInformation?.nationality)
   return (
@@ -52,7 +62,7 @@ export default function PersonalInformation({ setFormSection, formData, params, 
             <p className="text-neutral-700 text-xs leading-4 tracking-widest uppercase">{langs[params.lang as keyof typeof langs].personalInformation.middleName}</p>
             {
               !isLoading
-                ? <input required id="middleName" name="middleName" disabled={action == "view"} value={formData?.personalInformation?.middleName} onChange={(e) => handleInputChange(e, "personalInformation")} type="text" placeholder={langs[params.lang as keyof typeof langs].personalInformation.enterMiddleName} className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" />
+                ? <input id="middleName" name="middleName" disabled={action == "view"} value={formData?.personalInformation?.middleName} onChange={(e) => handleInputChange(e, "personalInformation")} type="text" placeholder={langs[params.lang as keyof typeof langs].personalInformation.enterMiddleName} className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" />
                 : <div className="w-full p-[23px] bg-neutral-200 mt-1 animate-pulse rounded-md" />
             }
           </label>
@@ -162,7 +172,8 @@ export default function PersonalInformation({ setFormSection, formData, params, 
               </svg>
             </button>
             <button
-              onClick={() => setFormSection(1)}
+              type={shouldProceed ? "button" : "submit"}
+              onClick={() => shouldProceed && setFormSection(1)}
               className="text-white basis text-center hover:bg-red-400 active:bg-red-600 duration-300 w-full text-base font-medium leading-6 whitespace-nowrap justify-center items-center bg-red-500 max-w-full mt-8 px-16 py-3 rounded-lg self-start max-md:px-5"
             >
               {langs[params.lang as keyof typeof langs].personalInformation.continue}

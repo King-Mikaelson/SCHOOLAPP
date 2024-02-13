@@ -27,7 +27,7 @@ interface IProps {
 
 export default function ContactInformation({ setFormSection, formSection, formData, setFormData, isLoading, handleInputChange, phoneDetails, setPhoneDetails, params }: IProps) {
   const action = useSearchParams().get("action");
-
+  const [ shouldProceed, setShouldProceed ] = useState<boolean>(false);
   const [ mailingPhoneDetails, setMailingPhoneDetails ] = useState({ countryCode: String(countryList[170].phone), number: "" });
 
   useEffect(() => {
@@ -48,6 +48,15 @@ export default function ContactInformation({ setFormSection, formSection, formDa
     }
   }, [ mailingPhoneDetails ]);
 
+  /* Effect that prevents the proceeding to the next page if all fields have not been filled */
+  useEffect(() => {
+    if (!formData?.contactInformation?.city || !formData?.contactInformation?.country || !formData?.contactInformation?.email || !formData?.contactInformation?.phone || !formData?.contactInformation?.state || !formData?.contactInformation?.streetAddress || !formData?.contactInformation?.zipCode || (!formData?.contactInformation?.isMailingAddress && (!formData?.contactInformation?.mailingAddress?.city || !formData?.contactInformation?.mailingAddress?.country || !formData?.contactInformation?.mailingAddress?.email || !formData?.contactInformation?.mailingAddress?.phone || !formData?.contactInformation?.mailingAddress?.state || !formData?.contactInformation?.mailingAddress?.streetAddress || !formData?.contactInformation?.mailingAddress?.zipCode)) ) {
+      if (shouldProceed) setShouldProceed(false)
+    } else {
+      if (!shouldProceed) setShouldProceed(true);
+    }
+  }, [ formData?.contactInformation ]);
+
   const handleMailingAddressInputChange = (e: any): void => {
     const { name, value } = e.target;
     setFormData({ ...formData, contactInformation: { ...formData.contactInformation, mailingAddress: { ...formData.contactInformation.mailingAddress, [name]: value }    }  });
@@ -55,7 +64,7 @@ export default function ContactInformation({ setFormSection, formSection, formDa
   }
 
   console.log(formData.contactInformation.mailingAddress);
-
+  console.log(shouldProceed)
   return (
     <section className="">
       <div className="items-start mx-auto bg-white shadow-md flex flex-col px-6 py-7 rounded-xl max-md:px-4 max-w-screen-lg">
@@ -403,7 +412,8 @@ export default function ContactInformation({ setFormSection, formSection, formDa
         <div className="items-stretch self-stretch  flex justify-between gap-5 max-md:max-w-full max-md:flex-wrap">
           <label htmlFor="location" className="text-neutral-400  text-sm flex  w-full md:basis-1/2 flex-col">
             <button
-              onClick={() => setFormSection(2)}
+              type={shouldProceed ? "button" : "submit"}
+              onClick={() => shouldProceed && setFormSection(2)}
               className="text-white text-center hover:bg-red-400 active:bg-red-600 duration-300 w-full text-base font-medium leading-6 whitespace-nowrap justify-center items-center bg-red-500 max-w-full mt-8 px-16 py-3 rounded-lg self-start max-md:px-5"
             >
               {langs[params.lang as keyof typeof langs].contactInformation.continue}

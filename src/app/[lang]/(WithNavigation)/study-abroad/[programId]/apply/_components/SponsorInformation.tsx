@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FormControl, MenuItem, Select } from "@mui/material";
 import { IFormData } from "../page";
 import en from "../../../../../dictionaries/en.json"
@@ -39,6 +39,19 @@ export default function SponsorInformation({
   params
 }: IProps) {
   const action = useSearchParams().get("action");
+  const [ shouldProceed, setShouldProceed ] = useState<boolean>(false);
+
+  useEffect(() => {
+    let res = true;
+    for (let i = 0; i < formData?.sponsorInformation?.sponsors?.length; i++) {
+      if (!formData?.sponsorInformation?.sponsors[i]?.city || !formData?.sponsorInformation?.sponsors[i]?.country || !formData?.sponsorInformation?.sponsors[i]?.email || !formData?.sponsorInformation?.sponsors[i]?.firstName || !formData?.sponsorInformation?.sponsors[i]?.lastName || !formData?.sponsorInformation?.sponsors[i]?.phone || !formData?.sponsorInformation?.sponsors[i]?.state || !formData?.sponsorInformation?.sponsors[i]?.streetAddress || !formData?.sponsorInformation?.sponsors[i]?.zipCode) {
+        res = false;
+        break;
+      } else {
+      }
+    }
+    setShouldProceed(res);
+  }, [ formData?.sponsorInformation ]);
 
   useEffect(() => {
     document.documentElement.scrollTo({ top: 150, behavior: "smooth" });
@@ -70,7 +83,8 @@ export default function SponsorInformation({
       setPhoneDetailsArray(phoneTemp)
     }
   }
-
+  console.log(shouldProceed)
+  console.log(formData?.sponsorInformation?.sponsors)
   return (
     <section className="">
       <div className="items-start mx-auto bg-white shadow-md flex flex-col px-6 py-7 rounded-xl max-md:px-4 max-w-screen-lg">
@@ -109,19 +123,19 @@ export default function SponsorInformation({
                   <div key={`sponsor-person-${index}`} className="items-stretch self-stretch flex justify-between gap-5 mt-9 max-md:max-w-full max-md:flex-wrap">
                       <label htmlFor="firstName" className="grow basis-1/2">
                         <p className="text-neutral-700 text-xs leading-4 tracking-widest uppercase">{langs[params.lang as keyof typeof langs].sponsorInformation.firstName}</p>       
-                        <input disabled={action == "view"} id="firstName" name="firstName" value={sponsor.firstName} onChange={(e) => handleArrayInputChange(e, index, "sponsorInformation", "sponsors")} type="text" placeholder={langs[params.lang as keyof typeof langs].sponsorInformation.enterHere} className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" />
+                        <input required disabled={action == "view"} id="firstName" name="firstName" value={sponsor.firstName} onChange={(e) => handleArrayInputChange(e, index, "sponsorInformation", "sponsors")} type="text" placeholder={langs[params.lang as keyof typeof langs].sponsorInformation.enterHere} className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" />
                       </label>
                         
                       <label htmlFor="lastName" className="grow basis-1/2">
                         <p className="text-neutral-700 text-xs leading-4 tracking-widest uppercase">{langs[params.lang as keyof typeof langs].sponsorInformation.lastName}</p>      
-                        <input disabled={action == "view"} id="lastName" name="lastName" value={sponsor?.lastName} onChange={(e) => handleArrayInputChange(e, index, "sponsorInformation", "sponsors")} type="text" placeholder={langs[params.lang as keyof typeof langs].sponsorInformation.enterHere} className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" />
+                        <input required disabled={action == "view"} id="lastName" name="lastName" value={sponsor?.lastName} onChange={(e) => handleArrayInputChange(e, index, "sponsorInformation", "sponsors")} type="text" placeholder={langs[params.lang as keyof typeof langs].sponsorInformation.enterHere} className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" />
                       </label>
                     </div>
 
                     <div className="items-stretch self-stretch flex justify-between gap-5 mt-4 max-md:max-w-full max-md:flex-wrap">
                       <label htmlFor="email" className="grow basis-1/2">
                         <p className="text-neutral-700 text-xs leading-4 tracking-widest uppercase">{langs[params.lang as keyof typeof langs].sponsorInformation.emailAddress}</p>        
-                        <input disabled={action == "view"} id="email" name="email" value={sponsor?.email} onChange={(e) => handleArrayInputChange(e, index, "sponsorInformation", "sponsors")} type="email"  placeholder={langs[params.lang as keyof typeof langs].sponsorInformation.enterHere} className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" />
+                        <input required disabled={action == "view"} id="email" name="email" value={sponsor?.email} onChange={(e) => handleArrayInputChange(e, index, "sponsorInformation", "sponsors")} type="email"  placeholder={langs[params.lang as keyof typeof langs].sponsorInformation.enterHere} className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" />
                       </label>
                         
                       <label htmlFor="email" className="grow basis-1/2">
@@ -146,7 +160,7 @@ export default function SponsorInformation({
                             }
                           </Select>
                         </FormControl>
-                          <input value={phoneDetailsArray[index]?.number} onChange={(e) => handleNestedPhoneNumberChange(e, index, "number")} disabled={action == "view"} id="mobileNumber" name="mobileNumber" type="tel" className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start" />
+                          <input required value={phoneDetailsArray[index]?.number} onChange={(e) => handleNestedPhoneNumberChange(e, index, "number")} disabled={action == "view"} id="mobileNumber" name="mobileNumber" type="tel" className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start" />
                         </span>
                       </label>
                     </div>
@@ -154,12 +168,12 @@ export default function SponsorInformation({
                     <div className="items-stretch self-stretch flex justify-between gap-5 mt-4 max-md:max-w-full max-md:flex-wrap">
                       <label htmlFor="streetAddress" className="grow basis-1/2">
                         <p className="text-neutral-700 text-xs leading-4 tracking-widest uppercase">{langs[params.lang as keyof typeof langs].sponsorInformation.streetAddress}</p>         
-                        <input disabled={action == "view"} id="streetAddress" name="streetAddress" value={sponsor?.streetAddress} onChange={(e) => handleArrayInputChange(e, index, "sponsorInformation", "sponsors")} type="tel" placeholder={langs[params.lang as keyof typeof langs].sponsorInformation.enterHere} className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" />
+                        <input required disabled={action == "view"} id="streetAddress" name="streetAddress" value={sponsor?.streetAddress} onChange={(e) => handleArrayInputChange(e, index, "sponsorInformation", "sponsors")} type="tel" placeholder={langs[params.lang as keyof typeof langs].sponsorInformation.enterHere} className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" />
                       </label>
                         
                       <label htmlFor="city" className="grow basis-1/2">
                         <p className="text-neutral-700 text-xs leading-4 tracking-widest uppercase">{langs[params.lang as keyof typeof langs].sponsorInformation.city}</p>        
-                        <input disabled={action == "view"} id="city" name="city" value={sponsor?.city} onChange={(e) => handleArrayInputChange(e, index, "sponsorInformation", "sponsors")} type="tel" placeholder={langs[params.lang as keyof typeof langs].sponsorInformation.enterHere} className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" />
+                        <input required disabled={action == "view"} id="city" name="city" value={sponsor?.city} onChange={(e) => handleArrayInputChange(e, index, "sponsorInformation", "sponsors")} type="tel" placeholder={langs[params.lang as keyof typeof langs].sponsorInformation.enterHere} className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" />
                       </label>
                     </div>
 
@@ -169,6 +183,7 @@ export default function SponsorInformation({
                         <FormControl fullWidth>
                           <Select
                             itemID="location"
+                            required
                             defaultValue="NG"
                             className="[&>*]:!py-2.5 [&>*]:!px-3 [&>*]:!rounded-md mt-1 placeholder:text-neutral-400 [&>*]:!border-none border-stone-300/70 border rounded-md text-stone-500 min-w-[180px]"
                             disabled={action == "view"}
@@ -191,6 +206,7 @@ export default function SponsorInformation({
                           {/* <InputLabel id="demo-simple-select-label p-0">Select Country</InputLabel> */}
                           <Select
                             // displayEmpty
+                            required
                             itemID="location"
                             defaultValue={10}
                             className="[&>*]:!py-2.5 [&>*]:!px-3 [&>*]:!rounded-md mt-1 placeholder:text-neutral-400 [&>*]:!border-none border-stone-300/70 border rounded-md text-stone-500 min-w-[180px]"
@@ -213,7 +229,7 @@ export default function SponsorInformation({
                     <div className="items-stretch self-stretch flex justify-between gap-5 mt-4 max-md:max-w-full max-md:flex-wrap">
                       <label htmlFor="zipCode" className="grow basis-1/2">
                         <p className="text-neutral-700 text-xs leading-4 tracking-widest uppercase">{langs[params.lang as keyof typeof langs].sponsorInformation.zipCode}</p>       
-                        <input disabled={action == "view"} id="zipCode" name="zipCode" value={sponsor?.zipCode} onChange={(e) => handleArrayInputChange(e, index, "sponsorInformation", "sponsors")} type="tel" placeholder={langs[params.lang as keyof typeof langs].sponsorInformation.enterHere} className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" />
+                        <input required disabled={action == "view"} id="zipCode" name="zipCode" value={sponsor?.zipCode} onChange={(e) => handleArrayInputChange(e, index, "sponsorInformation", "sponsors")} type="tel" placeholder={langs[params.lang as keyof typeof langs].sponsorInformation.enterHere} className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start max-md:pr-5" />
                       </label>
                       {
                         formData?.sponsorInformation?.sponsors?.length > 1
@@ -324,7 +340,10 @@ export default function SponsorInformation({
 
         <div className="items-stretch self-stretch  flex justify-between gap-5 max-md:max-w-full max-md:flex-wrap">
           <label htmlFor="location" className="text-neutral-400  text-sm flex  w-full md:basis-1/2 flex-col">
-            <button onClick={() => setFormSection(3)} className="text-white text-center hover:bg-red-400 active:bg-red-600 duration-300 w-full text-base font-medium leading-6 whitespace-nowrap justify-center items-center bg-red-500 max-w-full mt-8 px-16 py-3 rounded-lg self-start max-md:px-5">
+            <button
+              type={shouldProceed ? "button" : "submit"}
+              onClick={() => shouldProceed && setFormSection(3)}
+              className="text-white text-center hover:bg-red-400 active:bg-red-600 duration-300 w-full text-base font-medium leading-6 whitespace-nowrap justify-center items-center bg-red-500 max-w-full mt-8 px-16 py-3 rounded-lg self-start max-md:px-5">
               {langs[params.lang as keyof typeof langs].sponsorInformation.continueButton}
             </button>
           </label>

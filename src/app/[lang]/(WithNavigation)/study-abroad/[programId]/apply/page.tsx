@@ -36,7 +36,7 @@ const initialSchoolApplicationData = {
       hasGraduatedFromInstitution: false,
       previousInstitutionAttended: ""
     }],
-    prospectiveUniversity: "jow",
+    prospectiveUniversity: "",
     startTermAndYear: "",
     degree: ""
   },
@@ -190,12 +190,12 @@ export default function VisaApplication({ params }: IProps) {
 
   const handleInputChange = (e: any, property: string, componentValue?: string): void => {
     const { name, value, id, itemId } = e.target;
-    console.log(name)
-    if (["nationality", "country"].includes(id)) {
-      setFormData({ ...formData, [property]: { ...formData[property as keyof typeof formData], [id]: value } });
-    } else {
-      setFormData({ ...formData, [property]: { ...formData[property as keyof typeof formData], [name]: value } });
-    }
+    setFormData({ ...formData, [property]: { ...formData[property as keyof typeof formData], [name]: value } });
+    // if (["nationality", "country"].includes(id)) {
+    //   setFormData({ ...formData, [property]: { ...formData[property as keyof typeof formData], [id]: value } });
+    // } else {
+    //   setFormData({ ...formData, [property]: { ...formData[property as keyof typeof formData], [name]: value } });
+    // }
     if (submitSuccess) reset();
   }
 
@@ -272,7 +272,7 @@ export default function VisaApplication({ params }: IProps) {
         <div className="md:mx-[clamp(1px,calc(1vw*2),50px)] 2xl:mx-auto max-w-screen-2xl">
           <div className="form-container my-[clamp(2rem,2vmax,4rem)] z-[1] mt-10 bg-whit rounded-lg w-full md:w-[95%]">
             <h1 className="text-3xl font-semibold text-stone-700 lg:text-4xl xl:text-5xl">{langs[params.lang as keyof typeof langs].studyAbroad.completeApplication.completeApplication}</h1>
-            <p className="text-sm text-stone-600 mt-3 w-[75%] min-w-[400px]">{langs[params.lang as keyof typeof langs].studyAbroad.completeApplication.startJourney}</p>
+            {/* <p className="text-sm text-stone-600 mt-3 w-[75%] min-w-[400px]">{langs[params.lang as keyof typeof langs].studyAbroad.completeApplication.startJourney}</p> */}
           </div>
         </div>
 

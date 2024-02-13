@@ -26,7 +26,7 @@ export default function AcademicPlan({ formData, setFormData, handleInputChange,
       if (formData.academicInformation.typeOfTestTaken) delete formData.academicInformation.typeOfTestTaken;
       if (formData.academicInformation.testScore) delete formData.academicInformation.testScore;
     }
-  }, [ formData ]);
+  }, [ formData?.academicInformation?.hasTakenEnglishProficiencyTest ]);
 
   const addHighSchool = () => {
     setFormData({ ...formData, academicInformation: { ...formData.academicInformation, previousHighSchoolHistory: [ ...formData?.academicInformation?.previousHighSchoolHistory, {

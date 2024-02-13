@@ -242,11 +242,20 @@ export default function ContactUs({ params }: IProps) {
             </div>
 
             <div className="text-white text-lg font-normal leading-6 mt-7">
-              Abuja, NigeriaANON PlazaBS, Second FloorPlot 1085 Joseph Gomwalk Way, Gudu, Abuja (Opposite Ajuji Hotel)
+              {/* Abuja, NigeriaANON PlazaBS, Second FloorPlot 1085 Joseph Gomwalk Way, Gudu, Abuja (Opposite Ajuji Hotel) */}
+              Abuja, Nigeria <br />
+              ANON Plaza BS, Second Floor
+              Plot 1085 Joseph Gomwalk Way, Gudu Abuja
+              (Opposite Ajuji Hotel)
             </div>
 
             <div className="text-white text-lg font-normal leading-6 tracking- mt-4">
-              Owerri, Nigeria Silas PlazaLevel 2, Unit 7, KM 6 Owerri-Orlu RoadOwerri, Imo State (After Akwakuma Junction)
+              {/* Owerri, Nigeria Silas PlazaLevel 2, Unit 7, KM 6 Owerri-Orlu RoadOwerri, Imo State (After Akwakuma Junction) */}
+              Owerri, Nigeria <br />
+              Silas Plaza Level 2, Unit 7,
+              KM 6 Owerri - Orlu Road 
+              After Akwakuma Junction 
+              Owerri, Imo State
             </div>
           </div>
         </div>

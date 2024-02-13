@@ -28,9 +28,9 @@ export const applicationHistory = [
 ];
 
 export const statusColor = {
-  "in-review": "bg-yellow-50 text-yellow-600",
-  "IN_PROGRESS": "bg-orange-50 text-orange-600",
+  "in-review": "!bg-yellow-50 !text-yellow-600",
+  "IN_PROGRESS": "!bg-orange-50 !text-orange-600",
   "suspended": "bg-purple-50 text-purple-600",
-  "completed": "bg-emerald-50 text-emerald-600",
+  "completed": "!bg-emerald-50 !text-emerald-600",
   "rejected": "bg-rose-50 text-rose-600"
 }

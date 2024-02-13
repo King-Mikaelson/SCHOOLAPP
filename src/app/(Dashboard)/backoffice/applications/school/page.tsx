@@ -21,8 +21,9 @@ export default function SchoolApplications() {
   const [ searchData, setSearchData ] = useState({ fullName: "", from: "", to: "", status: "" });
   const [ searchQuery, setSearchQuery ] = useState("");
   const [ getApplicationsTrigger, { data, isLoading, error, isFetching }] = (searchQuery) ? api.adminApis.useLazySearchSchoolApplicationQuery() : api.adminApis.useLazyGetSchoolApplicationsQuery();
-  const [ deleteTrigger, { isLoading: isDeleting, error: deleteError, isSuccess: isDeleteSuccess, reset } ] = api.adminApis.useDeleteSchoolApplicationMutation()
-  const { data: paginationData, isLoading: paginationIsLoading, isError: paginationlIsError, error: paginationError } = api.adminApis.useGetSchoolApplicationStatsQuery("")
+  const [ deleteTrigger, { isLoading: isDeleting, error: deleteError, isSuccess: isDeleteSuccess, reset } ] = api.adminApis.useDeleteSchoolApplicationMutation();
+  const { data: paginationData, isLoading: paginationIsLoading, isError: paginationlIsError, error: paginationError } = api.adminApis.useGetSchoolApplicationStatsQuery("");
+  const [ updateSchoolApplicationTrigger, { data: updateSchoolApplicationData, error: updateSchoolApplicationError } ] = api.adminApis.useUpdateSchoolApplicationMutation();
 
 
   useEffect(() => {
@@ -62,6 +63,21 @@ console.log(searchQuery)
     setSearchQuery("");
     getApplicationsTrigger({ direction: "backward", cursor: data?.previousCursor})
   }
+
+  const handleUpdateStatus = (e: any, schoolId: string): void => {
+    const { value } = e.target;
+    // const submitData = { schoolApplicationId: schoolId, status: value }
+    console.log(value)
+    console.log(schoolId)
+    const submitData = new FormData();
+    submitData.append("schoolApplicationId", schoolId);
+    submitData.append("status", value);
+    updateSchoolApplicationTrigger(submitData);
+  }
+
+  console.log(updateSchoolApplicationData)
+  console.log(updateSchoolApplicationError)
+  console.log(data?.data)
 
   return (
     <main className="p-3 md:p-3 lg:p-4 xl:p-6">
@@ -150,7 +166,28 @@ console.log(searchQuery)
                         </td>
                         <td>{each?.contactInformation?.phone}</td>
                         <td>School Application</td>
-                        <td className="min-w-max"><span className={`${statusColor[each.status as keyof typeof statusColor]} min-w-max px-3 p-0.5 text-xs capitalize rounded-full`}>{each?.status?.replace(/_/g, " ")}</span></td>
+                        {/* <td className="min-w-max"><span className={`${statusColor[each.status as keyof typeof statusColor]} min-w-max px-3 p-0.5 text-xs capitalize rounded-full`}>{each?.status?.replace(/_/g, " ")}</span></td> */}
+                        <td className="min-w-max">
+                          <Select
+                            itemID="location"
+                            displayEmpty
+                            className={`${statusColor[each.status as keyof typeof statusColor]} [&>*]:!py-0.5 [&>*]:!px-2 capitalize !rounded-full [&>*]:!border-none !text-sm !px-3 lg:!px-4 font-medium text-zinc-500 min-w-[50px]`}
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            label="Age"
+                            value={each?.status}
+                            name="status"
+                            onChange={(e) => handleUpdateStatus(e, each?.schoolApplicationId)}
+                          >
+                            <MenuItem className="capitalize" value="IN_PROGRESS">In Progress</MenuItem>
+                            <MenuItem className="capitalize" value="COMPLETED">Completed</MenuItem>
+                            {/* {
+                              views.map((view: string, index: number) => (
+                                <MenuItem className="capitalize" key={index} value={view}>{view.replace(/_/, " ").toLowerCase()}</MenuItem>
+                              ))
+                            } */}
+                          </Select>
+                        </td>
                         <td className="flex flex-row gap-1.5 lg:gap-2 xl:gap-2.5" style={{ width: "110px"}}>
                           <Link href={`/backoffice/applications/school/add?id=${each.schoolApplicationId}&action=view`} className="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
