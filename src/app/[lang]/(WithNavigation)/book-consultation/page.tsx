@@ -2,13 +2,13 @@
 
 import Head from 'next/head';
 import { FormControl, MenuItem, Select } from "@mui/material";
+import emailjs from "emailjs-com";
 import langs from "@dictionaries/langs"
 import { useEffect, useState } from "react";
 import { countryList } from "@SharedData/CountryList";
 import api from "@redux/api";
 import LoadingButton from "@SharedComponents/LoadingButton";
 import ErrorBlock from "@SharedComponents/ErrorBlock";
-import Image from "next/image";
 import CalendlyEmbed from '@SharedComponents/CalendlyEmbed';
 
 interface IProps {
@@ -22,41 +22,64 @@ const initialState = { fullName: "", email:"", phone: "", topic: "", date: "", t
 export default function BookConsultation({ params }: IProps) {
   const [ formData, setFormData ] = useState(initialState);
   const [ phoneDetails, setPhoneDetails ] = useState({ countryCode: String(countryList[170].phone), number: "" })
+  const [ isLoading, setIsLoading ] = useState<boolean>(false);
+  const [ isSucessful, setIsSucessful ] = useState<boolean>(false);
 
   const [ addConsultation, { isSuccess, reset, isLoading: isSubmitting, error: submitError } ] = api.adminApis.useAddBookConsultationMutation();
 
   const handleInputChange = (e: any): void => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    if (isSuccess) reset();
+    if (isSucessful) setIsSucessful(false);
   };
 
 
-  useEffect(() => {
-    if(phoneDetails.number.startsWith("0")){
-      setFormData({ ...formData, phone: `+${phoneDetails.countryCode}${phoneDetails.number.slice(1, phoneDetails.number.length - 2)}`})
-    } else {
-      setFormData({ ...formData, phone: `+${phoneDetails.countryCode}${phoneDetails.number }`})
-    }
-  }, [ phoneDetails ]);
+  // useEffect(() => {
+  //   if(phoneDetails.number.startsWith("0")){
+  //     setFormData({ ...formData, phone: `+${phoneDetails.countryCode}${phoneDetails.number.slice(1, phoneDetails.number.length - 2)}`})
+  //   } else {
+  //     setFormData({ ...formData, phone: `+${phoneDetails.countryCode}${phoneDetails.number }`})
+  //   }
+  // }, [ phoneDetails ]);
 
   /* Sucessful Submission Effect */
-  useEffect(() => {
-    if (isSuccess) {
-      setFormData(initialState);
-      setPhoneDetails({ ...phoneDetails, number: "" });
-    };
-  }, [ isSuccess ]);
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     setFormData(initialState);
+  //     setPhoneDetails({ ...phoneDetails, number: "" });
+  //   };
+  // }, [ isSuccess ]);
+
+  // const handleSubmit = (e: any): void => {
+  //   e.preventDefault();
+  //   addConsultation(formData);
+  // }
 
   const handleSubmit = (e: any): void => {
     e.preventDefault();
-    addConsultation(formData);
+    setIsLoading(true);
+
+    const SERVICE_ID ="service_q21igjv";
+    const TEMPLATE_ID ="template_ms3zv1v";
+    const USER_ID ="rotjEdPIEU_gHvNVt";
+
+    emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, e.target, USER_ID)
+      .then((result)=>{
+        // console.log(result.text);
+        setFormData(initialState);
+        setIsLoading(false);
+        setIsSucessful(true);
+        // alert("Mail sucessfully sent")
+      })
+      .catch((error)=>{
+        setIsLoading(false);
+        alert("Something went wrong");
+      }) 
   }
-  
+
   return (
     <>
-    
-    <CalendlyEmbed url="YOUR_CALENDLY_EVENT_LINK_HERE" />
+    {/* <CalendlyEmbed url="YOUR_CALENDLY_EVENT_LINK_HERE" /> */}
     <main className="animate-fade-in my-12 justify-center max-md:max-w-full min-h-[calc(100vh-175px)]">
       <div className="container mx-auto xl:max-w-screen-xl">
         <div className="px-[clamp(1rem,calc(1vw*2),50px)]  2xl:px-auto  max-w-screen-2xl">
@@ -102,8 +125,8 @@ export default function BookConsultation({ params }: IProps) {
               <div className="items-stretch self-stretch flex justify-between gap-5 mt-5 max-md:max-w-full max-md:flex-wrap">
                 <label htmlFor="mobileNumber" className="grow basis-1/3">
                   <p className="text-neutral-700 grow basis-full text-xs leading-4 tracking-widest uppercase">{langs[params.lang as keyof typeof langs].bookConsultation.mobileNumber}</p>
-                  <span className="grid grid-cols-[1fr_3fr] gap-2">
-                    <FormControl fullWidth>
+                  <span className="">
+                    {/* <FormControl fullWidth>
                       <Select
                         itemID="location"
                         defaultValue="+234"
@@ -111,7 +134,6 @@ export default function BookConsultation({ params }: IProps) {
                         value={phoneDetails.countryCode}
                         onChange={(e) => setPhoneDetails({ ...phoneDetails, countryCode: e.target.value })}
                       >
-                        {/* <MenuItem className="!p-0 !hidden" value={10}>+234</MenuItem> */}
                         {
                           countryList.sort((a: any, b: any) => a?.name?.localeCompare(b?.name))?.map((country: typeof countryList[0], index: number) => (
                             <MenuItem key={country.name} className="" value={country.phone}><Image className="mr-0.5" width={35} height={17} src={`/images/country-flag/${country?.code}.svg`} alt="flag" />({country.name?.slice(0,3)}) +{country.phone}</MenuItem>
@@ -125,6 +147,18 @@ export default function BookConsultation({ params }: IProps) {
                       id="mobileNumber"
                       value={phoneDetails.number}
                       onChange={(e) => {setPhoneDetails({ ...phoneDetails, number: e.target.value.replace(/[^0-9]/ig, "") })}}
+                      placeholder={langs[params.lang as keyof typeof langs].contactUs.enterMobileNumber}
+                      className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start"
+                    /> */}
+                    <input
+                      required
+                      disabled={isLoading}
+                      id="mobileNumber"
+                      name="phone"
+                      onChange={handleInputChange}
+                      type="tel"
+                      value={formData.phone}
+                      // onChange={(e) => {setPhoneDetails({ ...phoneDetails, number: e.target.value.replace(/[^0-9]/ig, "") })}}
                       placeholder={langs[params.lang as keyof typeof langs].contactUs.enterMobileNumber}
                       className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 lg:px-4 py-3 rounded-md items-start"
                     />
@@ -152,6 +186,7 @@ export default function BookConsultation({ params }: IProps) {
                     <MenuItem value="Travel">Travel</MenuItem>
                     <MenuItem value="Study Abroad">Study Abroad</MenuItem>
                     <MenuItem value="Tourism">Tourism</MenuItem>
+                    <MenuItem value="Work">Work</MenuItem>
                     <MenuItem value="Other">Other</MenuItem>
                   </Select>
                 </FormControl>
@@ -191,8 +226,8 @@ export default function BookConsultation({ params }: IProps) {
 
               <label htmlFor="name" className="grow mt-5 basis-full">
                 <LoadingButton
-                  loading={isSubmitting}
-                  sucess={isSuccess}
+                  loading={isLoading}
+                  sucess={isSucessful}
                   successText="Sucessful!"
                   type="submit"
                   className="text-white text-center hover:bg-red-400 active:bg-red-600 duration-300 w-full text-base font-medium leading-6 whitespace-nowrap justify-center items-center bg-red-500 max-w-full mt-5 px-16 py-3 rounded-lg self-start max-md:px-5"
