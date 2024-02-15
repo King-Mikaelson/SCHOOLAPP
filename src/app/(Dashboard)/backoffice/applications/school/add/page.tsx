@@ -174,7 +174,7 @@ const initialSchoolApplicationData = {
   passportPhoto: "",
   waecScratchCard: "",
   unofficialTranscript: "",
-  schoolApplicationId: ""
+  schoolApplicationId: "",
 }
 
 type TView = ("Personal Information"|"Contact Information"|"Sponsor Information"|"Academic Information"|"Supporting Documents");
@@ -191,7 +191,7 @@ export default function AddSchoolApplications() {
   const views = ["Personal Information","Contact Information","Sponsor Information","Academic Information","Supporting Documents"]
   const [ currentView, setCurrentView ] = useState<TView>("Personal Information");
 
-  const [ addSchoolApplication, { isLoading: isSubmitting, isSuccess: submitSuccess, error: submitError, reset } ] = action === "update" ? api.adminApis.useUpdateSchoolApplicationMutation() : api.adminApis.useAddSchoolapplicationMutation()
+  const [ addSchoolApplication, { data: submitData, isLoading: isSubmitting, isSuccess: submitSuccess, error: submitError, reset } ] = action === "update" ? api.adminApis.useUpdateSchoolApplicationMutation() : api.adminApis.useAddSchoolapplicationMutation()
   // const [ addSchoolApplication, { isLoading: isSubmitting, isSuccess: submitSuccess, error: submitError, reset } ] = api.adminApis.useAddSchoolapplicationMutation()
   const [ fetchSchoolApplications, { data, isLoading, error }] = api.adminApis.useLazyGetSchoolApplicationsQuery();
   const selectedData = data?.data?.filter((each: any) => each?.schoolApplicationId === id)[0];
@@ -399,7 +399,7 @@ export default function AddSchoolApplications() {
     return formDataInstance;
   };
   // console.log(convertToFormData(formData).get("academicInformation[intendToStudyFullTime]"))
-  console.log(convertToFormData(formData).get("schoolApplicationId"))
+  console.log(convertToFormData(formData).get("status"))
   
 
   console.log(selectedData);
@@ -407,6 +407,9 @@ export default function AddSchoolApplications() {
     e.preventDefault();
     addSchoolApplication(convertToFormData(formData));
   }
+
+  console.log(submitError)
+  console.log(submitData)
 
   return (
     <form onSubmit={handleSubmit} className="p-3 md:p-3 lg:p-4 xl:p-6">

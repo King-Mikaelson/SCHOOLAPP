@@ -14,7 +14,6 @@ import api from "@redux/api";
 import { countryList } from "@SharedData/CountryList";
 
 
-
 const initialSchoolApplicationData = {
   academicInformation: {
     typeOfTestTaken: "",

@@ -23,7 +23,8 @@ export default function VisaApplications() {
   const [ searchQuery, setSearchQuery ] = useState("");
   const [ gatVisaApplicationTrigger, { data, isLoading, isError, error, isFetching } ] = searchQuery ? api.adminApis.useLazySearchVisaApplicationsQuery() : api.adminApis.useLazyGetVisaApplicationsQuery();
   const [ deleteTrigger, { isLoading: isDeleting, error: deleteError, isSuccess: isDeleteSuccess, reset } ] = api.adminApis.useDeleteVisaApplicationMutation()
-  const { data: paginationData, isLoading: paginationIsLoading, isError: paginationlIsError, error: paginationError } = api.adminApis.useGetVisaApplicationStatsQuery("")
+  const { data: paginationData, isLoading: paginationIsLoading, isError: paginationlIsError, error: paginationError } = api.adminApis.useGetVisaApplicationStatsQuery("");
+  const [ updateVisaApplicationTrigger, { data: updateVisaApplicationData, isLoading: updateVisaApplicationLoading, error: updateVisaApplicationError } ] = api.adminApis.useUpdateVisaApplicationMutation();
 
   useEffect(() => {
     searchQuery ? gatVisaApplicationTrigger(searchQuery) : gatVisaApplicationTrigger("");
@@ -61,6 +62,21 @@ export default function VisaApplications() {
     setSearchQuery("");
     gatVisaApplicationTrigger({ direction: "backward", cursor: data?.previousCursor})
   }
+
+  const handleUpdateStatus = (e: any, visaApplicationId: string): void => {
+    const { value } = e.target;
+    // const submitData = { schoolApplicationId: schoolId, status: value }
+    console.log(value)
+    console.log(visaApplicationId)
+    const formData = { visaApplicationId, status: value }
+    // const submitData = new FormData();
+    // submitData.append("schoolApplicationId", visaApplicationId);
+    // submitData.append("status", value);
+    updateVisaApplicationTrigger(formData);
+  }
+
+  console.log(updateVisaApplicationData);
+  console.log(updateVisaApplicationError);
 
   return (
     <main className="p-3 md:p-3 lg:p-4 xl:p-6">
@@ -151,7 +167,22 @@ export default function VisaApplications() {
                             </td>
                             <td>{getCountryNameFromCode(each?.nationality)}</td>
                             <td>{getCountryNameFromCode(each?.destinationCountry)}</td>
-                            <td className="min-w-max"><span className={`${statusColor[each.status as keyof typeof statusColor]} min-w-max px-3 p-0.5 text-xs capitalize rounded-full`}>{each.status?.replace(/_/g, " ")}</span></td>
+                            <td className="min-w-max">
+                            <Select
+                              itemID="location"
+                              displayEmpty
+                              className={`${statusColor[each.status as keyof typeof statusColor]} [&>*]:!py-0.5 [&>*]:!px-1 !uppercase !rounded-full [&>*]:!border-none !text-xs !px-3 lg:!px-4 font-medium text-zinc-500 min-w-[50px]`}
+                              labelId="demo-simple-select-label"
+                              id="demo-simple-select"
+                              label="Age"
+                              value={each?.status}
+                              name="status"
+                              onChange={(e) => handleUpdateStatus(e, each?.visaApplicationId)}
+                            >
+                              <MenuItem className="capitalize" value="IN_PROGRESS">In Progress</MenuItem>
+                              <MenuItem className="capitalize" value="COMPLETED">Completed</MenuItem>
+                            </Select>
+                            </td>
                             <td className="flex flex-row gap-1.5 lg:gap-2 xl:gap-2.5" style={{ width: "110px"}}>
                               <Link href={`/backoffice/applications/visa/add?id=${each?.visaApplicationId}&action=view`} className="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">

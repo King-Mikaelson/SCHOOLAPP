@@ -64,20 +64,55 @@ console.log(searchQuery)
     getApplicationsTrigger({ direction: "backward", cursor: data?.previousCursor})
   }
 
-  const handleUpdateStatus = (e: any, schoolId: string): void => {
+  const submitData = new FormData();
+
+  const handleUpdateStatus = (e: any, schoolApplicationId: string): void => {
     const { value } = e.target;
     // const submitData = { schoolApplicationId: schoolId, status: value }
     console.log(value)
-    console.log(schoolId)
-    const submitData = new FormData();
-    submitData.append("schoolApplicationId", schoolId);
-    submitData.append("status", value);
-    updateSchoolApplicationTrigger(submitData);
+    console.log(schoolApplicationId)
+    const result = { schoolApplicationId, status: value };
+    // submitData.append("schoolApplicationId", schoolApplicationId);
+    // submitData.append("status", value);
+    updateSchoolApplicationTrigger(convertToFormData(result));
+
+    console.log(submitData.get("schoolApplicationId"))
+
   }
 
   console.log(updateSchoolApplicationData)
   console.log(updateSchoolApplicationError)
   console.log(data?.data)
+
+    /* Converting Form Object to FormData */
+    function objectToFormData(obj: any, formDataInstance: FormData, parentKey = '') {
+      for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          const propName = parentKey ? `${parentKey}[${key}]` : key;
+          const value = obj[key as keyof any];
+    
+          if (value instanceof Array) {
+            value.forEach((item, index) => {
+              objectToFormData(item, formDataInstance, `${propName}[${index}]`);
+            });
+          } else if (value instanceof Object && !(value instanceof File)) {
+            objectToFormData(value as any, formDataInstance, propName);
+          } else {
+            // formDataInstance.append(propName, value);
+            // @ts-ignore;
+            if (value !== "") formDataInstance.append(propName, typeof value === 'boolean' ? String(value) : value);
+          }
+        }
+      }
+    }
+    
+    const convertToFormData = (data: any) => {
+      const formDataInstance = new FormData();
+      objectToFormData(data, formDataInstance);
+      return formDataInstance;
+    };
+
+
 
   return (
     <main className="p-3 md:p-3 lg:p-4 xl:p-6">
@@ -171,7 +206,7 @@ console.log(searchQuery)
                           <Select
                             itemID="location"
                             displayEmpty
-                            className={`${statusColor[each.status as keyof typeof statusColor]} [&>*]:!py-0.5 [&>*]:!px-2 capitalize !rounded-full [&>*]:!border-none !text-sm !px-3 lg:!px-4 font-medium text-zinc-500 min-w-[50px]`}
+                            className={`${statusColor[each.status as keyof typeof statusColor]} [&>*]:!py-0.5 [&>*]:!px-2 !uppercase !rounded-full [&>*]:!border-none !text-xs !px-3 lg:!px-4 font-medium text-zinc-500 min-w-[50px]`}
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             label="Age"
