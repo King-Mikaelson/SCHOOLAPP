@@ -8,6 +8,8 @@ const baseQuery: any = fetchBaseQuery({
     Authorization: typeof window !== "undefined" ? `Bearer ${JSON.parse(localStorage?.getItem("userToken") as string)?.jwt}` : ""
   }
 })
+
+
 const baseQueryWithReauth: BaseQueryFn<
   string | FetchArgs,
   unknown,
@@ -39,6 +41,7 @@ const api = createApi({
   // }),
   baseQuery: async (arg, api, extraOptions) => {
     console.log(api.endpoint)
+    console.log(api)
     // Wait for localStorage to be accessible
     if (!["clientGetSchools", "addVisaApplication", "addSchoolapplication", "clientGetSchools", "clientSearchSchools", "signIn", "addAdmin", "sendRecoveryToken", "resetPassword", "getSchoolPrograms"].includes(api.endpoint)) {
       await new Promise((resolve: any) => {
@@ -161,6 +164,11 @@ const api = createApi({
       transformResponse: (response: any) => response?.data,
       providesTags: () => [{ type: "school" }]
     }),
+      getSchoolsInCountry:builder.query({
+        query: (location) => `schools/search?location=${location ? location : ""}`,
+        transformResponse: (response: any) => response?.data,
+        providesTags: () => [{ type: "school" }]
+      }),
     getSchoolPrograms: builder.query({
       query: () => "/schools/programs",
       transformResponse: (response: any) => response?.data,

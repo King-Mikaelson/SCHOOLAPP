@@ -104,7 +104,7 @@ export default function StudyAbroad({ params }: IProps) {
                 value={searchData.location}
                 onChange={handleTextInput}
                 name="location"
-                sx={{ '& > *': { border: 'none', padding: "0.5rem 0", fontWeight: "500", color: "rgb(120 113 108)" } }}
+                sx={{ '& > *': { border: 'none', padding: "0.5rem 0", fontWeight: "500", color: "rgba(60, 60, 60, 1) !important" } }}
                 className="[&>*]:!py-2 [&>*]:!px-0 [&>*]:!border-none font-medium text-stone-500 min-w-[180px]"
               >
                 <MenuItem className="!p-0 !opacity-0" value="">{langs[params.lang as keyof typeof langs].form.selectCountry}</MenuItem>
@@ -119,7 +119,7 @@ export default function StudyAbroad({ params }: IProps) {
           
           <label htmlFor="location" className="text-neutral-400 bg-neutral-100 rounded-lg py-2 px-4 max-md:w-full md:bg-white text-sm flex flex-col">
             {langs[params.lang as keyof typeof langs].form.studyLabel}
-            {/* <FormControl fullWidth>
+            <FormControl fullWidth>
               <Select
                 itemID="location"
                 
@@ -128,7 +128,7 @@ export default function StudyAbroad({ params }: IProps) {
                 onChange={handleTextInput}
                 name="name"
                 defaultValue=""
-                sx={{ '& > *': { border: 'none', padding: "0.5rem 0", fontWeight: "500", color: "rgb(120 113 108)" } }}
+                sx={{ '& > *': { border: 'none', padding: "0.5rem 0", fontWeight: "500", color: "rgba(60, 60, 60, 1) !important" } }}
                 className="[&>*]:!py-2 [&>*]:!px-0 [&>*]:!border-none font-medium text-stone-500 min-w-[180px]"
                 
               >
@@ -139,8 +139,8 @@ export default function StudyAbroad({ params }: IProps) {
                   ))
                 }
               </Select>
-            </FormControl> */}
-            <FormControl fullWidth>
+            </FormControl>
+            {/* <FormControl fullWidth>
               <Autocomplete
                 // disablePortal
                 value={searchData.name}
@@ -153,13 +153,13 @@ export default function StudyAbroad({ params }: IProps) {
                   {...params}
                   name="name"
                   placeholder="Select Course"
-                  sx={{ '& > *': { border: 'none', padding: "0.5rem 0", fontWeight: "500",  } }}
+                  sx={{ '& > *': { border: 'none', padding: "0.5rem 0", fontWeight: "500",color: "rgba(60, 60, 60, 1) !important"} }}
                   className="[&>*]:!py-0 !border placeholder:!text-neutral-900 !border-red-400 [&>*]:!px-0 [&>*]:!border-none font-medium !text-stone-800 min-w-[180px]"
                   // label="Select Course"
                   />}
 
               />
-            </FormControl>
+            </FormControl> */}
             {/* <input name="courseOfStudy" onChange={handleTextInput} type="text" placeholder="Enter course of study" className="px-3 py-2 focus:outline outline-1 rounded-lg text-slate-700 focus:outline-slate-300" /> */}
             
           </label>
@@ -169,7 +169,7 @@ export default function StudyAbroad({ params }: IProps) {
               <Select
                 itemID="location"
                 displayEmpty
-                sx={{ '& > *': { border: 'none', padding: "0.5rem 0", fontWeight: "500", color: "rgb(120 113 108)" } }}
+                sx={{ '& > *': { border: 'none', padding: "0.5rem 0", fontWeight: "500", color: "rgba(60, 60, 60, 1) !important" } }}
                 className="[&>*]:!py-2 [&>*]:!px-0 [&>*]:!border-none font-medium text-stone-500 min-w-[180px]"
                 value={searchData.program}
                 name="program"
@@ -187,7 +187,7 @@ export default function StudyAbroad({ params }: IProps) {
 
           {/* ... other form elements ... */}
 
-          <button className="button bg-red-500 h-full max-md:w-full max-md:py-3 flex flex-row py-2 px-6 items-center justify-center rounded-lg gap-2">
+          <button className="button bg-[#FF4512] h-full max-md:w-full max-md:py-3 flex flex-row py-2 px-6 items-center justify-center rounded-lg gap-2">
             <img
               loading="lazy"
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/ec30e33db9ff2542020699f255cdc699c343a9eea71f9d3d7995882140f597ea?apiKey=0ce679486ae447bd8ce08b2cc2263e2e&"

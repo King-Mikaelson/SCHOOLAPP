@@ -68,26 +68,26 @@ export const testimonies = [
   {
     image: testimony1,
     text: "“GT Western exceeded my expectations! Their knowledgeable staff not only helped with the visa process but also provided insights into local culture. Booking my flight through them was seamless. I’m now enjoying my studies in a new country.",
-    name: "Sophie K. from Australia",
-    university: "University of Wastminster"
+    name: "Modupe A. from Osun, Nigeria",
+    university: "University of BRADFORD, UK"
   },
   {
     image: testimony2,
-    text: "“Applying to study abroad can be overwhelming, but GT Western made it surprisingly easy. Their team was patient in explaining the visa requirements, and their flight booking options saved me time and money. Highly recommend for a stress-free experience”",
-    name: "Sophie K. from Australia",
-    university: "University of Wastminster"
+    text: "“GT Western exceeded my expectations! Their knowledgeable staff not only helped with the visa process but also provided insights into local culture. Booking my flight through them was seamless. I’m now enjoying my studies in a new country.”",
+    name: "Babatunda K. from Ondo, Nigeria",
+    university: "liverpool john moores university, UK"
   },
   {
     image: testimony3,
-    text: "“GT Western made studying abroad hassle-free. Their website is a goldmine of information, and their responsive customer support addressed all my concerns. I confidently recommend GT Western to anyone considering studying overseas”",
-    name: "Sophie K. from Australia",
-    university: "University of Wastminster"
+    text: "“GT Western made my dream of studying abroad a reality! From helping me choose the right program to assisting me with the visa process, their support was invaluable. I'm now thriving at a university overseas, thanks to GT Western's assistance”",
+    name: "Happylife L. from Lagos, Nigeria",
+    university: "federation university, australia"
   },
   {
     image: testimony4,
     text: "“Applying to study abroad can be overwhelming, but GT Western made it surprisingly easy. Their team was patient in explaining the visa requirements, and their flight booking options saved me time and money. Highly recommend for a stress-free experience”",
-    name: "Sophie K. from Australia",
-    university: "University of Wastminster"
+    name: "Nelson O. from Delta, Nigeria",
+    university: "WESTCLIFF University, USA"
   },
 ]
 

@@ -73,9 +73,9 @@ export default function Schools() {
   return (
     <main className="p-3 md:p-3 lg:p-4 xl:p-6">
       <section className="flex flex-row gap-3  max-md:flex-wrap">
-        <div className="right flex flex-col gap-3 lg:gap-4  max-md:grow basis-3/4">
-          <div className="flex w-full flex-row gap-x-4 md:gap-3  lg:gap-4 h-max">
-            <label htmlFor="name" className="grow basis-1/2 relative max-h-max">
+        <div className="right flex flex-col gap-3 lg:gap-4 w-full">
+          <div className="flex w-full flex-col lg:flex-row gap-x-4 md:gap-3  lg:gap-4 h-max lg:items-center justify-between">
+            <label htmlFor="name" className="lg:w-[60%] relative max-h-max">
               <p className="text-xs text-stone-500 uppercase">SCHOOL</p>
               <span className="relative">
                 {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 absolute left-3 my-auto top-0 bottom-0">
@@ -85,7 +85,7 @@ export default function Schools() {
               </span>
               
             </label>
-            <span className="grow basis-1/2">
+            {/* <span className="grow basis-1/2">
               <p className="text-xs text-stone-500 uppercase">PROGRAMME</p>
               <label htmlFor="location" className="text-neutral-400  text-sm mt-1 flex flex-row border border-zinc-300 rounded-md items-center gap-1.5 ">
                 <Select
@@ -102,11 +102,20 @@ export default function Schools() {
                   }
                 </Select>
               </label>
-            </span>
+            </span> */}
+
+            <div className="lg:ml-auto">
+          <Link href="/backoffice/schools/add" className="bg-[#FF4512] max-w-max  flex flex-row font-medium items-center gap-1.5 rounded-lg px-6 py-2.5 shadow-md text-white mt-4">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+            Add New School
+          </Link>
+        </div>
           </div>
 
           <div className="flex w-full flex-row gap-x-4 md:gap-3 lg:gap-4 h-max">
-            <span className="grow basis-2/4">
+            {/* <span className="grow basis-2/4">
               <p className="text-xs text-stone-500 uppercase">COUNTRY</p>
               <label htmlFor="location" className="text-neutral-400  text-sm mt-1 flex flex-row border border-zinc-300 rounded-md items-center gap-1.5 ">
                 <Select
@@ -116,11 +125,7 @@ export default function Schools() {
                   name="location"
                   onChange={handleFilterTextInput}
                 >
-                  {/* {
-                    views.map((view: string, index: number) => (
-                      <MenuItem className="capitalize" key={index} value={view}>{view.replace(/-/, " ")}</MenuItem>
-                    ))
-                  } */}
+                
                   {
                     countryList.sort((a: any, b: any) => a?.name?.localeCompare(b?.name))?.map((country: typeof countryList[0], index: number) => (
                       <MenuItem key={country.name} className="" value={country.code}>{country.name}</MenuItem>
@@ -128,32 +133,25 @@ export default function Schools() {
                   }
                 </Select>
               </label>
-            </span>
+            </span> */}
 
-            <span className="grow basis-1/4">
+            {/* <span className="grow basis-1/4">
               <label htmlFor="from" className="text-neutral-400 text-sm flex flex-col gap-1">
                 <p className="text-xs text-stone-500 uppercase">FROM</p>
                 <input id="from" name="from" value={searchData.from} onChange={handleFilterTextInput} type="date" placeholder="" className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 border border-stone-300 focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90  px-3 py-3 rounded-md" />
               </label>
-            </span>
+            </span> */}
 
-            <span className="grow basis-1/4">
+            {/* <span className="grow basis-1/4">
               <label htmlFor="to" className="text-neutral-400 text-sm flex flex-col gap-1">
                 <p className="text-xs text-stone-500 uppercase">TO</p>
                 <input id="to" name="to" value={searchData.to} onChange={handleFilterTextInput} type="date" placeholder="" className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 border border-stone-300 focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90  px-3 py-3 rounded-md" />
               </label>
-            </span>
+            </span> */}
 
           </div>
         </div>
-        <div className="left basis-1/2">
-          <Link href="/backoffice/schools/add" className="bg-[#FF4512] max-w-max max-md:mr-auto md:ml-auto flex flex-row font-medium mt-1 items-center gap-1.5 rounded-lg px-6 py-2.5 shadow-md text-white">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-            </svg>
-            Add New School
-          </Link>
-        </div>
+       
       </section>
 
       <section className="mt-5">
@@ -162,10 +160,10 @@ export default function Schools() {
             <thead className="w-full sticky top-0 border-b bg-white border-y-zinc-200">
               <tr className="grid grid-cols-3 w-full md:table-row text-stone-600 font-medium">
                 {/* <td>#</td> */}
-                <td>Date</td>
+                <td>S/N</td>
                 <td>School Name</td>
-                <td>Country</td>
-                <td>Program Type</td>
+                <td>State,Country</td>
+                <td>Available Programmes</td>
                 <td style={{ width: "100px"}}>Action</td>
               </tr>
             </thead>
@@ -179,7 +177,7 @@ export default function Schools() {
                     data?.data && data?.data.map((each: any, index: number) => (
                       <tr key={index} className="text-slate-500 border-b border-b-zinc-200/70 w-full grid md:table-row grid-cols-3 font-semi-bold">
                         {/* <td>{String(new Date(each?.createdAt)).split(" ").slice(0, 4).join(" ")}</td> */}
-                        <td>{formatDate(each?.createdAt?.split("T")[0])}</td>
+                        <td>{index + 1}</td>
                         <td className="flex flex-col">
                           <span className="text-zinc-600 tracking-wide font-medium">{each?.info?.name}</span>
                           <span className="text-zonc-500 text-sm">{each?.info?.url}</span>

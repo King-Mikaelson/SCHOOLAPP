@@ -428,7 +428,7 @@ export default function ProgramDetails({ params }: IProps) {
                   }
                 </div>
 
-                <a href={selectedData?.info.url} rel="no-referrer" target="_blank" className="justify-center items-stretch flex gap-2 mt-6">
+                {/* <a href={selectedData?.info.url} rel="no-referrer" target="_blank" className="justify-center items-stretch flex gap-2 mt-6">
                   <span  className="text-orange-600 text-center text-base font-medium leading-6 grow whitespace-nowrap">
                     Learn More
                   </span>
@@ -437,7 +437,7 @@ export default function ProgramDetails({ params }: IProps) {
                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/846cbf7fad412b2c7d2835ef8da732816ad10a3277954d3520cc2a68e69036b2?apiKey=0ce679486ae447bd8ce08b2cc2263e2e&"
                     className="aspect-square object-contain object-center w-5 overflow-hidden self-center shrink-0 max-w-full my-auto"
                   />
-                </a>
+                </a> */}
 
               </div>
             </div>

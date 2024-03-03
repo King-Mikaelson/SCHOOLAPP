@@ -30,13 +30,13 @@
   "form": {
     "locationLabel": "Location",
     "selectCountry": "Select Country",
-    "studyLabel": "What do you want to study",
-    "selectProgram": "Select Course",
+    "studyLabel": "Course",
+    "selectProgram": "Select Program",
     "timeframeLabel": "When do you want to study",
     "selectTimeframe": "Select Timeframe",
-    "desiredDegree": "What degree do you want",
-    "selectDegree": "Select Degree",
-    "searchButton": "Search"
+    "desiredDegree": "School",
+    "selectDegree": "Select University",
+    "searchButton": "Apply"
   },
   "button": {
     "findProgram": "Find My Preferred Program"
