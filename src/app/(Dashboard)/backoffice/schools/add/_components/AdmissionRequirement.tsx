@@ -108,12 +108,18 @@ export default function AcademinRequirement({ formData, setFormData, isLoading, 
                 )
             }
           </div>
-          <button type="button" disabled={action === "view" || isSubmitting} onClick={() => addField("financialAid")} className="rounded-md mt-4 flex items-center gap-x-1.5 px-4 font-medium py-1.5 text-primary-red bg-red-100">
+          <button type="button" disabled={action === "view" || isSubmitting}  className="rounded-md mt-4 flex items-center gap-x-1.5 px-4 font-medium py-1.5 text-primary-red bg-red-100">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
             Add More
           </button>
+          {/* <button type="button" disabled={action === "view" || isSubmitting} onClick={() => addField("financialAid")} className="rounded-md mt-4 flex items-center gap-x-1.5 px-4 font-medium py-1.5 text-primary-red bg-red-100">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+            Add More
+          </button> */}
         </div>
 
         <div className="mt-6  w-full">
@@ -142,7 +148,13 @@ export default function AcademinRequirement({ formData, setFormData, isLoading, 
                 )
             }
           </div>
-          <button type="button" disabled={action === "view" || isSubmitting} onClick={() => addField("accomodationOptions")} className="rounded-md mt-4 flex items-center gap-x-1.5 px-4 font-medium py-1.5 text-primary-red bg-red-100">
+          {/* <button type="button" disabled={action === "view" || isSubmitting} onClick={() => addField("accomodationOptions")} className="rounded-md mt-4 flex items-center gap-x-1.5 px-4 font-medium py-1.5 text-primary-red bg-red-100">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+            Add More
+          </button> */}
+          <button type="button" disabled={action === "view" || isSubmitting}  className="rounded-md mt-4 flex items-center gap-x-1.5 px-4 font-medium py-1.5 text-primary-red bg-red-100">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
