@@ -54,8 +54,7 @@ export default function Hero({ params }: IProps) {
     }
   );
 
-  console.log(schools?.formattedData, "These are schools");
-  console.log(courses, "These are courses");
+
 
   useEffect(() => {
     setSearchData({ ...searchData, school: "", name: "" });
@@ -65,25 +64,25 @@ export default function Hero({ params }: IProps) {
     setSearchData({ ...searchData, name: "" });
   }, [searchData.school]);
 
-  const [getProgramsTrigger, { data: programs }] =
-    api.adminApis.useLazyGetSchoolProgramsQuery();
+  // const [getProgramsTrigger, { data: programs }] =
+  //   api.adminApis.useLazyGetSchoolProgramsQuery();
 
-  useEffect(() => {
-    // let interval: NodeJS.Timeout|null = null;
-    // if (!programs) {
-    //   interval = setInterval(() => {
-    //     console.log("Some running");
-    //     getProgramsTrigger("");
-    //   }, 400);
-    // } else {
-    //   console.log("Some ele runing")
-    //   if (interval) clearTimeout(interval);
-    // }
-    if (!programs) {
-      console.log("firing");
-      getProgramsTrigger("");
-    }
-  }, [programs, searchData, searchQuery]);
+  // useEffect(() => {
+  //   // let interval: NodeJS.Timeout|null = null;
+  //   // if (!programs) {
+  //   //   interval = setInterval(() => {
+  //   //     console.log("Some running");
+  //   //     getProgramsTrigger("");
+  //   //   }, 400);
+  //   // } else {
+  //   //   console.log("Some ele runing")
+  //   //   if (interval) clearTimeout(interval);
+  //   // }
+  //   // if (!programs) {
+  //   //   console.log("firing");
+  //   //   getProgramsTrigger("");
+  //   // }
+  // }, [programs, searchData, searchQuery]);
 
   // useEffect(() => {
   //   setSearchQuery(
@@ -109,8 +108,7 @@ export default function Hero({ params }: IProps) {
 
   // const dict = await getDictionary(params.lang)
   // const { t } = useTranslation();
-  console.log(programs);
-  console.log(searchData);
+  // console.log(searchData);
   // console.log(countryList.sort((a: any, b: any) => a?.name?.localeCompare(b?.name))?.map((x: any) => x?.name))
   return (
     <section

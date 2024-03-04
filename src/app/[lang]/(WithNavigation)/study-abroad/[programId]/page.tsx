@@ -95,7 +95,7 @@ export default function ProgramDetails({ params }: IProps) {
                 <h2 className="text-black text-xl mt-5 font-medium leading-6 tracking-tight self-stretch whitespace-nowrap max-md:max-w-full">Tuition and Fees</h2>
                 <div className="grid grid-cols-[2fr_3.2fr] mt-3 items-start max-md:max-w-full max-md:flex-wrap max-md:pr-5">
                   <div className="text-neutral-400 text-sm leading-5">
-                    Semester Tuition Fees:
+                    Annual Tuition Fees:
                   </div>
                   <div className="text-neutral-700 text-base leading-6 self-stretch whitespace-nowrap">
                     {/* $3,616.00 */}
