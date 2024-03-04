@@ -1,10 +1,17 @@
 // import { useTranslation } from 'react-i18next';
 "use client";
 
-import { Autocomplete, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import {
+  Autocomplete,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import { getDictionary } from "../../dictionaries";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import langs from "../../dictionaries/langs";
 import { countryList, getCountryNameFromCode } from "@SharedData/CountryList";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -13,25 +20,53 @@ import api from "@redux/api";
 
 interface IProps {
   params: {
-    lang: string
-  }
+    lang: string;
+  };
 }
 export default function Hero({ params }: IProps) {
   const pathname = usePathname();
+  const router = useRouter();
 
   // const [ searchData, setFormData ] = useState({ location: "", courseOfStudy: "", timeframe: "" })
-  const [ searchQuery, setSearchQuery ] = useState("");
-  const [ searchData, setSearchData ] = useState({ location: "", program: "", timeframe: "", from: "", to: "", name: "", cursor: "" });
-  // const [ searchData, setSearchData ] = useState({ location: "", program: ""});
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchData, setSearchData] = useState({
+    location: "",
+    school: "",
+    timeframe: "",
+    from: "",
+    to: "",
+    name: "",
+    cursor: "",
+  });
+  // const [ searchData, setSearchData ] = useState({ location: "",school: ""});
 
+  const { data: schools } = api.adminApis.useGetSchoolsInCountryQuery(
+    searchData.location,
+    {
+      skip: searchData.location === "",
+    }
+  );
 
-  const { data: schools, error, isLoading } = api.adminApis.useGetSchoolsInCountryQuery(searchData.location,{
-    skip : searchData.location === '',
-  })
+  const { data: courses } = api.adminApis.useGetProgramsInSchoolsQuery(
+    searchData.school,
+    {
+      skip: searchData.school === "",
+    }
+  );
 
-  console.log(schools?.data,"These are schools")
+  console.log(schools?.formattedData, "These are schools");
+  console.log(courses, "These are courses");
 
-  const [ getProgramsTrigger, { data: programs } ] = api.adminApis.useLazyGetSchoolProgramsQuery();
+  useEffect(() => {
+    setSearchData({ ...searchData, school: "", name: "" });
+  }, [searchData.location]);
+
+  useEffect(() => {
+    setSearchData({ ...searchData, name: "" });
+  }, [searchData.school]);
+
+  const [getProgramsTrigger, { data: programs }] =
+    api.adminApis.useLazyGetSchoolProgramsQuery();
 
   useEffect(() => {
     // let interval: NodeJS.Timeout|null = null;
@@ -45,27 +80,43 @@ export default function Hero({ params }: IProps) {
     //   if (interval) clearTimeout(interval);
     // }
     if (!programs) {
-      console.log("firing")
+      console.log("firing");
       getProgramsTrigger("");
     }
-  }, [ programs, searchData, searchQuery ]);
+  }, [programs, searchData, searchQuery]);
 
+  // useEffect(() => {
+  //   setSearchQuery(
+  //     `/${searchData.location && `location=${searchData.location}`}${
+  //       searchData.school && `&school=${searchData.school}`
+  //     }${searchData.name && `&name=${searchData.name}`}${
+  //       searchData.from && `&from=${searchData.from}`
+  //     }${searchData.to && `&to=${searchData.to}`}${
+  //       searchData.cursor && `&cursor=${searchData.cursor}`
+  //     }`
+  //   );
+  // }, [searchData]);
   useEffect(() => {
-    setSearchQuery(`?${searchData.location && `location=${searchData.location}`}${searchData.program && `&program=${searchData.program}`}${searchData.name && `&name=${searchData.name}`}${searchData.from && `&from=${searchData.from}`}${searchData.to && `&to=${searchData.to}`}${(searchData.cursor) && `&cursor=${searchData.cursor}`}`);
-  }, [ searchData ]);
+    setSearchQuery(`/${searchData.name && `${searchData.name}`}`);
+  }, [searchData]);
 
-  const handleTextInput = (e: ChangeEvent<HTMLInputElement|HTMLSelectElement|any>|any): void => {
+  const handleTextInput = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | any> | any
+  ): void => {
     const { name, value } = e.target;
     setSearchData({ ...searchData, [name]: value });
-  }
+  };
 
   // const dict = await getDictionary(params.lang)
   // const { t } = useTranslation();
-  console.log(programs)
-  console.log(searchData)
+  console.log(programs);
+  console.log(searchData);
   // console.log(countryList.sort((a: any, b: any) => a?.name?.localeCompare(b?.name))?.map((x: any) => x?.name))
   return (
-    <section id="hero" className="flex-col min-h-[calc(100vh-100px)] after:h-full after:w-full after:bg-black/40 after:absolute bg-[url(/images/home/hero.png)] bg-no-repeat bg-cover items-center overflow-hidden relative flex justify-center px-16 py-12 max-md:px-5">
+    <section
+      id="hero"
+      className="flex-col min-h-[calc(100vh-100px)] after:h-full after:w-full after:bg-black/40 after:absolute bg-[url(/images/home/hero.png)] bg-no-repeat bg-cover items-center overflow-hidden relative flex justify-center px-16 py-12 max-md:px-5"
+    >
       <header className="header z-[1] max-w-[1000px]">
         {/* <div className="text-sky-500 text-center text-sm leading-4 tracking-widest uppercase self-center whitespace-nowrap">
           {langs[params.lang as keyof typeof langs].common.welcome}
@@ -77,11 +128,13 @@ export default function Hero({ params }: IProps) {
           {langs[params.lang as keyof typeof langs].common.heroSubtitle}
         </p>
       </header>
-      
-      <div className="form-container z-[1] mt-10 bg-white rounded-lg w-[95%] xl:w-full  max-w-screen-2xl lg:px-6">        
+
+      <div className="form-container z-[1] mt-10 bg-white rounded-lg w-[95%] xl:w-full  max-w-screen-2xl lg:px-6">
         <form className="input-group  flex flex-row gap-2 justify-between items-center p-4 max-lg:flex-col">
-          <label htmlFor="location"
-          className="text-neutral-400 bg-neutral-100 rounded-lg py-2 px-4 max-lg:w-full lg:bg-white text-sm flex flex-col">
+          <label
+            htmlFor="location"
+            className="text-neutral-400 bg-neutral-100 rounded-lg py-2 px-4 max-lg:w-full lg:bg-white text-sm flex flex-col"
+          >
             {langs[params.lang as keyof typeof langs].form.locationLabel}
             {/* <FormControl fullWidth className="">
               <Autocomplete
@@ -115,43 +168,75 @@ export default function Hero({ params }: IProps) {
                 value={searchData.location}
                 onChange={handleTextInput}
                 name="location"
-                sx={{ '& > *': { border: 'none', padding: "0.5rem 0", fontWeight: "500", color: "rgba(60, 60, 60, 1) !important" } }}
+                sx={{
+                  "& > *": {
+                    border: "none",
+                    padding: "0.5rem 0",
+                    fontWeight: "500",
+                    color: "rgba(60, 60, 60, 1) !important",
+                  },
+                }}
                 className="[&>*]:!py-2 [&>*]:!px-0 [&>*]:!border-none font-medium text-stone-500 min-w-[180px]"
               >
-                <MenuItem className="!p-0 !opacity-0" value="">{langs[params.lang as keyof typeof langs].form.selectCountry}</MenuItem>
-                {
-                  countryList.sort((a: any, b: any) => a?.name?.localeCompare(b?.name))?.map((country: typeof countryList[0], index: number) => (
-                    <MenuItem key={index} className="" value={country.code}>{country.name}</MenuItem>
-                  ))
-                }
+                <MenuItem className="!p-0 !opacity-0" value="">
+                  {langs[params.lang as keyof typeof langs].form.selectCountry}
+                </MenuItem>
+                {countryList
+                  .sort((a: any, b: any) => a?.name?.localeCompare(b?.name))
+                  ?.map((country: (typeof countryList)[0], index: number) => (
+                    <MenuItem key={index} className="" value={country.code}>
+                      {country.name}
+                    </MenuItem>
+                  ))}
               </Select>
             </FormControl>
           </label>
 
-          <label htmlFor="location" className="text-neutral-400 bg-neutral-100 rounded-lg py-2 px-4 max-lg:w-full lg:bg-white text-sm flex flex-col">
+          <label
+            htmlFor="location"
+            className="text-neutral-400 bg-neutral-100 rounded-lg py-2 px-4 max-lg:w-full lg:bg-white text-sm flex flex-col"
+          >
             {langs[params.lang as keyof typeof langs].form.desiredDegree}
             <FormControl fullWidth>
               <Select
                 itemID="location"
                 displayEmpty
-                sx={{ '& > *': { border: 'none', padding: "0.5rem 0", fontWeight: "500", color: "rgba(60, 60, 60, 1) !important" } }}
+                sx={{
+                  "& > *": {
+                    border: "none",
+                    padding: "0.5rem 0",
+                    fontWeight: "500",
+                    color: "rgba(60, 60, 60, 1) !important",
+                  },
+                }}
                 className="[&>*]:!py-2 [&>*]:!px-0 [&>*]:!border-none font-medium text-stone-500 min-w-[180px]"
-                value={searchData.program}
-                name="program"
+                value={searchData.school}
+                name="school"
                 onChange={handleTextInput}
+                defaultValue="No Schools available"
               >
-                <MenuItem className="!p-0 !hidden" value="">{langs[params.lang as keyof typeof langs].form.selectDegree}</MenuItem>
-                
-                {
-                  schools?.data.map((degType: any) => (
-                    <MenuItem key={degType._id} value={degType?.info?.name}>{degType?.info?.name}</MenuItem>
-                  ))
-                }
+                <MenuItem className="!p-0 !hidden" value="">
+                  {langs[params.lang as keyof typeof langs].form.selectDegree}
+                </MenuItem>
+
+                {schools?.formattedData?.length === 0 && (
+                  <MenuItem value="" disabled>
+                    {"No Schools available"}
+                  </MenuItem>
+                )}
+                {schools?.formattedData?.map((degType: any) => (
+                  <MenuItem key={degType._id} value={degType?.info?.name}>
+                    {degType?.info?.name}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </label>
-          
-          <label htmlFor="location" className="text-neutral-400 bg-neutral-100 rounded-lg py-2 px-4 max-lg:w-full lg:bg-white text-sm flex flex-col">
+
+          <label
+            htmlFor="location"
+            className="text-neutral-400 bg-neutral-100 rounded-lg py-2 px-4 max-lg:w-full lg:bg-white text-sm flex flex-col"
+          >
             {langs[params.lang as keyof typeof langs].form.studyLabel}
             {/* <FormControl fullWidth>
             <TextField
@@ -165,8 +250,8 @@ export default function Hero({ params }: IProps) {
             >
               <MenuItem className="!p-0 !hidden" value="">{langs[params.lang as keyof typeof langs].form.selectProgram}</MenuItem>
                 {
-                  programs && programs?.map((program: string) => (
-                    <MenuItem value={program}>{program}</MenuItem>
+                  programs && programs?.map((school: string) => (
+                    <MenuItem value={school}>{school}</MenuItem>
                   ))
                 }
             </TextField>
@@ -194,33 +279,48 @@ export default function Hero({ params }: IProps) {
             </FormControl> */}
 
             <FormControl fullWidth>
-              <Select             
+              <Select
                 displayEmpty
                 value={searchData.name}
                 onChange={handleTextInput}
                 name="name"
                 defaultValue=""
-                sx={{ '& > *': { border: 'none', padding: "0.5rem 0", fontWeight: "500", color: "rgba(60, 60, 60, 1) !important" } }}
+                sx={{
+                  "& > *": {
+                    border: "none",
+                    padding: "0.5rem 0",
+                    fontWeight: "500",
+                    color: "rgba(60, 60, 60, 1) !important",
+                  },
+                }}
                 className="[&>*]:!py-2 [&>*]:!px-0 [&>*]:!border-none font-medium text-stone-500 min-w-[180px]"
               >
-                <MenuItem className="!p-0 !hidden" value="">{langs[params.lang as keyof typeof langs].form.selectProgram}
+                <MenuItem className="!p-0 !hidden" value="">
+                  {langs[params.lang as keyof typeof langs].form.selectProgram}
                 </MenuItem>
 
-                {
-                  programs && programs?.map((program: string) => (
-                    <MenuItem value={program}>{program}</MenuItem>
+                {courses?.length === 0 ? (
+                  <MenuItem value="" disabled>
+                    {"No Available Course"}
+                  </MenuItem>
+                ) : (
+                  courses?.map((course: any, index: number) => (
+                    <MenuItem key={index} value={course.schoolId}>
+                      {course.program}
+                    </MenuItem>
                   ))
-                }
+                )}
               </Select>
             </FormControl>
             {/* <input name="courseOfStudy" onChange={handleTextInput} type="text" placeholder="Enter course of study" className="px-3 py-2 focus:outline outline-1 rounded-md text-slate-700 focus:outline-slate-300" /> */}
-            
           </label>
-
 
           {/* ... other form elements ... */}
 
-          <Link href={`/${pathname.split("/")[1]}/study-abroad${searchQuery}`} className="button  bg-[#FF4512] max-lg:w-full max-md:py-3 flex flex-row py-2 px-6 items-center justify-center rounded-lg gap-2  lg:hidden">
+          {/* <Link
+            href={`/${pathname.split("/")[1]}/study-abroad${searchQuery}`}
+            className="button  bg-[#FF4512] max-lg:w-full max-md:py-3 flex flex-row py-2 px-6 items-center justify-center rounded-lg gap-2  lg:hidden"
+          >
             <img
               loading="lazy"
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/ec30e33db9ff2542020699f255cdc699c343a9eea71f9d3d7995882140f597ea?apiKey=0ce679486ae447bd8ce08b2cc2263e2e&"
@@ -230,13 +330,65 @@ export default function Hero({ params }: IProps) {
             <span className="text-white text-center text-base font-medium">
               {langs[params.lang as keyof typeof langs].form.searchButton}
             </span>
-          </Link>
+          </Link> */}
+
+          <button
+            title={`/${pathname.split("/")[1]}/study-abroad${searchQuery}`}
+            type="button"
+            onClick={() => {
+              if (
+                searchData.location !== "" &&
+                searchData.school !== "" &&
+                searchData.name !== ""
+              ) {
+                router.push(
+                  `/${pathname.split("/")[1]}/study-abroad${searchQuery}`
+                );
+              } else {
+                alert("Select Country,School And Course To Apply");
+              }
+            }}
+            className="button  bg-[#FF4512] max-lg:w-full max-md:py-3 flex flex-row py-2 px-6 items-center justify-center rounded-lg gap-2  lg:hidden"
+          >
+            <img
+              loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/ec30e33db9ff2542020699f255cdc699c343a9eea71f9d3d7995882140f597ea?apiKey=0ce679486ae447bd8ce08b2cc2263e2e&"
+              className="aspect-square object-contain object-center w-6 overflow-hidden shrink-0 max-w-full"
+              alt="Search Icon"
+            />
+            <span className="text-white text-center text-base font-medium">
+              {langs[params.lang as keyof typeof langs].form.searchButton}
+            </span>
+          </button>
         </form>
-        <Link href={`/${pathname.split("/")[1]}/study-abroad${searchQuery}`} className="bg-[#FF4512]  py-4 px-6 w-full h-full hidden lg:block rounded-lg gap-2 lg:my-5 md:mt-2 md:mb-2  mx-auto">
+        {/* <Link href={`/${pathname.split("/")[1]}/study-abroad${searchQuery}`} className="bg-[#FF4512]  py-4 px-6 w-full h-full hidden lg:block rounded-lg gap-2 lg:my-5 md:mt-2 md:mb-2  mx-auto">
             <span className="text-white text-center text-base font-medium block">
               {langs[params.lang as keyof typeof langs].form.searchButton}
             </span>
-          </Link>
+          </Link> */}
+
+        <button
+          title={`/${pathname.split("/")[1]}/study-abroad${searchQuery}`}
+          type="button"
+          onClick={() => {
+            if (
+              searchData.location !== "" &&
+              searchData.school !== "" &&
+              searchData.name !== ""
+            ) {
+              router.push(
+                `/${pathname.split("/")[1]}/study-abroad${searchQuery}`
+              );
+            } else {
+              alert("Select Country,School And Course To Apply");
+            }
+          }}
+          className="bg-[#FF4512]  py-4 px-6 w-full h-full hidden lg:block rounded-lg gap-2 lg:my-5 md:mt-2 md:mb-2  mx-auto"
+        >
+          <span className="text-white text-center text-base font-medium block">
+            {langs[params.lang as keyof typeof langs].form.searchButton}
+          </span>
+        </button>
       </div>
 
       {/* <div className="block lg:hidden mt-10 z-[1]">

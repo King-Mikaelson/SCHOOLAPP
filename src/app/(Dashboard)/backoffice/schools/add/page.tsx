@@ -15,7 +15,8 @@ import { schoolInformationInitialState } from "./data";
 import ErrorBlock from "@SharedComponents/ErrorBlock";
 import SchoolImages from "./_components/Images";
 
-type TView = ("School Information"|"Program Information"|"Tuition and Fees"|"Admission Requirement"|"Other Information"|"Image");
+// type TView = ("School Information"|"Program Information"|"Tuition and Fees"|"Admission Requirement"|"Other Information"|"Image");
+type TView = ("School Information"|"Program Information");
 
 
 
@@ -25,7 +26,8 @@ export default function AddSchoolApplications() {
   const action = searchParams.get("action");
   const id = searchParams.get("id");
 
-  const views = ["School Information","Program Information","Tuition and Fees","Admission Requirement", "Image"]
+  // const views = ["School Information","Program Information","Tuition and Fees","Admission Requirement", "Image"]
+  const views = ["School Information","Program Information"]
   const [ currentView, setCurrentView ] = useState<TView>("School Information");
   const [ formData, setFormData ] = useState(schoolInformationInitialState);
   const [ imageFiles, setImageFiles ] = useState<Array<any>>([]);

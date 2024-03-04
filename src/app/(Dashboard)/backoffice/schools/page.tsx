@@ -76,12 +76,12 @@ export default function Schools() {
         <div className="right flex flex-col gap-3 lg:gap-4 w-full">
           <div className="flex w-full flex-col lg:flex-row gap-x-4 md:gap-3  lg:gap-4 h-max lg:items-center justify-between">
             <label htmlFor="name" className="lg:w-[60%] relative max-h-max">
-              <p className="text-xs text-stone-500 uppercase">SCHOOL</p>
+              {/* <p className="text-xs text-stone-500 uppercase">SCHOOL</p> */}
               <span className="relative">
-                {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 absolute left-3 my-auto top-0 bottom-0">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="rgba(129, 129, 129, 1)" className={searchData.name === "" ? "w-6 h-6 absolute left-3 my-auto top-0 bottom-0": "!hidden"}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                </svg> */}
-                <input id="name" name="name" value={searchData.name} onChange={handleFilterTextInput} type="text" placeholder="" className="text-neutral-500 w-full text-md leading-5 placeholder:text-neutral-400 whitespace-nowrap border border-stone-300 focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 py-3.5 rounded-md items-start" />
+                </svg>
+                <input id="name" name="name" value={searchData.name} onChange={handleFilterTextInput} type="text" placeholder="Search School" className="text-neutral-500 w-full text-md leading-5 placeholder:text-sm placeholder:!px-6 placeholder:text-neutral-400 whitespace-nowrap border border-stone-300 focus:outline focus:outline-2 outline-offset-1 outline-slate-400/90 justify-center mt-1 px-3 py-3.5 rounded-md items-start" />
               </span>
               
             </label>
@@ -161,10 +161,10 @@ export default function Schools() {
               <tr className="grid grid-cols-3 w-full md:table-row text-stone-600 font-medium">
                 {/* <td>#</td> */}
                 <td>S/N</td>
-                <td>School Name</td>
-                <td>State,Country</td>
-                <td>Available Programmes</td>
-                <td style={{ width: "100px"}}>Action</td>
+                <td>Name Of School</td>
+                <td>State, Country</td>
+                <td>Available Programs</td>
+                {/* <td style={{ width: "100px"}}>Action</td> */}
               </tr>
             </thead>
 

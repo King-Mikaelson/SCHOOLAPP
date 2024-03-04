@@ -3,7 +3,8 @@
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError, createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const baseQuery: any = fetchBaseQuery({
-  baseUrl: 'https://gt-western-backend.onrender.com/api/v1/',
+  // baseUrl: 'https://gt-western-backend.onrender.com/api/v1/',
+  baseUrl: 'https://gt-agency-backend-api-deployment.onrender.com/api/v1/',
   headers: {
     Authorization: typeof window !== "undefined" ? `Bearer ${JSON.parse(localStorage?.getItem("userToken") as string)?.jwt}` : ""
   }
@@ -43,7 +44,7 @@ const api = createApi({
     console.log(api.endpoint)
     console.log(api)
     // Wait for localStorage to be accessible
-    if (!["clientGetSchools", "addVisaApplication", "addSchoolapplication", "clientGetSchools", "clientSearchSchools", "signIn", "addAdmin", "sendRecoveryToken", "resetPassword", "getSchoolPrograms"].includes(api.endpoint)) {
+    if (!["clientGetSchools", "addVisaApplication", "addSchoolapplication", "clientGetSchools", "clientSearchSchools", "signIn", "addAdmin", "sendRecoveryToken", "resetPassword", "getSchoolPrograms","getSchoolsInCountry"].includes(api.endpoint)) {
       await new Promise((resolve: any) => {
         const checkTokenAvailability = () => {
           const userToken = localStorage.getItem("userToken");
@@ -62,7 +63,8 @@ const api = createApi({
 
     // Now that localStorage is accessible, proceed with the actual request
     const result = await fetchBaseQuery({
-      baseUrl: "https://gt-western-backend.onrender.com/api/v1/",
+      // baseUrl: "https://gt-western-backend.onrender.com/api/v1/",
+      baseUrl: 'https://gt-agency-backend-api-deployment.onrender.com/api/v1/',
       headers: {
         Authorization: `Bearer ${JSON.parse(localStorage.getItem("userToken") as string)?.jwt}`,
       },
@@ -166,6 +168,11 @@ const api = createApi({
     }),
       getSchoolsInCountry:builder.query({
         query: (location) => `schools/search?location=${location ? location : ""}`,
+        transformResponse: (response: any) => response?.data,
+        providesTags: () => [{ type: "school" }]
+      }),
+      getProgramsInSchools:builder.query({
+        query: (school) => `schools/programs?school=${school}`,
         transformResponse: (response: any) => response?.data,
         providesTags: () => [{ type: "school" }]
       }),
