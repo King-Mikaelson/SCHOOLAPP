@@ -174,7 +174,7 @@ const api = createApi({
       getProgramsInSchools:builder.query({
         query: (school) => `schools/programs?school=${school}`,
         transformResponse: (response: any) => response?.data,
-        providesTags: () => [{ type: "school" }]
+        providesTags: () => [{ type: "programs" }]
       }),
     getSchoolPrograms: builder.query({
       query: () => "/schools/programs",

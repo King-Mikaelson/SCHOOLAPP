@@ -1,3 +1,16 @@
+export const schoolInitialState = {
+  info: {
+    name: "",
+    schoolType: "",
+    state: "",
+    country: "",
+    url: "",
+    about: "",
+  },
+  schoolId: "",
+};
+
+
 export const schoolInformationInitialState = {
   info: {
     name: "",
@@ -15,6 +28,14 @@ export const schoolInformationInitialState = {
     startDate: "",
     classType: "",
     about: "",
+    currency: "USD",
+    tuitionFee: "",
+    otherFee: "",
+   requiredDocuments: ["","","",""],
+   needBasedScholarships:false,
+   meritBasedScholarships:false,
+   OnCampus:false,
+   OffCampus:false,
   },
   tuition: {
     tuitionFee: "",

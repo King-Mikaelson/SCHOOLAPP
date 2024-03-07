@@ -40,14 +40,14 @@ export default function Hero({ params }: IProps) {
   });
   // const [ searchData, setSearchData ] = useState({ location: "",school: ""});
 
-  const { data: schools } = api.adminApis.useGetSchoolsInCountryQuery(
+  const { data: schools,isLoading:isLoadingSchools } = api.adminApis.useGetSchoolsInCountryQuery(
     searchData.location,
     {
       skip: searchData.location === "",
     }
   );
 
-  const { data: courses } = api.adminApis.useGetProgramsInSchoolsQuery(
+  const { data: courses, isLoading:isLoadingPrograms } = api.adminApis.useGetProgramsInSchoolsQuery(
     searchData.school,
     {
       skip: searchData.school === "",
@@ -222,6 +222,15 @@ export default function Hero({ params }: IProps) {
                     {"No Schools available"}
                   </MenuItem>
                 )}
+
+
+                {isLoadingSchools  && (
+                  <MenuItem value="" disabled>
+                    {"Loading Available Schools Please Wait..."}
+                  </MenuItem>
+                )}
+
+
                 {schools?.formattedData?.map((degType: any) => (
                   <MenuItem key={degType._id} value={degType?.info?.name}>
                     {degType?.info?.name}
@@ -296,6 +305,12 @@ export default function Hero({ params }: IProps) {
                 <MenuItem className="!p-0 !hidden" value="">
                   {langs[params.lang as keyof typeof langs].form.selectProgram}
                 </MenuItem>
+
+                {isLoadingPrograms  && (
+                  <MenuItem value="" disabled>
+                    {"Loading Available Courses Please Wait..."}
+                  </MenuItem>
+                )}
 
                 {courses?.length === 0 ? (
                   <MenuItem value="" disabled>
