@@ -64,8 +64,8 @@ function ProgramTable({ setProgramView,action }: Props) {
             <div className="lg:ml-auto">
               <button
               disabled={ ["view", "update"].includes(action as string)
-              ? true
-              : false}
+              ? false
+              : true}
                 onClick={() => setProgramView("Form")}
                 className="bg-[#FF4512] max-w-max  flex flex-row font-medium items-center gap-1.5 rounded-lg px-6 py-2.5 shadow-md text-white mt-4"
               >
