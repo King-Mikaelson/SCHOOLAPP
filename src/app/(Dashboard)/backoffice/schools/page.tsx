@@ -78,13 +78,13 @@ export default function Schools() {
 
   console.log(data);
 
-  useEffect(() => {
-    searchQuery ? getSchoolsTrigger(searchQuery) : getSchoolsTrigger("");
-  }, []);
-
   // useEffect(() => {
   //   searchQuery ? getSchoolsTrigger(searchQuery) : getSchoolsTrigger("");
-  // }, [searchQuery]);
+  // }, []);
+
+  useEffect(() => {
+    searchQuery ? getSchoolsTrigger(searchQuery) : getSchoolsTrigger("");
+  }, [searchQuery]);
 
   console.log(searchQuery);
 
@@ -132,7 +132,7 @@ export default function Schools() {
     setPage(newPage);
   };
 
-  const rowsPerPage = 5;
+  const rowsPerPage = 6;
 
   // console.log(page);
 
@@ -142,9 +142,6 @@ export default function Schools() {
     page: page,
   });
 
-  function convertToArray(value:any){
-    return Object.entries(value).length
-  }
 
 
   return (
@@ -292,18 +289,18 @@ export default function Schools() {
                       >
                         <TableCell>{index + 1}</TableCell>
                         <TableCell className="text-zinc-600 tracking-wide font-medium">
-                          {each.info?.name}
+                          {each.name}
                         </TableCell>
-                        <TableCell className="flex flex-col">
-                          <span className="text-[#101828] tracking-wide  text-sm">
-                            {each?.info?.state}
-                          </span>
-                          <span className="text-[#667085] text-sm">
-                            {getCountryNameFromCode(each?.info?.country)}
-                          </span>
+                        <TableCell className="flex !flex-col">
+                          <p className="text-[#101828] tracking-wide  text-sm">
+                            {each?.state}
+                          </p>
+                          <p className="text-[#667085] text-sm">
+                            {(each?.country)}
+                          </p>
                         </TableCell>
                         <TableCell className="capitalize">
-                          {convertToArray(each?.program)}
+                          {each?.programs.length}
                         </TableCell>
                         <TableCell className="gap-1.5 lg:gap-2 xl:gap-2.5">
                           <Link

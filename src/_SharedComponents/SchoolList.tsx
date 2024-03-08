@@ -49,16 +49,16 @@ const SchoolsList = memo(({ arrangement, selectedFilters, routeProfix, scroll = 
                 <li key={index} className="">
                   <div onClick={() => handleNavigateToSchoolDetails(school?.schoolId)} className="card min-h-[400px] grid grid-rows-[1fr,1.2fr] cursor-pointer h-full relative hover:shadow-lg duration-300 min-w-[270px] rounded-lg overflow-hidden">
                     <div className="relative">
-                      <Image fill alt="school" className="object-cover object-center" src={school?.images[0]?.url} />
+                      <Image fill alt="school" className="object-cover object-center" src={school?.images?.[0]?.url} />
                     </div>
                     {/* <Image fill alt="testimony" className="object-cover object-center" src="/images/home/hero.png" /> */}
                     <div className="p-3 z-[1] flex flex-col gap-1 bg-white w-full">
-                      <h3 className="font-semibold  text-md">{school?.info?.name}</h3>
+                      <h3 className="font-semibold  text-md">{school?.name}</h3>
                       
                       <p className="leading-4 text-xs font-light overflow-ellipsis flex flex-col overflow-hidden text-stone-700">
                         {/* <span className=" font-medium text-sm text-stone-600">{school?.program?.duration}, { school?.program?.programType}</span> */}
                         <span className=" font-medium text-sm text-stone-600">{school?.program?.name}, { school?.program?.programType}</span>
-                        <span className="mt-0.5 text-justify">{school?.info?.about}</span>
+                        <span className="mt-0.5 text-justify">{school?.about}</span>
                       </p>
                       <p className="mt-auto text-red-500 font-medium text-md">Explore Program</p>
                     </div>

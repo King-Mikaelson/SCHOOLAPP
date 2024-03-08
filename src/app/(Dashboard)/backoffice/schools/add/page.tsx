@@ -11,7 +11,7 @@ import { useSearchParams } from "next/navigation";
 import api from "@redux/api";
 import LoadingButton from "@SharedComponents/LoadingButton";
 import { useRouter } from "next/navigation";
-import { schoolInformationInitialState,schoolInitialState } from "./data";
+import { schoolInformationInitialState, schoolInitialState } from "./data";
 import ErrorBlock from "@SharedComponents/ErrorBlock";
 import SchoolImages from "./_components/Images";
 import ProgramTable from "./_components/ProgramTable";
@@ -23,7 +23,7 @@ import ProgramTable from "./_components/ProgramTable";
 //   | "Admission Requirement"
 //   | "Other Information"
 //   | "Image";
-type TView = ("School Information"|"Program Information");
+type TView = "School Information" | "Program Information";
 type PView = "Table" | "Form";
 
 export default function AddSchoolApplications() {
@@ -39,7 +39,7 @@ export default function AddSchoolApplications() {
   //   "Admission Requirement",
   //   "Image",
   // ];
-  const views = ["School Information","Program Information"]
+  const views = ["School Information", "Program Information"];
   const [currentView, setCurrentView] = useState<TView>("School Information");
   const [programView, setProgramView] = useState<PView>("Table");
   const [formData, setFormData] = useState(schoolInformationInitialState);
@@ -67,10 +67,31 @@ export default function AddSchoolApplications() {
   // const [ addSchool, { isLoading: isSubmitting, isSuccess: submitSuccess, error: submitError, reset } ] = api.adminApis.useAddSchoolMutation()
   const [getSchoolTrigger, { isLoading, data }] =
     api.adminApis.useLazyGetSchoolsQuery();
-  const selectedData = data?.data?.filter(
-    (each: any) => each?.schoolId === id
-  )[0];
-  console.log(selectedData);
+
+  let selectedData = {
+    info: {
+      name: "",
+      schoolType: "",
+      state: "",
+      country: "",
+      url: "",
+      about: "",
+      _id: "",
+      __v: "",
+      programs: [],
+    },
+  };
+
+  selectedData.info = data?.data?.find((each: any) => each?.schoolId === id);
+
+  if (
+    isLoading === false &&
+    (selectedData?.info?._id || selectedData?.info?.__v)
+  ) {
+    const { _id, __v, programs, ...restOfInfo } = selectedData.info;
+    selectedData.info = restOfInfo;
+  }
+
   useEffect(() => {
     if (["view", "update"].includes(action as string)) {
       getSchoolTrigger("");
@@ -80,8 +101,27 @@ export default function AddSchoolApplications() {
   /* Propopulate Sponsor Application Phone Number fields */
   useEffect(() => {
     if (selectedData && !isSubmitting) {
-      setFormData({ ...selectedData });
-      setSchoolFormData({ ...selectedData });
+      setFormData({
+        info: selectedData.info,
+        program: {
+          name: "",
+          programType: "",
+          duration: "",
+          degreeType: "",
+          startDate: "",
+          classType: "",
+          about: "",
+          currency: "USD",
+          tuitionFee: "",
+          otherFee: "",
+          requiredDocuments: ["", "", "", ""],
+          needBasedScholarships: false,
+          meritBasedScholarships: false,
+          OnCampus: false,
+          OffCampus: false,
+        },
+      });
+      // setSchoolFormData({ ...selectedData });
     }
   }, [data]);
 
@@ -294,49 +334,116 @@ export default function AddSchoolApplications() {
   //   return formData;
   // };
 
+  // const convertStateToFormData = (state: any) => {
+  //   const formData = new FormData();
+
+  //   const appendFields = (data: any, parentKey = "") => {
+  //     for (const key in data) {
+  //       if (data.hasOwnProperty(key)) {
+  //         const value = data[key];
+  //         const fieldName = key;
+
+  //         if (value instanceof Array) {
+  //           // removing index number of images
+  //           if (fieldName === "images") {
+  //             value.forEach((item, index) => {
+  //               formData.append(`${fieldName}`, item);
+  //             });
+  //           } else {
+  //             // Handle arrays
+  //             value.forEach((item, index) => {
+  //               if (item !== "")
+  //                 formData.append(`${fieldName}[${index}]`, item);
+  //             });
+  //           }
+  //         } else if (value instanceof Object && !(value instanceof FileList)) {
+  //           // Recursively process nested objects
+  //           appendFields(value, fieldName);
+  //         } else {
+  //           // Handle other values
+  //           if (value !== "") formData.append(fieldName, value);
+  //         }
+  //       }
+  //     }
+  //   };
+
+  //   appendFields(state);
+
+  //   return formData;
+  // };
+
 
   const convertStateToFormData = (state: any) => {
     const formData = new FormData();
-
+  
     const appendFields = (data: any, parentKey = "") => {
       for (const key in data) {
         if (data.hasOwnProperty(key)) {
           const value = data[key];
-          const fieldName =  key;
-
+          console.log("parentKeys.....", parentKey)
+          // Construct field name with hierarchy for nested objects
+          const fieldName = parentKey !== "[info]" ? `${parentKey}[${key}]` : key;
+  
           if (value instanceof Array) {
-            // removing index number of images
-            if (fieldName === "images") {
-              value.forEach((item, index) => {
-                formData.append(`${fieldName}`, item);
-              });
-            } else {
-              // Handle arrays
-              value.forEach((item, index) => {
-                if (item !== "")
-                  formData.append(`${fieldName}[${index}]`, item);
-              });
+            // Special handling for image arrays or general arrays
+            value.forEach((item, index) => {
+              // If it's an array of files/images, just append them without index
+              if (item instanceof File || fieldName === "images") {
+                formData.append(fieldName, item);
+              } else if (typeof item === 'object') {
+                // For nested objects within arrays, call recursively
+                appendFields(item, `${fieldName}[${index}]`);
+              } else {
+                // Append other array values with indices
+                formData.append(`${fieldName}[${index}]`, item?.toString());
+              }
+            });
+          } else if (value instanceof FileList) {
+            // Append all files from a FileList
+            for (let i = 0; i < value.length; i++) {
+              formData.append(fieldName, value[i]);
             }
-          } else if (value instanceof Object && !(value instanceof FileList)) {
+          } else if (value instanceof Object) {
             // Recursively process nested objects
             appendFields(value, fieldName);
           } else {
-            // Handle other values
-            if (value !== "") formData.append(fieldName, value);
+            // Append non-object and non-array values directly
+            if (value !== "") formData.append(fieldName, value?.toString());
           }
         }
       }
     };
-
+  
     appendFields(state);
-
     return formData;
   };
+  
+  // const extractkeyAndValues = (value) => {
+  //     // Extract keys and values
+  // const keys = Object.keys(value);
+  // const values = Object.values(value);
+
+  // // Create a new object with key-value pairs
+  // const newObject = {};
+
+  // keys.forEach((key, index) => {
+  //   newObject[key] = values[index];
+  // });
+  // setFormData({...newObject, program:formData.program});
+  // setSchoolFormData({...newObject});
+  // }
 
   const handleSubmit = (e: any): void => {
     e.preventDefault();
     // addSchool(convertStateToFormData(formData));
-    addSchool(convertStateToFormData(schoolFormData));
+  
+    addSchool(
+      convertStateToFormData(
+        ["view", "update"].includes(action as string)
+          ?  formData
+          :  schoolFormData
+      )
+    );
   };
 
   var the: FormData = convertStateToFormData(formData);
@@ -356,7 +463,7 @@ export default function AddSchoolApplications() {
 
   console.log(convertStateToFormData(formData).get("images"));
   console.log(typeof convertStateToFormData(formData).get("images[0]"));
-  console.log(formData?.info?.name);
+  console.log(formData)
 
   // console.log(selectedData);
   return (
@@ -431,8 +538,16 @@ export default function AddSchoolApplications() {
         <div className=" mb-14">
           {currentView === "School Information" ? (
             <SchoolInformation
-              formData={schoolFormData}
-              setFormData={setSchoolFormData}
+              formData={
+                ["view", "update"].includes(action as string)
+                  ? formData
+                  : schoolFormData
+              }
+              setFormData={
+                ["view", "update"].includes(action as string)
+                  ? setFormData
+                  : setSchoolFormData
+              }
               isLoading={isLoading}
               isSubmitting={isSubmitting}
               handleInputChange={handleInputChange}

@@ -18,7 +18,8 @@ export default function ProgramDetails({ params }: IProps) {
 
   const objectState = { ...schoolInformationInitialState, images: [ { url: "" }]}
   const [ triggerGetSchools, { isLoading, data }] = api.adminApis.useLazyClientGetSchoolsQuery();
-  const selectedData: typeof objectState = data?.data?.filter((each: any) => each?.schoolId === params?.programId)[0];
+  let selectedData = {info: {}, programs: []};
+  selectedData.info = data?.data?.filter((each: any) => each?.schoolId === params?.programId)[0];
   // let selectedData: typeof objectState = objectState;
 
   useEffect(() => {
@@ -34,7 +35,7 @@ export default function ProgramDetails({ params }: IProps) {
 
       <section className={`${ selectedData ? "after:bg-black/50": "bg-neutral-200 animate-pulse"} flex-col w-full relative overflow-hidden flex min-h-[491px] justify-center px-3 py-12 items-start  after:absolute after:top-0 after:left-0 after:h-full after:w-full`}>
         <div className=""></div>
-        <Image fill src={selectedData?.images[0]?.url} alt="university" loading="lazy"  className="absol ute h-full w-full object-cover object-center inset-0" />
+        <Image fill src={selectedData?.images?.[0]?.url} alt="university" loading="lazy"  className="absol ute h-full w-full object-cover object-center inset-0" />
         {/* <Image fill src="/images/home/hero.png" alt="university" loading="lazy"  className="absolute h-full w-full object-cover object-center inset-0" /> */}
         <div className="relative flex z-[1] flex-col md:ml-[1vmax] items-stretch  mt-64 mb-1 max-md:max-w-full max-md:mt-30">
           <h2 className="text-white text-6xl font-semibold leading-[56px] tracking-tighter max-md:max-w-full max-sm:text-4xl max-lg:text-5xl max-md:leading-10" aria-label="University Name">
@@ -99,7 +100,7 @@ export default function ProgramDetails({ params }: IProps) {
                   </div>
                   <div className="text-neutral-700 text-base leading-6 self-stretch whitespace-nowrap">
                     {/* $3,616.00 */}
-                    { selectedData?.tuition.currency && selectedData?.tuition.tuitionFee
+                    { selectedData?.tuition?.currency && selectedData?.tuition?.tuitionFee
                        ? <>{selectedData?.tuition?.currency} {splitInThousand(String(selectedData?.tuition?.tuitionFee))}</>
                        : <div className="h-4 w-[30%] bg-neutral-200 animate-pulse rounded-lg" />
                     }
@@ -113,7 +114,7 @@ export default function ProgramDetails({ params }: IProps) {
                     {/* <span className="text-neutral-700">$600.00</span> */}
                     {
                       !isLoading
-                      ? selectedData?.tuition.otherFee && <span className="text-neutral-700">{selectedData?.tuition?.currency} {splitInThousand(String(selectedData?.tuition?.otherFee))}</span>
+                      ? selectedData?.tuition?.otherFee && <span className="text-neutral-700">{selectedData?.tuition?.currency} {splitInThousand(String(selectedData?.tuition?.otherFee))}</span>
                       :  <div className="h-4 w-[30%] bg-neutral-200 animate-pulse rounded-lg" />
                     }
                     
@@ -145,12 +146,12 @@ export default function ProgramDetails({ params }: IProps) {
                   </div>
                 </div> */}
                 {
-                  selectedData?.tuition.otherInformation
+                  selectedData?.tuition?.otherInformation
                   && (
                     <div className="grid grid-cols-[2fr_3.2fr]  mt-4 max-md:max-w-full max-md:flex-wrap">
                       <div className="text-neutral-400 text-sm leading-5">Others</div>
                       <div className="text-neutral-600 text-base text-justify leading-6 self-stretch grow shrink basis-auto">
-                        {selectedData?.tuition.otherInformation}
+                        {selectedData?.tuition?.otherInformation}
                       </div>
                     </div>
                   )

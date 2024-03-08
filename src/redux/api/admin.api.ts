@@ -29,7 +29,7 @@ const baseQueryWithReauth: BaseQueryFn<
 
 const api = createApi({
   reducerPath: "userApi",
-  tagTypes: ["schoolApplication", "visaApplication", "school"],
+  tagTypes: ["schoolApplication", "visaApplication", "school","programs"],
   // baseQuery: baseQueryWithReauth,
   // baseQuery: fetchBaseQuery({
   //   baseUrl: "https://gt-western-backend.onrender.com/api/v1/",
@@ -172,7 +172,7 @@ const api = createApi({
         providesTags: () => [{ type: "school" }]
       }),
       getProgramsInSchools:builder.query({
-        query: (school) => `schools/programs?school=${school}`,
+        query: (school) => `schools/programs?schoolId=${school}`,
         transformResponse: (response: any) => response?.data,
         providesTags: () => [{ type: "programs" }]
       }),

@@ -350,7 +350,7 @@ console.log(formData)
           </p>
           <div className="flex gap-y-2 gap-x-4 mt-1 max-md:max-w-full flex-wrap ">
             {!isLoading
-              ? formData.program.requiredDocuments.map(
+              ? formData?.program?.requiredDocuments?.map(
                   (each: string, index: number) => (
                     <div
                       key={index}
@@ -446,7 +446,7 @@ console.log(formData)
                   control={
                     <Checkbox
                       name="meritBasedScholarships"
-                      checked={formData.program.meritBasedScholarships}
+                      checked={formData?.program?.meritBasedScholarships}
                       onChange={(e) => handleCheckBox(e, "program")}
                       inputProps={{ "aria-label": "controlled" }}
                     />
@@ -460,7 +460,7 @@ console.log(formData)
                   control={
                     <Checkbox
                       name="needBasedScholarships"
-                      checked={formData.program.needBasedScholarships}
+                      checked={formData?.program?.needBasedScholarships}
                       onChange={(e) => handleCheckBox(e, "program")}
                       inputProps={{ "aria-label": "controlled" }}
                     />
@@ -484,7 +484,7 @@ console.log(formData)
                   control={
                     <Checkbox
                       name="OnCampus"
-                      checked={formData.program.OnCampus}
+                      checked={formData?.program?.OnCampus}
                       onChange={(e) => handleCheckBox(e, "program")}
                       inputProps={{ "aria-label": "controlled" }}
                     />
@@ -498,7 +498,7 @@ console.log(formData)
                   control={
                     <Checkbox
                       name="OffCampus"
-                      checked={formData.program.OffCampus}
+                      checked={formData?.program?.OffCampus}
                       onChange={(e) => handleCheckBox(e, "program")}
                       inputProps={{ "aria-label": "controlled" }}
                     />

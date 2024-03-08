@@ -65,4 +65,5 @@ export const schoolInformationInitialState = {
     requiredDocuments: ["","","",""],
   },
   schoolId: "",
+
 };

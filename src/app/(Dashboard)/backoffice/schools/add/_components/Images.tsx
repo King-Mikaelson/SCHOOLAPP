@@ -58,7 +58,7 @@ export default function SchoolImages({
 
     async function processImages() {
       // const space = /* get your space object */
-      if (formData && formData.info.images) {
+      if (formData && formData?.images) {
         const imageFiles = [];
         const imageGenerator = fetchImagesGenerator(formData.images);
 
@@ -67,8 +67,7 @@ export default function SchoolImages({
         }
         setImageFiles(imageFiles);
         if (imageFiles?.length >= 1)
-          // setFormData({ ...formData, images: imageFiles });
-          setFormData({ ...formData, info:{...formData.info, images: imageFiles } });
+          setFormData({ ...formData, images: imageFiles });
         setHasProcessedImages(true);
         console.log("All images processed:", imageFiles);
       }
@@ -77,15 +76,14 @@ export default function SchoolImages({
   }, [selectedData, formData]);
 
   const handleImageUpload = (e: any): void => {
-    if (formData?.info.images) {
+    if (formData?.images) {
       const tempData = { ...formData };
+      tempData.images = [...formData?.images, ...e.target.files];
       tempData.info.images = [...formData?.info?.images, ...e.target.files];
-      // tempData.images = [...formData?.images, ...e.target.files];
       setFormData(tempData);
     } else {
-      // const tempData = { ...formData, images: [], info:{...formData.info, images: [] } };
-      // tempData.images.push(...e.target.files);
-      const tempData = { ...formData, info:{...formData.info, images: [] } };
+      const tempData = { ...formData, images: [], info:{...formData.info, images: [] } };
+      tempData.images.push(...e.target.files);
       tempData.info.images.push(...e.target.files);
       setFormData(tempData);
     }
@@ -96,25 +94,22 @@ export default function SchoolImages({
     type: "new" | "existing"
   ): void => {
     if (type === "new") {
-      const filteredImages = formData.info.images.filter(
+      const filteredImages = formData.images.filter(
         (image: string, index: number) => index !== itemIndex
       );
-      // setFormData({ ...formData, images: filteredImages });
-      setFormData({ ...formData, info:{...formData.info, images: filteredImages } });
+      setFormData({ ...formData, images: filteredImages });
     } else if (type === "existing") {
       const filteredImages = formData.IMAGES.filter(
         (image: string, index: number) => index !== itemIndex
       );
-      // setFormData({ ...formData, IMAGES: filteredImages });
-      setFormData({ ...formData, info:{...formData.info,  IMAGES: filteredImages } });
-
+      setFormData({ ...formData, IMAGES: filteredImages });
     }
   };
-  console.log(formData?.info?.images);
+  console.log(formData.images);
   console.log(imageFiles);
   console.log(hasProcessedImages);
 
-  console.log(formData?.info?.images?.length);
+  console.log(formData?.images?.length);
   console.log(formData);
   return (
     <main className="my-2">

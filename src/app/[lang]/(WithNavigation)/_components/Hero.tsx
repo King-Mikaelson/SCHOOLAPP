@@ -47,7 +47,7 @@ export default function Hero({ params }: IProps) {
     }
   );
 
-  const { data: courses, isLoading:isLoadingPrograms } = api.adminApis.useGetProgramsInSchoolsQuery(
+  const { data: courses, isLoading:isLoadingPrograms,refetch,  } = api.adminApis.useGetProgramsInSchoolsQuery(
     searchData.school,
     {
       skip: searchData.school === "",
@@ -61,8 +61,17 @@ export default function Hero({ params }: IProps) {
   }, [searchData.location]);
 
   useEffect(() => {
-    setSearchData({ ...searchData, name: "" });
+      setSearchData({ ...searchData, name: "" });
   }, [searchData.school]);
+
+  // useEffect(() => {
+  //   if(courses?.length > 0){
+  //     refetch()
+  //   }
+  // }, [courses,searchData.school,searchData.location]);
+ 
+
+  console.log(courses?.[0]?.programs)
 
   // const [getProgramsTrigger, { data: programs }] =
   //   api.adminApis.useLazyGetSchoolProgramsQuery();
@@ -110,6 +119,8 @@ export default function Hero({ params }: IProps) {
   // const { t } = useTranslation();
   // console.log(searchData);
   // console.log(countryList.sort((a: any, b: any) => a?.name?.localeCompare(b?.name))?.map((x: any) => x?.name))
+
+  console.log(schools?.data)
   return (
     <section
       id="hero"
@@ -182,7 +193,7 @@ export default function Hero({ params }: IProps) {
                 {countryList
                   .sort((a: any, b: any) => a?.name?.localeCompare(b?.name))
                   ?.map((country: (typeof countryList)[0], index: number) => (
-                    <MenuItem key={index} className="" value={country.code}>
+                    <MenuItem key={index} className="" value={country.name}>
                       {country.name}
                     </MenuItem>
                   ))}
@@ -217,7 +228,7 @@ export default function Hero({ params }: IProps) {
                   {langs[params.lang as keyof typeof langs].form.selectDegree}
                 </MenuItem>
 
-                {schools?.formattedData?.length === 0 && (
+                {schools?.data?.length === 0 && (
                   <MenuItem value="" disabled>
                     {"No Schools available"}
                   </MenuItem>
@@ -231,9 +242,9 @@ export default function Hero({ params }: IProps) {
                 )}
 
 
-                {schools?.formattedData?.map((degType: any) => (
-                  <MenuItem key={degType._id} value={degType?.info?.name}>
-                    {degType?.info?.name}
+                {schools?.data?.map((degType: any) => (
+                  <MenuItem key={degType._id} value={degType?.schoolId}>
+                    {degType?.name}
                   </MenuItem>
                 ))}
               </Select>
@@ -318,11 +329,13 @@ export default function Hero({ params }: IProps) {
                   </MenuItem>
                 ) : (
                   courses?.map((course: any, index: number) => (
-                    <MenuItem key={index} value={course.schoolId}>
-                      {course.program}
+                    course.programs?.map((text,id) => (
+                      <MenuItem key={id} value={course.schoolId}>
+                      {text}
                     </MenuItem>
+                    )))
                   ))
-                )}
+                }
               </Select>
             </FormControl>
             {/* <input name="courseOfStudy" onChange={handleTextInput} type="text" placeholder="Enter course of study" className="px-3 py-2 focus:outline outline-1 rounded-md text-slate-700 focus:outline-slate-300" /> */}

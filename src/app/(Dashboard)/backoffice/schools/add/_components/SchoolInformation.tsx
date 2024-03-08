@@ -59,7 +59,7 @@ export default function SchoolInformation({
 
     async function processImages() {
       // const space = /* get your space object */
-      if (formData && formData.info.images) {
+      if (formData && formData?.info?.images) {
         const imageFiles = [];
         const imageGenerator = fetchImagesGenerator(formData.info.images);
 
@@ -74,7 +74,7 @@ export default function SchoolInformation({
       }
     }
     processImages();
-  }, [selectedData, formData]);
+  }, [formData]);
 
   const handleImageUpload = (e: any): void => {
     if (formData.info?.images) {
@@ -111,6 +111,12 @@ export default function SchoolInformation({
   console.log(formData.info?.images?.length);
   console.log(formData);
 
+
+  console.log(countryList.find((data) => data.name === formData.info?.country)?.code)
+
+  const returnCountryCode = (value:string) =>{
+  return countryList.find((data) => data.name === value)?.code
+  }
   return (
     <section className="">
       <div className="items-start flex flex-col py-1 max-md:px-4 max-w-screen-md">
@@ -168,7 +174,7 @@ export default function SchoolInformation({
               <FormControl fullWidth>
                 <Select
                   itemID="location"
-                  defaultValue="NG"
+                  defaultValue="Nigeria"
                   className="[&>*]:!py-2.5 [&>*]:!px-3 [&>*]:!rounded-md mt-1 placeholder:text-neutral-400 [&>*]:!border-none border-stone-300/70 border rounded-md text-stone-500 min-w-[180px]"
                   disabled={action == "view"}
                   name="country"
@@ -179,7 +185,7 @@ export default function SchoolInformation({
                   {countryList
                     .sort((a: any, b: any) => a?.name?.localeCompare(b?.name))
                     ?.map((country: (typeof countryList)[0], index: number) => (
-                      <MenuItem key={index} className="" value={country.code}>
+                      <MenuItem key={index} className="" value={country.name}>
                         {country.name}
                       </MenuItem>
                     ))}
@@ -212,7 +218,7 @@ export default function SchoolInformation({
                 >
                   {/* <MenuItem className="!p-0 !hidden" value={10}>Select</MenuItem> */}
                   {State.getStatesOfCountry(
-                    formData?.info?.country as string
+                    returnCountryCode(formData?.info?.country as string)
                   ).map((state: IState, index: number) => (
                     <MenuItem key={index} value={state.name}>
                       {state.name}
