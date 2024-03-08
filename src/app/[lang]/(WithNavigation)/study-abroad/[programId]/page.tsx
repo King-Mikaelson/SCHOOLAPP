@@ -37,7 +37,7 @@ type Info = {
   country: string;
   url: string;
   about: string;
-  programs?: Program | never[];
+  programs?: Program[] | undefined;
   _id?:string | number;
   __v?:string;
 };;
@@ -144,8 +144,8 @@ export default function ProgramDetails({ params }: IProps) {
                   </div>
                   <div className="text-neutral-700 text-base leading-6 self-stretch whitespace-nowrap">
                     {/* $3,616.00 */}
-                    { selectedData?.programs?.[0]?.tuition?.currency && selectedData?.programs?.[0]?.tuition?.tuitionFee
-                       ? <>{selectedData?.programs?.[0]?.tuition?.currency} {splitInThousand(String(selectedData?.programs?.[0]?.tuition?.tuitionFee))}</>
+                    { selectedData?.programs?.[0]?.currency && selectedData?.programs?.[0]?.tuitionFee
+                       ? <>{selectedData?.programs?.[0]?.currency} {splitInThousand(String(selectedData?.programs?.[0]?.tuitionFee))}</>
                        : <div className="h-4 w-[30%] bg-neutral-200 animate-pulse rounded-lg" />
                     }
                   </div>
@@ -158,7 +158,7 @@ export default function ProgramDetails({ params }: IProps) {
                     {/* <span className="text-neutral-700">$600.00</span> */}
                     {
                       !isLoading
-                      ?selectedData?.programs?.[0]?.tuition?.otherFee && <span className="text-neutral-700">{selectedData?.programs?.[0]?.tuition?.currency} {splitInThousand(String(selectedData?.programs?.[0]?.tuition?.otherFee))}</span>
+                      ?selectedData?.programs?.[0]?.otherFee && <span className="text-neutral-700">{selectedData?.programs?.[0]?.currency} {splitInThousand(String(selectedData?.programs?.[0]?.otherFee))}</span>
                       :  <div className="h-4 w-[30%] bg-neutral-200 animate-pulse rounded-lg" />
                     }
                     
@@ -189,17 +189,17 @@ export default function ProgramDetails({ params }: IProps) {
                     <span className="text-neutral-700">{selectedData?.tuition?.currency} {splitInThousand(String(selectedData?.tuition?.avgTransportationCost))}</span>
                   </div>
                 </div> */}
-                {
-                 selectedData?.programs?.[0]?.tuition?.otherInformation
+                {/* {
+                 selectedData?.programs?.[0]?.otherInformation
                   && (
                     <div className="grid grid-cols-[2fr_3.2fr]  mt-4 max-md:max-w-full max-md:flex-wrap">
                       <div className="text-neutral-400 text-sm leading-5">Others</div>
                       <div className="text-neutral-600 text-base text-justify leading-6 self-stretch grow shrink basis-auto">
-                        {selectedData?.programs?.[0]?.tuition?.otherInformation}
+                        {selectedData?.programs?.[0]?.otherInformation}
                       </div>
                     </div>
                   )
-                }
+                } */}
                 
               </section>
               
@@ -216,7 +216,7 @@ export default function ProgramDetails({ params }: IProps) {
                     {/* English Proficiency Test */}
                     {
                       selectedData
-                      ? <p className="break-word w-full flex flex-wrap">{selectedData?.programs?.[0]?.admissionRequirement?.financialAid?.join(", ")}</p>
+                      ? <p className="break-word w-full flex flex-wrap">{selectedData?.programs?.[0]?.meritBasedScholarships}</p>
                       : <div className="h-3 w-[65%] bg-neutral-200 animate-pulse rounded-md" />
                     }
                     
@@ -237,7 +237,7 @@ export default function ProgramDetails({ params }: IProps) {
                     {
                       selectedData
                       // ? <p className="break-word w-full flex flex-wrap">{selectedData?.admissionRequirement?.accomodationOptions?.map((each: string, index: number) => <><span>{each}</span> {(selectedData?.admissionRequirement?.accomodationOptions?.length - 1) > index && <pre>, </pre>}</>)}</p>
-                      ? <p className="break-word w-full flex flex-wrap">{selectedData?.programs?.[0]?.admissionRequirement?.accomodationOptions?.join(", ")}</p>
+                      ? <p className="break-word w-full flex flex-wrap">{selectedData?.programs?.[0]?.OnCampus}</p>
                       : <div className="h-3 w-[65%] bg-neutral-200 animate-pulse rounded-md" />
                     }
                     
@@ -263,7 +263,7 @@ export default function ProgramDetails({ params }: IProps) {
                     </ul> */}
                     {
                       selectedData
-                      ? <p className="break-word w-full flex flex-wrap">{selectedData?.programs?.[0]?.admissionRequirement?.requiredDocuments?.join(", ")}</p>
+                      ? <p className="break-word w-full flex flex-wrap">{selectedData?.programs?.[0]?.requiredDocuments?.join(", ")}</p>
                       : <div className="h-3 w-[65%] bg-neutral-200 animate-pulse rounded-md" />
                     }
                     
@@ -389,7 +389,7 @@ export default function ProgramDetails({ params }: IProps) {
                     </div>
                     <div className="text-neutral-700 capitalize text-base leading-6 whitespace-nowrap mt-1">
                       {/* Major */}
-                      {selectedData?.program?.programType.toLowerCase()}
+                      {selectedData?.programs?.[0]?.programType.toLowerCase()}
                     </div>
                   </div>
                   <div className="items-stretch flex grow basis-[0%] flex-col pr-16 max-md:pr-5">
@@ -398,7 +398,7 @@ export default function ProgramDetails({ params }: IProps) {
                     </div>
                     <div className="text-neutral-700 text-base leading-6 whitespace-nowrap mt-1">
                       {/* Fall (Sept.)/Spring (Jan.) */}
-                      {selectedData?.program?.duration.toLowerCase()}
+                      {selectedData?.programs?.[0]?.duration.toLowerCase()}
                     </div>
                   </div>
                 </div>
@@ -410,7 +410,7 @@ export default function ProgramDetails({ params }: IProps) {
                     </div>
                     <div className="text-neutral-700 capitalize text-base leading-6 mt-1">
                       {/* English */}
-                      {selectedData?.program?.name.toLowerCase()}
+                      {selectedData?.programs?.[0]?.name.toLowerCase()}
                     </div>
                   </div>
                   <div className="items-stretch flex grow basis-[0%] flex-col pr-9 max-md:pr-5">
@@ -419,7 +419,7 @@ export default function ProgramDetails({ params }: IProps) {
                     </div>
                     <div className="text-neutral-700 capitalize text-base leading-6 mt-1">
                       {/* College of Arts and Sciences */}
-                      {selectedData?.info?.name.toLowerCase()}
+                      {selectedData?.name.toLowerCase()}
                     </div>
                   </div>
                 </div>
@@ -429,7 +429,7 @@ export default function ProgramDetails({ params }: IProps) {
                       Start Date
                     </div>
                     <div className="text-neutral-700 text-base leading-6 mt-1">
-                    {selectedData?.program?.startDate?.split("T")[0]?.toLowerCase()}
+                    {selectedData?.programs?.[0]?.startDate?.split("T")[0]?.toLowerCase()}
                     </div>
                   </div>
                   {/* <div className="items-stretch flex grow basis-[0%] flex-col">
