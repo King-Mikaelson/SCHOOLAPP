@@ -28,7 +28,7 @@ export default function OtherInformation({ formData, setFormData, isLoading, isS
     setFormData(temp);
   }
 
-  const addField = (field: keyof typeof schoolInformationInitialState.other): void => {
+  const addField = (field: any): void => {
     const temp = { ...formData };
     temp.other[field].push("");
     setFormData(temp);
