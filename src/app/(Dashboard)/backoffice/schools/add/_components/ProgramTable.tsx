@@ -24,16 +24,12 @@ type Props = {
 function ProgramTable({ setProgramView,action }: Props) {
   const List = styled("div")({
     padding: "1.5rem 0",
-    margin: 0,
+    margin: "0 auto",
     display: "flex",
     listStyle: "none",
-    alignSelf: "end",
-    // position: "fixed",
-    // right: "50%",
-    // left: "50%",
-    // transform: "translateX(50)",
-    // gap: "0.5rem",
-    // justifyContent: "space-between",
+    position: "fixed",
+    left: "0%",
+    width:"0 !important"
   });
   const isFetching = false;
   const isLoading = false;
@@ -190,8 +186,8 @@ function ProgramTable({ setProgramView,action }: Props) {
             </Table>
           </TableContainer>
           {!(data?.data?.length === 0) && (
-            <div className=" !w-full">
-              <List className="!flex-1 first-letter:flex items-center max-md:max-w-[calc(100vw-2.2rem)] w-[500px] bottom-4 bg-white mb-4 ml-auto  md:max-w-max rounded-md  mt-8 p-1">
+            <div className="">
+              <List className=" !w-0 bottom-4 bg-white mb-4 rounded-md  mt-8">
                 {items.map(({ page, type, selected, ...item }, index) => {
                   let children = null;
 
@@ -204,7 +200,6 @@ function ProgramTable({ setProgramView,action }: Props) {
                         style={{
                           fontWeight: selected ? "bold" : undefined,
                           padding: "0.5rem 1rem",
-                          width: "100%",
                         }}
                         {...item}
                       >

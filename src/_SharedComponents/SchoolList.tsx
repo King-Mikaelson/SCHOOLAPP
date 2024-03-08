@@ -49,7 +49,7 @@ const SchoolsList = memo(({ arrangement, selectedFilters, routeProfix, scroll = 
                 <li key={index} className="">
                   <div onClick={() => handleNavigateToSchoolDetails(school?.schoolId)} className="card min-h-[400px] grid grid-rows-[1fr,1.2fr] cursor-pointer h-full relative hover:shadow-lg duration-300 min-w-[270px] rounded-lg overflow-hidden">
                     <div className="relative">
-                      <Image fill alt="school" className="object-cover object-center" src={school?.images?.[0]?.url} />
+                      <Image fill alt="school" className="object-cover object-center" src={school?.image} />
                     </div>
                     {/* <Image fill alt="testimony" className="object-cover object-center" src="/images/home/hero.png" /> */}
                     <div className="p-3 z-[1] flex flex-col gap-1 bg-white w-full">
