@@ -167,12 +167,14 @@ export default function AddSchoolApplications() {
     }
   }, [submitSuccess]);
 
+  // @ts-ignore
   const handleInputChange = (e: any, property: any): void => {
     const { name, value } = e.target;
     // @ts-ignore;
     setFormData({
       ...formData,
       [property]: {
+        // @ts-ignore
         ...formData[property as keyof typeof formData],
         [name]: value,
       },
@@ -180,6 +182,7 @@ export default function AddSchoolApplications() {
     setSchoolFormData({
       ...schoolFormData,
       [property]: {
+        // @ts-ignore
         ...schoolFormData[property as keyof typeof schoolFormData],
         [name]: value,
       },
@@ -198,13 +201,16 @@ export default function AddSchoolApplications() {
     setFormData({
       ...formData,
       [property]: {
+        // @ts-ignore
         ...formData[property as keyof typeof formData],
         [name]: checked,
       },
     });
+     // @ts-ignore;
     setSchoolFormData({
       ...schoolFormData,
       [property]: {
+        // @ts-ignore
         ...schoolFormData[property as keyof typeof schoolFormData],
         [name]: checked,
       },
@@ -218,6 +224,7 @@ export default function AddSchoolApplications() {
     setFormData({
       ...formData,
       [property]: {
+        // @ts-ignore
         ...formData[property as keyof typeof formData],
         [name]: Number(value.replace(/,/g, "").replace(/[^0-9]/gi, "")),
       },
@@ -225,6 +232,7 @@ export default function AddSchoolApplications() {
     setSchoolFormData({
       ...formData,
       [property]: {
+        // @ts-ignore
         ...schoolFormData[property as keyof typeof schoolFormData],
         [name]: Number(value.replace(/,/g, "").replace(/[^0-9]/gi, "")),
       },
