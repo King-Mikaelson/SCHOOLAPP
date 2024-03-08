@@ -144,8 +144,8 @@ export default function ProgramDetails({ params }: IProps) {
                   </div>
                   <div className="text-neutral-700 text-base leading-6 self-stretch whitespace-nowrap">
                     {/* $3,616.00 */}
-                    { selectedData?.programs?.[0]?.currency && selectedData?.programs?.[0]?.tuitionFee
-                       ? <>{selectedData?.programs?.[0]?.currency} {splitInThousand(String(selectedData?.programs?.[0]?.tuitionFee))}</>
+                    { selectedData?.programs?.[0]?.tuitionFee && selectedData?.programs?.[0]?.tuitionFee
+                       ? <>{selectedData?.programs?.[0]?.tuitionFee} {splitInThousand(String(selectedData?.programs?.[0]?.tuitionFee))}</>
                        : <div className="h-4 w-[30%] bg-neutral-200 animate-pulse rounded-lg" />
                     }
                   </div>
@@ -158,7 +158,7 @@ export default function ProgramDetails({ params }: IProps) {
                     {/* <span className="text-neutral-700">$600.00</span> */}
                     {
                       !isLoading
-                      ?selectedData?.programs?.[0]?.otherFee && <span className="text-neutral-700">{selectedData?.programs?.[0]?.currency} {splitInThousand(String(selectedData?.programs?.[0]?.otherFee))}</span>
+                      ?selectedData?.programs?.[0]?.otherFee && <span className="text-neutral-700">{selectedData?.programs?.[0]?.otherFee} {splitInThousand(String(selectedData?.programs?.[0]?.otherFee))}</span>
                       :  <div className="h-4 w-[30%] bg-neutral-200 animate-pulse rounded-lg" />
                     }
                     
