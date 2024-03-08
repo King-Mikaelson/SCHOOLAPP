@@ -59,6 +59,7 @@ export default function ProgramDetails({ params }: IProps) {
     country: "",
     url: "",
     about: "",
+    image:""
   };
   // @ts-ignore
   selectedData = data?.data?.filter((each: any) => each?.schoolId === params?.programId)[0];
