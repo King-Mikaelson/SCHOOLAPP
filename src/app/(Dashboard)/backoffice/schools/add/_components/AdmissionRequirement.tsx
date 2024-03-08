@@ -27,7 +27,7 @@ export default function AcademinRequirement({ formData, setFormData, isLoading, 
     setFormData(temp);
   }
 
-  const addField = (field: keyof typeof schoolInformationInitialState.admissionRequirement): void => {
+  const addField = (field: any): void => {
     setFormData({ ...formData, admissionRequirement: { ...formData.admissionRequirement, [field]: [ ...formData.admissionRequirement[field], "" ]}});
   };
 
