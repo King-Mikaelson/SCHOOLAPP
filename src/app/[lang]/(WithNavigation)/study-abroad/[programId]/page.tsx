@@ -30,7 +30,7 @@ type Program = {
 };
 
 type Info = {
-  image?: string;
+  image: string;
   name: string;
   schoolType: string;
   state: string;
