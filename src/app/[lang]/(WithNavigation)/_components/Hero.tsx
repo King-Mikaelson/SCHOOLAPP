@@ -329,6 +329,7 @@ export default function Hero({ params }: IProps) {
                   </MenuItem>
                 ) : (
                   courses?.map((course: any, index: number) => (
+                     // @ts-ignore
                     course.programs?.map((text,id) => (
                       <MenuItem key={id} value={course.schoolId}>
                       {text}

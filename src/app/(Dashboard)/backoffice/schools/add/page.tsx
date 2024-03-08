@@ -16,14 +16,14 @@ import ErrorBlock from "@SharedComponents/ErrorBlock";
 import SchoolImages from "./_components/Images";
 import ProgramTable from "./_components/ProgramTable";
 
-// type TView =
-//   | "School Information"
-//   | "Program Information"
-//   | "Tuition and Fees"
-//   | "Admission Requirement"
-//   | "Other Information"
-//   | "Image";
-type TView = "School Information" | "Program Information";
+type TView =
+  | "School Information"
+  | "Program Information"
+  | "Tuition and Fees"
+  | "Admission Requirement"
+  | "Other Information"
+  | "Image";
+// type TView = "School Information" | "Program Information";
 type PView = "Table" | "Form";
 
 export default function AddSchoolApplications() {
@@ -32,14 +32,14 @@ export default function AddSchoolApplications() {
   const action = searchParams.get("action");
   const id = searchParams.get("id");
 
-  const views = [
-    "School Information",
-    "Program Information",
-    "Tuition and Fees",
-    "Admission Requirement",
-    "Image",
-  ];
-  // const views = ["School Information", "Program Information"];
+  // const views = [
+  //   "School Information",
+  //   "Program Information",
+  //   "Tuition and Fees",
+  //   "Admission Requirement",
+  //   "Image",
+  // ];
+  const views = ["School Information", "Program Information"];
   const [currentView, setCurrentView] = useState<TView>("School Information");
   const [programView, setProgramView] = useState<PView>("Table");
   const [formData, setFormData] = useState(schoolInformationInitialState);
