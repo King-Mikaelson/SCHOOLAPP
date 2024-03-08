@@ -255,6 +255,7 @@ export default function AddSchoolApplications() {
         ...prevFormData[property as keyof typeof formData],
         // @ts-ignore
         [nestedProperty]: prevFormData[property][nestedProperty].map(
+           // @ts-ignore
           (sponsor, i) => (i === index ? value : sponsor)
         ),
       },
