@@ -18,7 +18,7 @@ type PView = "Table" | "Form";
 
 type Props = {
   setProgramView: React.Dispatch<React.SetStateAction<PView>>;
-  action:string
+  action:string | null
 };
 
 function ProgramTable({ setProgramView,action }: Props) {

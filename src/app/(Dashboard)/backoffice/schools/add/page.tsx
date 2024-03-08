@@ -69,7 +69,7 @@ export default function AddSchoolApplications() {
     api.adminApis.useLazyGetSchoolsQuery();
 
   let selectedData: Partial<{
-    info: {
+    info?: {
       name: string;
       schoolType: string;
       state: string;
@@ -393,7 +393,6 @@ export default function AddSchoolApplications() {
       for (const key in data) {
         if (data.hasOwnProperty(key)) {
           const value = data[key];
-          console.log("parentKeys.....", parentKey)
           // Construct field name with hierarchy for nested objects
           const fieldName = parentKey !== "[info]" ? `${parentKey}[${key}]` : key;
   

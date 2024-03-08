@@ -27,9 +27,71 @@ export const schoolInitialState: Partial<{
 } 
 
 
+type Info = {
+  name: string;
+  schoolType: string;
+  state: string;
+  country: string;
+  url: string;
+  about: string;
+  programs?:never[],
+  _id?:string | number,
+  __v?:string
+};;
+
+type Program = {
+  name: string;
+  programType: string;
+  duration: string;
+  degreeType: string;
+  startDate: string;
+  classType: string;
+  about: string;
+  currency: string;
+  tuitionFee: string;
+  otherFee: string;
+  requiredDocuments: string[];
+  needBasedScholarships: boolean;
+  meritBasedScholarships: boolean;
+  OnCampus: boolean;
+  OffCampus: boolean;
+};
+
+type Tuition = {
+  tuitionFee: string;
+  otherFee: string;
+  otherInformation: string;
+  currency: string;
+};
+
+type AdmissionRequirement = {
+  requiredDocuments: string[];
+  financialAid: string[];
+  accomodationOptions: string[];
+};
+
+type Other = {
+  availableInternshipOpportunities: string;
+  formOfAssement: string;
+  availableInternationalStudentSupport: string;
+  availableStudentArrivalSupport: string;
+  academicRequirements: string[];
+  requiredDocuments: string[];
+};
 
 
-export const schoolInformationInitialState = {
+type SchoolInformationInitialState = {
+  info: Info | undefined;
+  program: Program;
+  tuition?: Tuition;
+  admissionRequirement?: AdmissionRequirement;
+  other?: Other;
+  schoolId?: string;
+};
+
+
+
+export const schoolInformationInitialState : SchoolInformationInitialState = {
   info: {
     name: "",
     schoolType: "",
