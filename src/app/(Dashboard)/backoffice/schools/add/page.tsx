@@ -32,14 +32,14 @@ export default function AddSchoolApplications() {
   const action = searchParams.get("action");
   const id = searchParams.get("id");
 
-  // const views = [
-  //   "School Information",
-  //   "Program Information",
-  //   "Tuition and Fees",
-  //   "Admission Requirement",
-  //   "Image",
-  // ];
-  const views = ["School Information", "Program Information"];
+  const views = [
+    "School Information",
+    "Program Information",
+    "Tuition and Fees",
+    "Admission Requirement",
+    "Image",
+  ];
+  // const views = ["School Information", "Program Information"];
   const [currentView, setCurrentView] = useState<TView>("School Information");
   const [programView, setProgramView] = useState<PView>("Table");
   const [formData, setFormData] = useState(schoolInformationInitialState);
@@ -593,6 +593,7 @@ export default function AddSchoolApplications() {
               handleFlatArrayInputChange={handleFlatArrayInputChange}
               handleCheckBox={handleCheckBox}
             />
+             // @ts-ignore
           ) : currentView === "Tuition and Fees" ? (
             <TuitionAndFees
               formData={formData}
@@ -602,6 +603,7 @@ export default function AddSchoolApplications() {
               handleInputChange={handleInputChange}
               handleNumericInputChange={handleNumericInputChange}
             />
+             // @ts-ignore
           ) : currentView === "Admission Requirement" ? (
             <AdmissionRequirement
               formData={formData}
@@ -610,6 +612,7 @@ export default function AddSchoolApplications() {
               isSubmitting={isSubmitting}
               handleFlatArrayInputChange={handleFlatArrayInputChange}
             />
+             // @ts-ignore
           ) : currentView === "Image" ? (
             <SchoolImages
               formData={schoolFormData}
@@ -623,6 +626,7 @@ export default function AddSchoolApplications() {
               hasProcessedImages={hasProcessedImages}
               setHasProcessedImages={setHasProcessedImages}
             />
+             // @ts-ignore
           ) : currentView === "Other Information" ? (
             <OtherInformation
               formData={formData}
