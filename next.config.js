@@ -2,7 +2,7 @@
 const nextConfig = {
   // output: "export",
   images: {
-    domains: ['res.cloudinary.com'],
+    domains: ['res.cloudinary.com',"unsplash.com"],
   },
   async headers() {
     return [
