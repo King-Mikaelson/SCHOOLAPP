@@ -5,14 +5,8 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'unsplash.com',
-        pathname: '/photos',
-        port:""
-      },
-      {
-        protocol: 'https',
-        hostname: 'res.cloudinary.com',
-        pathname: 'res.cloudinary.com',
-        port:""
+         port: '',
+        pathname: '/photos/**',
       },
     ],
   },
