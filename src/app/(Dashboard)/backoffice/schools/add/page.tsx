@@ -68,7 +68,20 @@ export default function AddSchoolApplications() {
   const [getSchoolTrigger, { isLoading, data }] =
     api.adminApis.useLazyGetSchoolsQuery();
 
-  let selectedData = {
+  let selectedData: Partial<{
+    info: {
+      name: string;
+      schoolType: string;
+      state: string;
+      country: string;
+      url: string;
+      about: string;
+      programs?:never[],
+      _id?:string | number,
+      __v?:string
+    };
+    schoolId: string;
+  }>  = {
     info: {
       name: "",
       schoolType: "",
@@ -559,7 +572,7 @@ export default function AddSchoolApplications() {
             />
           ) : currentView === "Program Information" &&
             programView === "Table" ? (
-            <ProgramTable setProgramView={setProgramView} />
+            <ProgramTable setProgramView={setProgramView} action={action}/>
           ) : currentView === "Program Information" &&
             programView === "Form" ? (
             <ProgramInformation

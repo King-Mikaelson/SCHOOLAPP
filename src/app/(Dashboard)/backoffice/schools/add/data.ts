@@ -1,4 +1,17 @@
-export const schoolInitialState = {
+export const schoolInitialState: Partial<{
+  info: {
+    name: string;
+    schoolType: string;
+    state: string;
+    country: string;
+    url: string;
+    about: string;
+    programs?:never[],
+    _id?:string | number,
+    __v?:string
+  };
+  schoolId: string;
+}>  = {
   info: {
     name: "",
     schoolType: "",
@@ -6,9 +19,14 @@ export const schoolInitialState = {
     country: "",
     url: "",
     about: "",
+    _id: "",
+    __v: "",
+    programs: [],
   },
   schoolId: "",
-};
+} 
+
+
 
 
 export const schoolInformationInitialState = {
