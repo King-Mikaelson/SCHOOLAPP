@@ -97,9 +97,7 @@ export default function ProgramDetails({ params }: IProps) {
         <div className=""></div>
         <Image
           fill
-          src={
-            "https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=2972&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          }
+          src={selectedData?.image}
           alt="university"
           loading="lazy"
           className="absol ute h-full w-full object-cover object-center inset-0"

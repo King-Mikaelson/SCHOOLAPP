@@ -59,16 +59,16 @@ export default function SchoolInformation({
 
     async function processImages() {
       // const space = /* get your space object */
-      if (formData && formData?.info?.images) {
+      if (formData && formData?.info?.image) {
         const imageFiles = [];
-        const imageGenerator = fetchImagesGenerator(formData.info.images);
+        const imageGenerator = fetchImagesGenerator(formData.info.image);
 
         for await (const imageFile of imageGenerator) {
           imageFiles.push(imageFile);
         }
         setImageFiles(imageFiles);
         if (imageFiles?.length >= 1)
-          setFormData({ ...formData, info:{...formData.info, images:imageFiles } });
+          setFormData({ ...formData, info:{...formData.info, image:imageFiles } });
         setHasProcessedImages(true);
         console.log("All images processed:", imageFiles);
       }
@@ -77,13 +77,13 @@ export default function SchoolInformation({
   }, [formData]);
 
   const handleImageUpload = (e: any): void => {
-    if (formData.info?.images) {
+    if (formData.info?.image) {
       const tempData = { ...formData };
-      tempData.info.images = [...formData?.info?.images, ...e.target.files];
+      tempData.info.image = [...formData?.info?.image, ...e.target.files];
       setFormData(tempData);
     } else {
-      const tempData = { ...formData,  info:{...formData.info, images: [] } };
-      tempData.info.images.push(...e.target.files);
+      const tempData = { ...formData,  info:{...formData.info, image: [] } };
+      tempData.info.image.push(...e.target.files);
       setFormData(tempData);
     }
   };
@@ -93,22 +93,22 @@ export default function SchoolInformation({
     type: "new" | "existing"
   ): void => {
     if (type === "new") {
-      const filteredImages = formData.info.images.filter(
+      const filteredImages = formData.info.image.filter(
         (image: string, index: number) => index !== itemIndex
       );
-      setFormData({ ...formData, info:{...formData.info, images: filteredImages } });
+      setFormData({ ...formData, info:{...formData.info, image: filteredImages } });
     } else if (type === "existing") {
-      const filteredImages = formData.info.IMAGES.filter(
+      const filteredImages = formData.info.image.filter(
         (image: string, index: number) => index !== itemIndex
       );
-      setFormData({ ...formData, info:{...formData.info, IMAGES: filteredImages } });
+      setFormData({ ...formData, info:{...formData.info, image: filteredImages } });
     }
   };
-  console.log(formData.info?.images);
+  console.log(formData.info?.image);
   console.log(imageFiles);
   console.log(hasProcessedImages);
 
-  console.log(formData.info?.images?.length);
+  console.log(formData.info?.image?.length);
   console.log(formData);
 
 
@@ -279,8 +279,8 @@ export default function SchoolInformation({
         </div>
         <main className="my-2">
       <ul className="flex flex-row align-center gap-2 flex-wrap">
-        {hasProcessedImages && formData.info?.images
-          ? formData.info?.images?.map((image: any, index: number) => (
+        {hasProcessedImages && formData.info?.image
+          ? formData.info?.image?.map((image: any, index: number) => (
               <li className="relative cursor-pointer p-20 h-[150px] w-[170px] overflow-hidden">
                 <button
                   type="button"
