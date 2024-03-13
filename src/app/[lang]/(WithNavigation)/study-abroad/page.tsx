@@ -90,6 +90,8 @@ export default function StudyAbroad({ params }: IProps) {
   console.log(error)
   // console.log(searchData)
   // console.log(searchQuery)
+
+  
   return (
     <main className="p-4 grid grid-rows-[max-content_1fr] animate-fade-in min-h-[calc(100vh-80px)]">
       <div className="form-container container mx-auto shadow-lg my-[clamp(3rem,5vmax,6rem)] z-[1] mt-10 bg-white rounded-xl w-full md:w-[95%] max-w-screen-2xl">        

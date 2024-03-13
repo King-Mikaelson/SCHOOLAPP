@@ -96,6 +96,11 @@ export default function AddSchoolApplications() {
   };
 
   selectedData.info = data?.data?.find((each: any) => each?.schoolId === id);
+  console.log("this is an exampkeeee", id, data?.data?.find((each: any) => each?.schoolId === "SC0BBZW8UQ2V50K"))
+
+  console.log("this is an exampkeeeeiddd", id, data?.data?.find((each: any) => each?.schoolId === "SC4RG0L5MF7OZ3I"))
+
+  console.log("this is an exampkeeee666666", id, data?.data?.find((each: any) => each?.name=== "Metropolitan University College of Medicine"))
 
   if (
     isLoading === false &&

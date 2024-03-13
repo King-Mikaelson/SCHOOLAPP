@@ -49,7 +49,7 @@ const SchoolsList = memo(({ arrangement, selectedFilters, routeProfix, scroll = 
                 <li key={index} className="">
                   <div onClick={() => handleNavigateToSchoolDetails(school?.schoolId)} className="card min-h-[400px] grid grid-rows-[1fr,1.2fr] cursor-pointer h-full relative hover:shadow-lg duration-300 min-w-[270px] rounded-lg overflow-hidden">
                     <div className="relative">
-                      <Image fill alt="school" className="object-cover object-center" src={school?.image} />
+                      <Image  loader={({ src }) => src} fill alt="school" className="object-cover object-center" src={"https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=2972&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"} unoptimized={true}/>
                     </div>
                     {/* <Image fill alt="testimony" className="object-cover object-center" src="/images/home/hero.png" /> */}
                     <div className="p-3 z-[1] flex flex-col gap-1 bg-white w-full">
@@ -57,7 +57,7 @@ const SchoolsList = memo(({ arrangement, selectedFilters, routeProfix, scroll = 
                       
                       <p className="leading-4 text-xs font-light overflow-ellipsis flex flex-col overflow-hidden text-stone-700">
                         {/* <span className=" font-medium text-sm text-stone-600">{school?.program?.duration}, { school?.program?.programType}</span> */}
-                        <span className=" font-medium text-sm text-stone-600">{school?.program?.name}, { school?.program?.programType}</span>
+                        <span className=" font-medium text-sm text-stone-600">{school?.program?.name} {school?.program?.programType}</span>
                         <span className="mt-0.5 text-justify">{school?.about}</span>
                       </p>
                       <p className="mt-auto text-red-500 font-medium text-md">Explore Program</p>
