@@ -37,36 +37,29 @@ export default function SchoolInformation({
   const action = useSearchParams().get("action");
 
 
-
-
   /* Effect to transform file obtained from requiest to Local File Object */
   useEffect(() => {
-    async function* fetchImagesGenerator(images: any) {
-      for (const image of images) {
+    async function fetchImagesGenerator(image: any) {
         try {
-          const response = await fetch(image?.url);
+          const response = await fetch(image);
           const data = await response.blob();
-          const fileName = image?.url.substring(
-            image?.url.lastIndexOf("/") + 1
+          const fileName = image?.substring(
+            image?.lastIndexOf("/") + 1
           );
           const imageFile = new File([data], fileName, { type: data?.type });
-          yield imageFile;
+          return imageFile;
         } catch (error) {
           console.error("Error fetching image:", error);
         }
       }
-    }
 
     async function processImages() {
       // const space = /* get your space object */
-      if (formData && formData?.info?.image) {
+      if (formData && formData?.info?.image && typeof formData?.info?.image === 'string') {
         const imageFiles = [];
-        const imageGenerator = fetchImagesGenerator(formData.info.image);
-
-        for await (const imageFile of imageGenerator) {
-          imageFiles.push(imageFile);
-        }
-        setImageFiles(imageFiles);
+        const imageGenerator = await fetchImagesGenerator(formData.info.image);
+        imageFiles.push(imageGenerator);
+        // setImageFiles(imageFiles);
         if (imageFiles?.length >= 1)
           setFormData({ ...formData, info:{...formData.info, image:imageFiles } });
         setHasProcessedImages(true);
@@ -74,9 +67,10 @@ export default function SchoolInformation({
       }
     }
     processImages();
-  }, [formData]);
+  }, [selectedData]);
 
   const handleImageUpload = (e: any): void => {
+    setHasProcessedImages(true);
     if (formData.info?.image) {
       const tempData = { ...formData };
       tempData.info.image = [...formData?.info?.image, ...e.target.files];
@@ -279,10 +273,10 @@ export default function SchoolInformation({
         </div>
         <main className="my-2">
       <ul className="flex flex-row align-center gap-2 flex-wrap">
-        {hasProcessedImages && formData.info?.image
+        {(hasProcessedImages && formData.info?.image)
           ? formData.info?.image?.map((image: any, index: number) => (
               <li className="relative cursor-pointer p-20 h-[150px] w-[170px] overflow-hidden">
-                <button
+                {action !== "view" && <button
                   type="button"
                   onClick={() => handleRemoveSpaceImage(index, "new")}
                   className="absolute top-0 right-0 bg-white p-1 z-[1]"
@@ -301,24 +295,23 @@ export default function SchoolInformation({
                       d="M6 18 18 6M6 6l12 12"
                     />
                   </svg>
-                </button>
+                </button>}
                 <Image
                   fill
-                  src={!image?.url ? URL.createObjectURL(image) : ""}
+                  src={URL.createObjectURL(image)}
                   className="rounded-lg"
                   alt={`space ${index}`}
                 />
               </li>
-            ))
-          : action &&
-            action === "update" &&
+            ))  : action &&
+            action === "update" && hasProcessedImages ===  false &&
             Array.from({ length: 1 }).map((_, item: number) => (
               <li
                 key={item}
                 className="rounded-lg h-[150px] w-[170px] bg-neutral-200 animate-pulse"
               />
             ))}
-        {action !== "update" && (
+        { action !== "view" &&(
           <div className="flex flex-col gap-2">
           <h3 className="text-[rgba(60,60,60,1)] text-xs">IMAGE</h3>
           <label

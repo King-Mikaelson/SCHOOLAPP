@@ -65,7 +65,7 @@ export default function Testimonials({ params }: IProps) {
           </div>
 
           <div ref={imageContainerRef} className="flex  snap-x snap-mandatory rounded-lg no-scrollbar flex-col overflow-y-auto items-stretch max-md:w-full max-md:ml-0">
-            <ul  className="grid grid-cols-2 h-full  gap-2 md:gap-3 lg:gap-3 w-full">
+            <ul  className="grid md:grid-cols-2 grid-cols-1 h-full  gap-2 md:gap-3 lg:gap-3 w-full">
               {
                 testimonies.map((testimony: typeof testimonies[0], index: number) => (
                   <li className="card  snap-start snap-always h-full relative flex flex-row rounded-lg overflow-hidden">
