@@ -23,12 +23,11 @@ type Props = {
 function ProgramTable({ setProgramView,action, selectedData }: Props) {
   const List = styled("div")({
     padding: "1.5rem 0",
-    margin: "0 auto",
+    margin: 0,
     display: "flex",
     listStyle: "none",
-    position: "fixed",
-    left: "0%",
-    width:"0 !important"
+    alignSelf: "end",
+
   });
   const isFetching = false;
   const isLoading = false;
