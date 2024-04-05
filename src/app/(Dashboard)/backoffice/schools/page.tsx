@@ -82,8 +82,8 @@ export default function Schools() {
   //   searchQuery ? getSchoolsTrigger(searchQuery) : getSchoolsTrigger("");
   // }, []);
 
-  console.log("this is an exampkeeee666666", data?.data?.find((each: any) => each?.name=== "Metropolitan University College of Medicine"))
-  console.log("this is an exampkeeee666666", data?.data?.find((each: any) => each?.name=== "Azerbaijan State University of Culture and Arts (ASUCA)"))
+  console.log("this is an exampkeeee666666", data?.find((each: any) => each?.name=== "Metropolitan University College of Medicine"))
+  console.log("this is an exampkeeee666666", data?.find((each: any) => each?.name=== "Azerbaijan State University of Culture and Arts (ASUCA)"))
 
   useEffect(() => {
     searchQuery ? getSchoolsTrigger(searchQuery) : getSchoolsTrigger("");
@@ -140,7 +140,7 @@ export default function Schools() {
   // console.log(page);
 
   const { items } = usePagination({
-    count: Math.ceil(data?.data.length / rowsPerPage),
+    count: Math.ceil(data?.length / rowsPerPage),
     onChange: (event, page) => handleChange(event, page),
     page: page,
   });
@@ -283,8 +283,8 @@ export default function Schools() {
                 <TableLoader cols={5} />
               ) : (
                 <TableBody>
-                  {data?.data
-                    .slice((page - 1) * rowsPerPage, page * rowsPerPage)
+                  {data
+                    ?.slice((page - 1) * rowsPerPage, page * rowsPerPage)
                     .map((each: any, index: number) => (
                       <TableRow
                         key={index}
@@ -615,7 +615,7 @@ export default function Schools() {
               )}
             </tbody>
           </table> */}
-          {!(isLoading || isFetching) && data?.data?.length === 0 && (
+          {!(isLoading || isFetching) && data?.length === 0 && (
             <div className="px-2 py-4 text-center">
               <h2 className="text-xl font-semibold">No result found</h2>
             </div>

@@ -76,12 +76,13 @@ export default function AddSchoolApplications() {
       country: string;
       url: string;
       about: string;
-      programs?:never[],
-      _id?:string | number,
-      __v?:string
+      programs?: never[];
+      _id?: string | number;
+      __v?: string;
+      image?: string | string[];
     };
     schoolId: string;
-  }>  = {
+  }> = {
     info: {
       name: "",
       schoolType: "",
@@ -95,18 +96,14 @@ export default function AddSchoolApplications() {
     },
   };
 
-  selectedData.info = data?.data?.find((each: any) => each?.schoolId === id);
-  console.log("this is an exampkeeee", id, data?.data?.find((each: any) => each?.schoolId === "SC0BBZW8UQ2V50K"))
-
-  console.log("this is an exampkeeeeiddd", id, data?.data?.find((each: any) => each?.schoolId === "SC4RG0L5MF7OZ3I"))
-
-  console.log("this is an exampkeeee666666", id, data?.data?.find((each: any) => each?.name=== "Metropolitan University College of Medicine"))
+  selectedData.info = data?.find((each: any) => each?.schoolId === id);
+  console.log(selectedData.info, "resultttttttt");
 
   if (
     isLoading === false &&
     (selectedData?.info?._id || selectedData?.info?.__v)
   ) {
-    const { _id, __v, programs, ...restOfInfo } = selectedData.info;
+    const { _id, __v, ...restOfInfo } = selectedData.info;
     selectedData.info = restOfInfo;
   }
 
@@ -211,7 +208,7 @@ export default function AddSchoolApplications() {
         [name]: checked,
       },
     });
-     // @ts-ignore;
+    // @ts-ignore;
     setSchoolFormData({
       ...schoolFormData,
       [property]: {
@@ -260,7 +257,7 @@ export default function AddSchoolApplications() {
         ...prevFormData[property as keyof typeof formData],
         // @ts-ignore
         [nestedProperty]: prevFormData[property][nestedProperty].map(
-           // @ts-ignore
+          // @ts-ignore
           (sponsor, i) => (i === index ? value : sponsor)
         ),
       },
@@ -399,24 +396,24 @@ export default function AddSchoolApplications() {
   //   return formData;
   // };
 
-
   const convertStateToFormData = (state: any) => {
     const formData = new FormData();
-  
+
     const appendFields = (data: any, parentKey = "") => {
       for (const key in data) {
         if (data.hasOwnProperty(key)) {
           const value = data[key];
           // Construct field name with hierarchy for nested objects
-          const fieldName = parentKey !== "[info]" ? `${parentKey}[${key}]` : key;
-  
+          const fieldName =
+            parentKey !== "[info]" ? `${parentKey}[${key}]` : key;
+
           if (value instanceof Array) {
             // Special handling for image arrays or general arrays
             value.forEach((item, index) => {
               // If it's an array of files/images, just append them without index
               if (item instanceof File || fieldName === "images") {
                 formData.append(fieldName, item);
-              } else if (typeof item === 'object') {
+              } else if (typeof item === "object") {
                 // For nested objects within arrays, call recursively
                 appendFields(item, `${fieldName}[${index}]`);
               } else {
@@ -439,36 +436,78 @@ export default function AddSchoolApplications() {
         }
       }
     };
-  
+
     appendFields(state);
     return formData;
   };
-  
-  // const extractkeyAndValues = (value) => {
-  //     // Extract keys and values
-  // const keys = Object.keys(value);
-  // const values = Object.values(value);
-
-  // // Create a new object with key-value pairs
-  // const newObject = {};
-
-  // keys.forEach((key, index) => {
-  //   newObject[key] = values[index];
-  // });
-  // setFormData({...newObject, program:formData.program});
-  // setSchoolFormData({...newObject});
-  // }
 
   const handleSubmit = (e: any): void => {
     e.preventDefault();
     // addSchool(convertStateToFormData(formData));
-  
+
+    // addSchool(
+    //   convertStateToFormData(
+    //     ["view", "update"].includes(action as string)
+    //       ?  formData
+    //       :  schoolFormData
+    //   )
+    // );
+    console.log(
+      ["view", "update"].includes(action as string)
+        ? {
+            name: formData.info?.name,
+            schoolType: formData.info?.schoolType,
+            state: formData.info?.state,
+            country: formData.info?.country,
+            url: formData.info?.url,
+            about: formData.info?.about,
+            schoolId: formData.info?.schoolId,
+            ...(formData.info?.image && formData.info?.image.length > 0
+              ? { image: formData.info?.image[0] }
+              : {}),
+            program: formData.program,
+          }
+        : {
+            name: schoolFormData.info?.name,
+            schoolType: schoolFormData.info?.schoolType,
+            state: schoolFormData.info?.state,
+            country: schoolFormData.info?.country,
+            url: schoolFormData.info?.url,
+            about: schoolFormData.info?.about,
+            ...(schoolFormData.info?.image &&
+            schoolFormData.info?.image.length > 0
+              ? { image: schoolFormData.info?.image }
+              : {}),
+          }
+    );
+
     addSchool(
-      convertStateToFormData(
-        ["view", "update"].includes(action as string)
-          ?  formData
-          :  schoolFormData
-      )
+      ["view", "update"].includes(action as string)
+        ? {
+            name: formData.info?.name,
+            schoolType: formData.info?.schoolType,
+            state: formData.info?.state,
+            country: formData.info?.country,
+            url: formData.info?.url,
+            about: formData.info?.about,
+            schoolId: formData.info?.schoolId,
+            ...(formData.info?.image && formData.info?.image.length > 0
+              ? { image: formData.info?.image[0] }
+              : {}),
+            program: formData.program,
+          }
+        : {
+            name: schoolFormData.info?.name,
+            schoolType: schoolFormData.info?.schoolType,
+            state: schoolFormData.info?.state,
+            country: schoolFormData.info?.country,
+            url: schoolFormData.info?.url,
+            about: schoolFormData.info?.about,
+            ...(schoolFormData.info?.image &&
+            schoolFormData.info?.image.length > 0
+              ? { image: schoolFormData.info?.image[0] }
+              : {}),
+          }
     );
   };
 
@@ -489,7 +528,7 @@ export default function AddSchoolApplications() {
 
   console.log(convertStateToFormData(formData).get("images"));
   console.log(typeof convertStateToFormData(formData).get("images[0]"));
-  console.log(formData)
+  console.log(formData);
 
   // console.log(selectedData);
   return (
@@ -585,7 +624,11 @@ export default function AddSchoolApplications() {
             />
           ) : currentView === "Program Information" &&
             programView === "Table" ? (
-            <ProgramTable setProgramView={setProgramView} action={action}/>
+            <ProgramTable
+              setProgramView={setProgramView}
+              action={action}
+              selectedData={selectedData}
+            />
           ) : currentView === "Program Information" &&
             programView === "Form" ? (
             <ProgramInformation
@@ -598,8 +641,8 @@ export default function AddSchoolApplications() {
               handleFlatArrayInputChange={handleFlatArrayInputChange}
               handleCheckBox={handleCheckBox}
             />
-             // @ts-ignore
-          ) : currentView === "Tuition and Fees" ? (
+          ) : // @ts-ignore
+          currentView === "Tuition and Fees" ? (
             <TuitionAndFees
               formData={formData}
               setFormData={setFormData}
@@ -608,8 +651,8 @@ export default function AddSchoolApplications() {
               handleInputChange={handleInputChange}
               handleNumericInputChange={handleNumericInputChange}
             />
-             // @ts-ignore
-          ) : currentView === "Admission Requirement" ? (
+          ) : // @ts-ignore
+          currentView === "Admission Requirement" ? (
             <AdmissionRequirement
               formData={formData}
               setFormData={setFormData}
@@ -617,8 +660,8 @@ export default function AddSchoolApplications() {
               isSubmitting={isSubmitting}
               handleFlatArrayInputChange={handleFlatArrayInputChange}
             />
-             // @ts-ignore
-          ) : currentView === "Image" ? (
+          ) : // @ts-ignore
+          currentView === "Image" ? (
             <SchoolImages
               formData={schoolFormData}
               setFormData={setSchoolFormData}
@@ -631,8 +674,8 @@ export default function AddSchoolApplications() {
               hasProcessedImages={hasProcessedImages}
               setHasProcessedImages={setHasProcessedImages}
             />
-             // @ts-ignore
-          ) : currentView === "Other Information" ? (
+          ) : // @ts-ignore
+          currentView === "Other Information" ? (
             <OtherInformation
               formData={formData}
               setFormData={setFormData}

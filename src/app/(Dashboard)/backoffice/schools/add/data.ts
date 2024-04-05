@@ -8,9 +8,10 @@ export const schoolInitialState: Partial<{
     about: string;
     programs?:never[],
     _id?:string | number,
-    __v?:string
+    __v?:string,
+    image?:string | string[]
   };
-  schoolId: string;
+  schoolId?: string;
 }>  = {
   info: {
     name: "",
@@ -23,7 +24,6 @@ export const schoolInitialState: Partial<{
     __v: "",
     programs: [],
   },
-  schoolId: "",
 } 
 
 
@@ -36,8 +36,10 @@ type Info = {
   about: string;
   programs?:never[],
   _id?:string | number,
-  __v?:string
-};;
+  __v?:string,
+  image?:string | string[],
+  schoolId?:string
+};
 
 type Program = {
   name: string;

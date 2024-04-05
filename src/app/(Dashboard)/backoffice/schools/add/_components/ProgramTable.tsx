@@ -9,8 +9,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import TableFooter from "@mui/material/TableFooter";
-import Pagination from "@material-ui/lab/Pagination";
 import usePagination from "@mui/material/usePagination";
 import { styled } from "@mui/material/styles";
 
@@ -19,9 +17,10 @@ type PView = "Table" | "Form";
 type Props = {
   setProgramView: React.Dispatch<React.SetStateAction<PView>>;
   action:string | null
+  selectedData: any;
 };
 
-function ProgramTable({ setProgramView,action }: Props) {
+function ProgramTable({ setProgramView,action, selectedData }: Props) {
   const List = styled("div")({
     padding: "1.5rem 0",
     margin: "0 auto",
@@ -34,9 +33,7 @@ function ProgramTable({ setProgramView,action }: Props) {
   const isFetching = false;
   const isLoading = false;
 
-  const data = {
-    data: [],
-  };
+  const data = selectedData?.info?.programs.filter((obj:any) => obj !== null)
 
   const rowsPerPage = 5;
 
@@ -47,10 +44,11 @@ function ProgramTable({ setProgramView,action }: Props) {
   };
 
   const { items } = usePagination({
-    count: Math.ceil(data?.data.length / rowsPerPage),
+    count: Math.ceil(data.length / rowsPerPage),
     onChange: (event, page) => handleChange(event, page),
     page: page,
   });
+
 
   return (
     <div>
@@ -103,7 +101,7 @@ function ProgramTable({ setProgramView,action }: Props) {
                 <TableLoader cols={5} />
               ) : (
                 <TableBody>
-                  {data?.data
+                  {data
                     .slice((page - 1) * rowsPerPage, page * rowsPerPage)
                     .map((each: any, index: number) => (
                       <TableRow
@@ -112,7 +110,10 @@ function ProgramTable({ setProgramView,action }: Props) {
                       >
                         <TableCell>{index + 1}</TableCell>
                         <TableCell className="text-zinc-600 tracking-wide font-medium">
-                          {each.info?.name}
+                          {each.name}
+                        </TableCell>
+                        <TableCell className="text-zinc-600 tracking-wide font-medium">
+                          {each.degreeType}
                         </TableCell>
                         <TableCell className="gap-1.5 lg:gap-2 xl:gap-2.5">
                           <Link
@@ -185,7 +186,7 @@ function ProgramTable({ setProgramView,action }: Props) {
               )}
             </Table>
           </TableContainer>
-          {!(data?.data?.length === 0) && (
+          {!(data?.length === 0) && (
             <div className="">
               <List className=" !w-0 bottom-4 bg-white mb-4 rounded-md  mt-8">
                 {items.map(({ page, type, selected, ...item }, index) => {
@@ -279,7 +280,7 @@ function ProgramTable({ setProgramView,action }: Props) {
             </div>
           )}
 
-          {!(isLoading || isFetching) && data?.data?.length === 0 && (
+          {!(isLoading || isFetching) && data?.length === 0 && (
             <div className="px-2 py-4 text-center">
               <h2 className="text-xl font-semibold">No result found</h2>
             </div>

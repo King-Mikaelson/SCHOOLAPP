@@ -200,7 +200,7 @@ const api = createApi({
 
     updateSchool: builder.mutation({
       query: (formData) => ({
-        url: `admin/school-mgmt/schools/${formData.get("schoolId")}`,
+        url: `admin/school-mgmt/schools/${formData.schoolId}`,
         method: "PATCH",
         body: formData
       }),
