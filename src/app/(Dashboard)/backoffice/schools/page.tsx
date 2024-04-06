@@ -82,8 +82,7 @@ export default function Schools() {
   //   searchQuery ? getSchoolsTrigger(searchQuery) : getSchoolsTrigger("");
   // }, []);
 
-  console.log("this is an exampkeeee666666", data?.find((each: any) => each?.name=== "Metropolitan University College of Medicine"))
-  console.log("this is an exampkeeee666666", data?.find((each: any) => each?.name=== "Azerbaijan State University of Culture and Arts (ASUCA)"))
+
 
   useEffect(() => {
     searchQuery ? getSchoolsTrigger(searchQuery) : getSchoolsTrigger("");

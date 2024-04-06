@@ -7,6 +7,7 @@ import Image from "next/image";
 import fileUpload from "@public/images/back-office/file-upload-states.png";
 import { useEffect, useState } from "react";
 interface IProps {
+  programTerm:string | null;
   formData: any;
   setFormData: React.Dispatch<React.SetStateAction<any>>;
   isLoading: boolean;
@@ -33,6 +34,7 @@ export default function SchoolInformation({
   setImageFiles,
   hasProcessedImages,
   setHasProcessedImages,
+  programTerm
 }: IProps) {
   const action = useSearchParams().get("action");
 
@@ -87,7 +89,7 @@ export default function SchoolInformation({
       }
     }
     processImages();
-  }, [selectedData]);
+  }, [selectedData,programTerm]);
 
   // const handleImageUpload = (e) => {
   //   const file = e.target.files[0];
@@ -149,6 +151,7 @@ export default function SchoolInformation({
     }
   };
   console.log(formData.info?.image);
+  console.log(typeof formData?.info?.image === "string");
   console.log(imageFiles);
   console.log(hasProcessedImages);
 
@@ -321,7 +324,7 @@ export default function SchoolInformation({
         </div>
         <main className="my-2">
           <ul className="flex flex-row align-center gap-2 flex-wrap">
-            {hasProcessedImages && formData.info?.image
+            {hasProcessedImages && formData.info?.image && !(typeof formData?.info?.image === "string")
               ? formData.info?.image?.map((image: any, index: number) => (
                   <li className="relative cursor-pointer p-20 h-[150px] w-[170px] overflow-hidden">
                     {action !== "view" && (

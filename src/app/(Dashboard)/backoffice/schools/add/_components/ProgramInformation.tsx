@@ -447,6 +447,7 @@ console.log(formData)
                     <Checkbox
                       name="meritBasedScholarships"
                       checked={formData?.program?.meritBasedScholarships}
+                      value={formData?.program?.meritBasedScholarships}
                       onChange={(e) => handleCheckBox(e, "program")}
                       inputProps={{ "aria-label": "controlled" }}
                     />
@@ -461,6 +462,7 @@ console.log(formData)
                     <Checkbox
                       name="needBasedScholarships"
                       checked={formData?.program?.needBasedScholarships}
+                      value={formData?.program?.needBasedScholarships}
                       onChange={(e) => handleCheckBox(e, "program")}
                       inputProps={{ "aria-label": "controlled" }}
                     />
@@ -485,6 +487,7 @@ console.log(formData)
                     <Checkbox
                       name="OnCampus"
                       checked={formData?.program?.OnCampus}
+                      value={formData?.program?.OnCampus}
                       onChange={(e) => handleCheckBox(e, "program")}
                       inputProps={{ "aria-label": "controlled" }}
                     />
@@ -501,6 +504,7 @@ console.log(formData)
                       checked={formData?.program?.OffCampus}
                       onChange={(e) => handleCheckBox(e, "program")}
                       inputProps={{ "aria-label": "controlled" }}
+                      value={formData?.program?.OffCampus}
                     />
                   }
                   label="OFF-CAMPUS"

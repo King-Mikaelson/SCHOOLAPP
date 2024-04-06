@@ -84,7 +84,7 @@ type Other = {
 
 type SchoolInformationInitialState = {
   info: Info | undefined;
-  program: Program;
+  program: Program | undefined;
   tuition?: Tuition;
   admissionRequirement?: AdmissionRequirement;
   other?: Other;

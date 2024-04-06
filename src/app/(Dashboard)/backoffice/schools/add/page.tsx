@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import SchoolInformation from "./_components/SchoolInformation";
 import ProgramInformation from "./_components/ProgramInformation";
@@ -26,11 +25,32 @@ type TView =
 // type TView = "School Information" | "Program Information";
 type PView = "Table" | "Form";
 
+type Program = {
+  name: string;
+  programType: string;
+  duration: string;
+  degreeType: string;
+  startDate: string;
+  classType: string;
+  about: string;
+  currency: string;
+  tuitionFee: string;
+  otherFee: string;
+  requiredDocuments: string[];
+  needBasedScholarships: boolean;
+  meritBasedScholarships: boolean;
+  OnCampus: boolean;
+  OffCampus: boolean;
+};
+
 export default function AddSchoolApplications() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const action = searchParams.get("action");
   const id = searchParams.get("id");
+  const programTerm = searchParams.get("program");
+
+  console.log(programTerm);
 
   // const views = [
   //   "School Information",
@@ -97,7 +117,9 @@ export default function AddSchoolApplications() {
   };
 
   selectedData.info = data?.find((each: any) => each?.schoolId === id);
-  console.log(selectedData.info, "resultttttttt");
+  const selectedProgramData:Program | undefined = selectedData.info?.programs?.find((data:any) => data?._id === programTerm)
+  console.log(selectedProgramData, "resultttttttt");
+
 
   if (
     isLoading === false &&
@@ -115,7 +137,7 @@ export default function AddSchoolApplications() {
 
   /* Propopulate Sponsor Application Phone Number fields */
   useEffect(() => {
-    if (selectedData && !isSubmitting) {
+    if (selectedData && !isSubmitting && programTerm === null) {
       setFormData({
         info: selectedData.info,
         program: {
@@ -137,8 +159,13 @@ export default function AddSchoolApplications() {
         },
       });
       // setSchoolFormData({ ...selectedData });
+    }else if(selectedData && !isSubmitting && programTerm !== null){
+      setFormData({
+        info: selectedData.info,
+        program: selectedProgramData
+      });
     }
-  }, [data]);
+  }, [data,programTerm]);
 
   /* Susessful Submission Effect */
   // useEffect(() => {
@@ -270,132 +297,7 @@ export default function AddSchoolApplications() {
     router.back();
   };
 
-  /* Transforming To FormData Type Before Submission */
-  /* =============================================== */
-  // function convertStateToFormData(state: any) {
-  //   const formData = new FormData();
-
-  //   // Recursive function to flatten nested objects
-  //   const flattenObject = (obj: any, prefix = "") => {
-  //     for (const [key, value] of Object.entries(obj)) {
-  //       const newKey = prefix ? `${prefix}.${key}` : key;
-
-  //       if (value && typeof value === "object" && !Array.isArray(value)) {
-  //         flattenObject(value, newKey);
-  //       } else {
-  //         formData.append(newKey, value as string);
-  //       }
-  //     }
-  //   };
-
-  //   // Start flattening from the top-level state object
-  //   flattenObject(state);
-
-  //   return formData;
-  // }
-
-  // function objectToFormData(obj: any, formDataInstance: FormData, parentKey = '') {
-  //   for (const key in obj) {
-  //     if (obj.hasOwnProperty(key)) {
-  //       const propName = parentKey ? `${parentKey}[${key}]` : key;
-  //       const value = obj[key as keyof any];
-
-  //       if (value instanceof Array) {
-  //         value.forEach((item, index) => {
-  //           objectToFormData(item, formDataInstance, `${propName}`);
-  //         });
-  //       } else if (value instanceof Object && !(value instanceof File)) {
-  //         objectToFormData(value as any, formDataInstance, propName);
-  //       } else {
-  //         // formDataInstance.append(propName, value);
-  //         formDataInstance.append(propName, typeof value === 'boolean' ? String(value) : value);
-  //       }
-  //     }
-  //   }
-  // }
-
-  // const convertToFormData = (data: any): FormData => {
-  //   const formDataInstance = new FormData();
-  //   objectToFormData(data, formDataInstance);
-  //   return formDataInstance;
-  // };
-
-  // const convertStateToFormData = (state: any) => {
-  //   const formData = new FormData();
-
-  //   const appendFields = (data: any, parentKey = "") => {
-  //     for (const key in data) {
-  //       if (data.hasOwnProperty(key)) {
-  //         const value = data[key];
-  //         const fieldName = parentKey ? `${parentKey}[${key}]` : key;
-
-  //         if (value instanceof Array) {
-  //           // removing index number of images
-  //           if (fieldName === "images") {
-  //             value.forEach((item, index) => {
-  //               formData.append(`${fieldName}`, item);
-  //             });
-  //           } else {
-  //             // Handle arrays
-  //             value.forEach((item, index) => {
-  //               if (item !== "")
-  //                 formData.append(`${fieldName}[${index}]`, item);
-  //             });
-  //           }
-  //         } else if (value instanceof Object && !(value instanceof FileList)) {
-  //           // Recursively process nested objects
-  //           appendFields(value, fieldName);
-  //         } else {
-  //           // Handle other values
-  //           if (value !== "") formData.append(fieldName, value);
-  //         }
-  //       }
-  //     }
-  //   };
-
-  //   appendFields(state);
-
-  //   return formData;
-  // };
-
-  // const convertStateToFormData = (state: any) => {
-  //   const formData = new FormData();
-
-  //   const appendFields = (data: any, parentKey = "") => {
-  //     for (const key in data) {
-  //       if (data.hasOwnProperty(key)) {
-  //         const value = data[key];
-  //         const fieldName = key;
-
-  //         if (value instanceof Array) {
-  //           // removing index number of images
-  //           if (fieldName === "images") {
-  //             value.forEach((item, index) => {
-  //               formData.append(`${fieldName}`, item);
-  //             });
-  //           } else {
-  //             // Handle arrays
-  //             value.forEach((item, index) => {
-  //               if (item !== "")
-  //                 formData.append(`${fieldName}[${index}]`, item);
-  //             });
-  //           }
-  //         } else if (value instanceof Object && !(value instanceof FileList)) {
-  //           // Recursively process nested objects
-  //           appendFields(value, fieldName);
-  //         } else {
-  //           // Handle other values
-  //           if (value !== "") formData.append(fieldName, value);
-  //         }
-  //       }
-  //     }
-  //   };
-
-  //   appendFields(state);
-
-  //   return formData;
-  // };
-
+ 
   const convertStateToFormData = (state: any) => {
     const formData = new FormData();
 
@@ -522,9 +424,6 @@ export default function AddSchoolApplications() {
     console.log(`${key}: ${value}`);
   }
 
-  // console.log(convertStateToFormData(formData).get("program[degreeType]"))
-  // console.log(convertStateToFormData(formData).get("admissionRequirement[accomodationOptions][0]"))
-  // console.log(convertStateToFormData(formData).get("admissionRequirement[accomodationOptions][0]"))
 
   console.log(convertStateToFormData(formData).get("images"));
   console.log(typeof convertStateToFormData(formData).get("images[0]"));
@@ -621,6 +520,7 @@ export default function AddSchoolApplications() {
               setImageFiles={setImageFiles}
               hasProcessedImages={hasProcessedImages}
               setHasProcessedImages={setHasProcessedImages}
+              programTerm={programTerm}
             />
           ) : currentView === "Program Information" &&
             programView === "Table" ? (
@@ -628,6 +528,7 @@ export default function AddSchoolApplications() {
               setProgramView={setProgramView}
               action={action}
               selectedData={selectedData}
+              setFormData={setFormData}
             />
           ) : currentView === "Program Information" &&
             programView === "Form" ? (

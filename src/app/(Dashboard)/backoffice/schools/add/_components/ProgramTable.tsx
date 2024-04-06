@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import Link from "next/link";
+import React, { useState, useEffect } from "react";
 import TableLoader from "@SharedComponents/TableLoader";
+import Image from "next/image";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -9,16 +11,23 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import usePagination from "@mui/material/usePagination";
 import { styled } from "@mui/material/styles";
+import { useRouter } from 'next/navigation'
 
 type PView = "Table" | "Form";
 
 type Props = {
   setProgramView: React.Dispatch<React.SetStateAction<PView>>;
-  action:string | null
+  action: string | null;
   selectedData: any;
+  setFormData: any;
 };
 
-function ProgramTable({ setProgramView,action, selectedData }: Props) {
+function ProgramTable({
+  setProgramView,
+  action,
+  selectedData,
+  setFormData,
+}: Props) {
   const List = styled("div")({
     padding: "1.5rem 0",
     margin: 0,
@@ -28,8 +37,9 @@ function ProgramTable({ setProgramView,action, selectedData }: Props) {
   });
   const isFetching = false;
   const isLoading = false;
+  const router = useRouter()
 
-  const data = selectedData?.info?.programs.filter((obj:any) => obj !== null)
+  const data = selectedData?.info?.programs.filter((obj: any) => obj !== null);
 
   const rowsPerPage = 5;
 
@@ -40,11 +50,78 @@ function ProgramTable({ setProgramView,action, selectedData }: Props) {
   };
 
   const { items } = usePagination({
-    count: Math.ceil(data.length / rowsPerPage),
+    count: Math.ceil(data?.length / rowsPerPage),
     onChange: (event, page) => handleChange(event, page),
     page: page,
   });
 
+  const [url, setUrl] = useState("");
+  useEffect(() => {
+    const currentUrl = window.location.href;
+    console.log(currentUrl, "currenturllllll");
+    setUrl(currentUrl);
+    // You can use 'currentUrl' as needed here
+  }, []);
+
+  console.log(url);
+
+  function updateUrlParam(newParamValue: string, action: string) {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+
+    // Remove the 'program' parameter if it exists
+    if (urlSearchParams.has("program")) {
+      urlSearchParams.delete("program");
+    }
+
+    // Check if 'action' parameter exists and update it to 'view' if found
+    if (urlSearchParams.has("action")) {
+      urlSearchParams.set("action", action);
+    }
+
+    // Add the new 'program' parameter with the specified value
+    urlSearchParams.set("program", newParamValue);
+
+    // Replace the current URL with the modified URL
+    const newUrl = `${window.location.pathname}?${urlSearchParams.toString()}`;
+    return newUrl;
+  }
+
+  const removeExistingProgramme = () => {
+    const urlSearchParams = new URLSearchParams(
+      window.location.search
+    );
+    // Remove the 'program' parameter if it exists
+    if (urlSearchParams.has("program")) {
+      urlSearchParams.delete("program");
+    }
+    const newUrl = `${
+      window.location.pathname
+    }?${urlSearchParams.toString()}`;
+
+    router.push(newUrl);
+
+    setFormData({
+      info: selectedData.info,
+      program: {
+        name: "",
+        programType: "",
+        duration: "",
+        degreeType: "",
+        startDate: "",
+        classType: "",
+        about: "",
+        currency: "USD",
+        tuitionFee: "",
+        otherFee: "",
+        requiredDocuments: ["", "", "", ""],
+        needBasedScholarships: false,
+        meritBasedScholarships: false,
+        OnCampus: false,
+        OffCampus: false,
+      },
+    });
+    setProgramView("Form");
+  }
 
   return (
     <div>
@@ -53,10 +130,10 @@ function ProgramTable({ setProgramView,action, selectedData }: Props) {
           <div className="flex w-full">
             <div className="lg:ml-auto">
               <button
-              disabled={ ["view", "update"].includes(action as string)
-              ? false
-              : true}
-                onClick={() => setProgramView("Form")}
+                disabled={
+                  ["view", "update"].includes(action as string) ? false : true
+                }
+                onClick={ () => removeExistingProgramme()}
                 className="bg-[#FF4512] max-w-max  flex flex-row font-medium items-center gap-1.5 rounded-lg px-6 py-2.5 shadow-md text-white mt-4"
               >
                 <svg
@@ -98,7 +175,7 @@ function ProgramTable({ setProgramView,action, selectedData }: Props) {
               ) : (
                 <TableBody>
                   {data
-                    .slice((page - 1) * rowsPerPage, page * rowsPerPage)
+                    ?.slice((page - 1) * rowsPerPage, page * rowsPerPage)
                     .map((each: any, index: number) => (
                       <TableRow
                         key={index}
@@ -112,7 +189,9 @@ function ProgramTable({ setProgramView,action, selectedData }: Props) {
                           {each.degreeType}
                         </TableCell>
                         <TableCell className="gap-1.5 lg:gap-2 xl:gap-2.5">
-                          <button
+                          <Link
+                            href={`${updateUrlParam(each._id, "view")}`}
+                            onClick={() => setProgramView("Form")}
                             className="!inline mx-1"
                           >
                             <svg
@@ -131,8 +210,10 @@ function ProgramTable({ setProgramView,action, selectedData }: Props) {
                                 stroke-linejoin="round"
                               />
                             </svg>
-                          </button>
-                          <button
+                          </Link>
+                          <Link
+                            href={`${updateUrlParam(each._id, "update")}`}
+                            onClick={() => setProgramView("Form")}
                             className="!inline mx-1"
                           >
                             <svg
@@ -151,7 +232,7 @@ function ProgramTable({ setProgramView,action, selectedData }: Props) {
                                 stroke-linejoin="round"
                               />
                             </svg>
-                          </button>
+                          </Link>
                           <button
                             // onClick={() => initiateDelete(each)}
                             className="!inline mx-1"
