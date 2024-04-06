@@ -54,7 +54,7 @@ export default function ProgramInformation({
   }, []);
 
   const addField = (
-    field: keyof typeof schoolInformationInitialState.program
+    field: string
   ): void => {
     setFormData({
       ...formData,
