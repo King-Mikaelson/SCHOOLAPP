@@ -27,12 +27,10 @@ type Program = {
   meritBasedScholarships: boolean;
   OnCampus: boolean;
   OffCampus: boolean;
-  tuition: {
-    _id: string;
-    currency:string;
-     otherFee:  string;
-    tuitionFee: string;
-  }
+  _id: string;
+  currency:string;
+  otherFee:  string;
+  tuitionFee: string;
 
 };
 
@@ -44,7 +42,7 @@ type Info = {
   country: string;
   url: string;
   about: string;
-  programs?: Program[] | undefined;
+  programs: Program[];
   _id?: string | number;
   __v?: string;
 };
@@ -52,8 +50,18 @@ type Info = {
 export default function ProgramDetails({ params }: IProps) {
   const router = useRouter();
 
-  const [isSchoolDetailsTruncated, setIsSchoolDetailsTruncated] =
-    useState<boolean>(true);
+
+  const [schoolData, setSchoolData] =
+    useState<Info>({
+      name: "",
+      schoolType: "",
+      state: "",
+      country: "",
+      url: "",
+      about: "",
+      image: "",
+      programs: [],
+    });
 
   const objectState = {
     ...schoolInformationInitialState,
@@ -70,11 +78,12 @@ export default function ProgramDetails({ params }: IProps) {
     url: "",
     about: "",
     image: "",
+    programs: [],
   };
   // @ts-ignore
-  selectedData = data?.data?.filter(
+  selectedData = data?.find(
     (each: any) => each?.schoolId === params?.programId
-  )[0];
+  );
   // let selectedData: typeof objectState = objectState;
 
   useEffect(() => {
@@ -83,7 +92,15 @@ export default function ProgramDetails({ params }: IProps) {
     }
   }, [selectedData, params]);
 
-  console.log(selectedData);
+  const filteredPrograms= selectedData?.programs?.filter((data) => data !== null)
+  useEffect(() => {
+    if (selectedData?.programs.length > 0 && selectedData !== undefined) {
+      const updatedSelectedData = { ...selectedData, programs: filteredPrograms };
+      setSchoolData(updatedSelectedData);
+    }
+  }, [selectedData]);
+
+  
 
   // @ts-ignore
   return (
@@ -91,13 +108,13 @@ export default function ProgramDetails({ params }: IProps) {
     <main className="bg-white flex flex-col justify-center items-center mb-[4vmin] animate-fade-in">
       <section
         className={`${
-          selectedData ? "after:bg-black/50" : "bg-neutral-200 animate-pulse"
+          schoolData ? "after:bg-black/50" : "bg-neutral-200 animate-pulse"
         } flex-col w-full relative overflow-hidden flex min-h-[491px] justify-center px-3 py-12 items-start  after:absolute after:top-0 after:left-0 after:h-full after:w-full`}
       >
         <div className=""></div>
         <Image
           fill
-          src={selectedData?.image}
+          src={schoolData?.image}
           alt="university"
           loading="lazy"
           className="absol ute h-full w-full object-cover object-center inset-0"
@@ -109,15 +126,15 @@ export default function ProgramDetails({ params }: IProps) {
             aria-label="University Name"
           >
             {/* The University of Hong Kong */}
-            {selectedData?.name}
+            {schoolData?.name}
           </h2>
           <h3
             className="text-white capitalize break-word text-5xl font-medium leading-10 tracking-tighter mt-5 max-md:max-w-full max-sm:text-xl max-lg:text-4xl max-md:leading-10"
             aria-label="Degree"
           >
             {/* B.Sc, Computer Science */}
-            {selectedData?.programs?.[0]?.programType.toLowerCase()}{" "}
-            {selectedData?.programs?.[0]?.name?.toLowerCase()}
+            {schoolData?.programs?.[0]?.programType.toLowerCase()}{" "}
+            {schoolData?.programs?.[0]?.name?.toLowerCase()}
           </h3>
         </div>
       </section>
@@ -132,7 +149,7 @@ export default function ProgramDetails({ params }: IProps) {
                   <button onClick={() => router.back()} className="">
                     / Study Abroad{" "}
                   </button>{" "}
-                  / Universities / {selectedData?.name}
+                  / Universities / {schoolData?.name}
                 </div>
               </div>
               <div className="text-black text-xl font-medium leading-6 tracking-tight self-stretch whitespace-nowrap mt-8 max-md:max-w-full">
@@ -151,8 +168,8 @@ export default function ProgramDetails({ params }: IProps) {
                 evolving technology. Courses use a variety of programming
                 languages, with introductory courses using Java and further
                 coursework that can include C++, PHP, and other languages. */}
-                {selectedData?.programs?.[0]?.about ? (
-                  selectedData?.programs?.[0]?.about
+                {schoolData?.programs?.[0]?.about ? (
+                  schoolData?.programs?.[0]?.about
                 ) : (
                   <div className="flex flex-col gap-y-2">
                     <div className="h-3 w-[90%] bg-neutral-200 animate-pulse rounded-md" />
@@ -177,12 +194,12 @@ export default function ProgramDetails({ params }: IProps) {
                   </div>
                   <div className="text-neutral-700 text-base leading-6 self-stretch whitespace-nowrap">
                     {/* $3,616.00 */}
-                    {selectedData?.programs?.[0]?.tuition?.tuitionFee &&
-                    selectedData?.programs?.[0]?.tuition?.tuitionFee ? (
+                    {schoolData?.programs?.[0]?.tuitionFee &&
+                    schoolData?.programs?.[0]?.tuitionFee ? (
                       <>
-                        {selectedData?.programs?.[0]?.tuition?.tuitionFee}{" "}
+                        {schoolData?.programs?.[0]?.tuitionFee}{" "}
                         {splitInThousand(
-                          String(selectedData?.programs?.[0]?.tuition?.tuitionFee)
+                          String(schoolData?.programs?.[0]?.tuitionFee)
                         )}
                       </>
                     ) : (
@@ -197,11 +214,11 @@ export default function ProgramDetails({ params }: IProps) {
                   <div className="text-neutral-400 text-base leading-6 self-stretch whitespace-nowrap">
                     {/* <span className="text-neutral-700">$600.00</span> */}
                     {!isLoading ? (
-                      selectedData?.programs?.[0]?.tuition?.otherFee && (
+                      schoolData?.programs?.[0]?.otherFee && (
                         <span className="text-neutral-700">
-                          {selectedData?.programs?.[0]?.tuition?.otherFee}{" "}
+                          {schoolData?.programs?.[0]?.otherFee}{" "}
                           {splitInThousand(
-                            String(selectedData?.programs?.[0]?.tuition?.otherFee)
+                            String(schoolData?.programs?.[0]?.otherFee)
                           )}
                         </span>
                       )
@@ -260,9 +277,10 @@ export default function ProgramDetails({ params }: IProps) {
                   </div>
                   <div className="text-neutral-700 flex flex-wrap w-full text-base leading-6 self-stretch">
                     {/* English Proficiency Test */}
-                    {selectedData ? (
+                    {schoolData ? (
                       <p className="break-word w-full flex flex-wrap">
-                        {selectedData?.programs?.[0]?.meritBasedScholarships}
+                        {schoolData?.programs?.[0]?.meritBasedScholarships === true ?  "meritBasedScholarship" : ""}
+                        {schoolData?.programs?.[0]?.needBasedScholarships === true ?  "needBasedScholarship" : ""}
                       </p>
                     ) : (
                       <div className="h-3 w-[65%] bg-neutral-200 animate-pulse rounded-md" />
@@ -280,10 +298,10 @@ export default function ProgramDetails({ params }: IProps) {
                       <li>Transcript</li>
                       <li>Standardised Test Result</li> */}
                     </ul>
-                    {selectedData ? (
+                    {schoolData ? (
                       // ? <p className="break-word w-full flex flex-wrap">{selectedData?.admissionRequirement?.accomodationOptions?.map((each: string, index: number) => <><span>{each}</span> {(selectedData?.admissionRequirement?.accomodationOptions?.length - 1) > index && <pre>, </pre>}</>)}</p>
                       <p className="break-word w-full flex flex-wrap">
-                        {selectedData?.programs?.[0]?.OnCampus}
+                        {schoolData?.programs?.[0]?.OnCampus === true ?  "OnCampus" : "" }{schoolData?.programs?.[0]?.OffCampus === true ? "OffCampus" : "" }
                       </p>
                     ) : (
                       <div className="h-3 w-[65%] bg-neutral-200 animate-pulse rounded-md" />
@@ -308,9 +326,9 @@ export default function ProgramDetails({ params }: IProps) {
                         <span className="text-neutral-700">Passport copies</span>
                       </li>
                     </ul> */}
-                    {selectedData ? (
+                    {schoolData ? (
                       <p className="break-word w-full flex flex-wrap">
-                        {selectedData?.programs?.[0]?.requiredDocuments?.join(
+                        {schoolData?.programs?.[0]?.requiredDocuments?.join(
                           ", "
                         )}
                       </p>
@@ -417,7 +435,7 @@ export default function ProgramDetails({ params }: IProps) {
                     </div>
                     <div className="text-neutral-700 capitalize text-base leading-6 word-break mt-1">
                       {/* Bachelor&apos;s Degree */}
-                      {selectedData?.programs?.[0]?.degreeType.toLowerCase()}
+                      {schoolData?.programs?.[0]?.degreeType.toLowerCase()}
                     </div>
                   </div>
                   <div className="items-stretch flex grow basis-[0%] flex-col">
@@ -426,7 +444,7 @@ export default function ProgramDetails({ params }: IProps) {
                     </div>
                     <div className="text-neutral-700 capitalize text-base leading-6 whitespace-nowrap mt-1">
                       {/* In-Person */}
-                      {selectedData?.programs?.[0]?.classType.toLowerCase()}
+                      {schoolData?.programs?.[0]?.classType.toLowerCase()}
                     </div>
                   </div>
                 </div>
@@ -437,7 +455,7 @@ export default function ProgramDetails({ params }: IProps) {
                     </div>
                     <div className="text-neutral-700 capitalize text-base leading-6 whitespace-nowrap mt-1">
                       {/* Major */}
-                      {selectedData?.programs?.[0]?.programType.toLowerCase()}
+                      {schoolData?.programs?.[0]?.programType.toLowerCase()}
                     </div>
                   </div>
                   <div className="items-stretch flex grow basis-[0%] flex-col pr-16 max-md:pr-5">
@@ -446,7 +464,7 @@ export default function ProgramDetails({ params }: IProps) {
                     </div>
                     <div className="text-neutral-700 text-base leading-6 whitespace-nowrap mt-1">
                       {/* Fall (Sept.)/Spring (Jan.) */}
-                      {selectedData?.programs?.[0]?.duration.toLowerCase()}
+                      {schoolData?.programs?.[0]?.duration.toLowerCase()}
                     </div>
                   </div>
                 </div>
@@ -458,7 +476,7 @@ export default function ProgramDetails({ params }: IProps) {
                     </div>
                     <div className="text-neutral-700 capitalize text-base leading-6 mt-1">
                       {/* English */}
-                      {selectedData?.programs?.[0]?.name.toLowerCase()}
+                      {schoolData?.programs?.[0]?.name.toLowerCase()}
                     </div>
                   </div>
                   <div className="items-stretch flex grow basis-[0%] flex-col pr-9 max-md:pr-5">
@@ -467,7 +485,7 @@ export default function ProgramDetails({ params }: IProps) {
                     </div>
                     <div className="text-neutral-700 capitalize text-base leading-6 mt-1">
                       {/* College of Arts and Sciences */}
-                      {selectedData?.name.toLowerCase()}
+                      {schoolData?.name.toLowerCase()}
                     </div>
                   </div>
                 </div>
@@ -477,7 +495,7 @@ export default function ProgramDetails({ params }: IProps) {
                       Start Date
                     </div>
                     <div className="text-neutral-700 text-base leading-6 mt-1">
-                      {selectedData?.programs?.[0]?.startDate
+                      {schoolData?.programs?.[0]?.startDate
                         ?.split("T")[0]
                         ?.toLowerCase()}
                     </div>
@@ -511,8 +529,8 @@ export default function ProgramDetails({ params }: IProps) {
                   teaching, groundbreaking research and dedication to public
                   service continue a legacy that began when the University was
                   chartered in 1789 and opened to students four years later. */}
-                  {selectedData?.about ? (
-                    selectedData?.about
+                  {schoolData?.about ? (
+                    schoolData?.about
                   ) : (
                     <div className="flex flex-col gap-y-2">
                       <div className="h-3 w-[90%] bg-neutral-200 animate-pulse rounded-md" />

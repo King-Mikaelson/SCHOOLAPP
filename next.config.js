@@ -2,37 +2,33 @@
 const nextConfig = {
   // output: "export",
   images: {
-    domains: ['unsplash.com',"media.istockphoto.com","images.unsplash.com"],
+    domains: [
+      "unsplash.com",
+      "media.istockphoto.com",
+      "images.unsplash.com",
+      "res.cloudinary.com",
+    ],
   },
   async headers() {
     return [
       {
-        source: '/(.*)',
+        source: "/(.*)",
         headers: [
           {
-            key: 'Content-Security-Policy',
+            key: "Content-Security-Policy",
             value: "frame-src 'self' https://unsplash.com;",
           },
           {
-            key: 'Access-Control-Allow-Origin',
+            key: "Access-Control-Allow-Origin",
             value: "*",
-          }
+          },
         ],
       },
     ];
-  }
-}
+  },
+};
 
-module.exports = nextConfig
-
-
-
-
-
-
-
-
-
+module.exports = nextConfig;
 
 // const nextConfig = {
 //   images: {
@@ -47,7 +43,7 @@ module.exports = nextConfig
 //       },
 //     ],
 //   },
-  
+
 //   // async headers() {
 //   //   return [
 //   //     {

@@ -71,7 +71,7 @@ export default function Hero({ params }: IProps) {
   // }, [courses,searchData.school,searchData.location]);
  
 
-  console.log(courses?.[0]?.programs)
+  console.log(courses)
 
   // const [getProgramsTrigger, { data: programs }] =
   //   api.adminApis.useLazyGetSchoolProgramsQuery();
@@ -120,7 +120,8 @@ export default function Hero({ params }: IProps) {
   // console.log(searchData);
   // console.log(countryList.sort((a: any, b: any) => a?.name?.localeCompare(b?.name))?.map((x: any) => x?.name))
 
-  console.log(schools?.data)
+  console.log(schools);
+
   return (
     <section
       id="hero"
@@ -228,7 +229,7 @@ export default function Hero({ params }: IProps) {
                   {langs[params.lang as keyof typeof langs].form.selectDegree}
                 </MenuItem>
 
-                {schools?.data?.length === 0 && (
+                {schools?.length === 0 && (
                   <MenuItem value="" disabled>
                     {"No Schools available"}
                   </MenuItem>
@@ -242,7 +243,7 @@ export default function Hero({ params }: IProps) {
                 )}
 
 
-                {schools?.data?.map((degType: any) => (
+                {schools?.map((degType: any) => (
                   <MenuItem key={degType._id} value={degType?.schoolId}>
                     {degType?.name}
                   </MenuItem>

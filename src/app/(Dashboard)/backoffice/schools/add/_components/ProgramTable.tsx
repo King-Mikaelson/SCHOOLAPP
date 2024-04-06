@@ -1,7 +1,5 @@
-import Link from "next/link";
 import React, { useState } from "react";
 import TableLoader from "@SharedComponents/TableLoader";
-import Image from "next/image";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -27,7 +25,6 @@ function ProgramTable({ setProgramView,action, selectedData }: Props) {
     display: "flex",
     listStyle: "none",
     alignSelf: "end",
-
   });
   const isFetching = false;
   const isLoading = false;
@@ -115,8 +112,7 @@ function ProgramTable({ setProgramView,action, selectedData }: Props) {
                           {each.degreeType}
                         </TableCell>
                         <TableCell className="gap-1.5 lg:gap-2 xl:gap-2.5">
-                          <Link
-                            href={`/backoffice/schools/add?id=${each.schoolId}&action=view`}
+                          <button
                             className="!inline mx-1"
                           >
                             <svg
@@ -135,9 +131,8 @@ function ProgramTable({ setProgramView,action, selectedData }: Props) {
                                 stroke-linejoin="round"
                               />
                             </svg>
-                          </Link>
-                          <Link
-                            href={`/backoffice/schools/add?id=${each.schoolId}&action=update`}
+                          </button>
+                          <button
                             className="!inline mx-1"
                           >
                             <svg
@@ -156,7 +151,7 @@ function ProgramTable({ setProgramView,action, selectedData }: Props) {
                                 stroke-linejoin="round"
                               />
                             </svg>
-                          </Link>
+                          </button>
                           <button
                             // onClick={() => initiateDelete(each)}
                             className="!inline mx-1"
